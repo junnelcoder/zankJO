@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>YoraUI Admin</title>
   <!-- base:css -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" href="../../../../css/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../../../css/vendors/css/vendor.bundle.base.css">
   <!-- endinject -->
@@ -379,424 +380,69 @@
                         <table id="order-listing" class="table">
                           <thead>
                             <tr class="bg-primary text-white">
-                                <th>Job Order No.</th>
-                                <th>Date</th>
-                                <th>Customer</th>
-                                <th>Address</th>
-                                <th>Technical</th>
-                                <th>Month No.</th>
-                                <th>Week No.</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                              <th>Job Order No.</th>
+                              <th>Date</th>
+                              <th>Customer</th>
+                              <th>Address</th>
+                              <th>Technical</th>
+                              <th>Month No.</th>
+                              <th>Week No.</th>
+                              <th>Status</th>
+                              <th>Actions</th>
                             </tr>
                           </thead>
-                          <tbody>
-                            <tr>
-                                <td>WD-61</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-info">On hold</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-62</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-danger">Pending</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-63</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-success">Closed</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-64</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-warning">Open</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-65</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-success">Closed</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-66</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-info">On hold</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-67</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-success">Closed</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-68</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-warning">Open</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-69</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-success">Closed</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-70</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-danger">Pending</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-71</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-danger">Pending</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-72</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-warning">Open</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-73</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-warning">Open</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-74</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-success">Closed</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-75</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-danger">Pending</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-76</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-info">On hold</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-77</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-warning">Open</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-78</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-success">Closed</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-79</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-danger">Pending</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>WD-80</td>
-                                <td>01/30/24</td>
-                                <td>Edinburgh</td>
-                                <td>New York</td>
-                                <td>Tom</td>
-                                <td>January</td>
-                                <td>3</td>
-                                <td>
-                                  <label class="badge badge-info">On hold</label>
-                                </td>
-                                <td class="text-right">
-                                  <button class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                  </button>
-                                  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                  </button>
-                                </td>
-                            </tr>
+                          <tbody id="jobOrderListBody">
+                            <!-- Job order list rows will be dynamically inserted here -->
                           </tbody>
                         </table>
                       </div>
                     </div>
                   </div>
                 </div>
+              
+                <!-- Add defer attribute to defer script execution until after the HTML is parsed -->
+<!-- Add defer attribute to defer script execution until after the HTML is parsed -->
+<script defer>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Fetch job order list data and populate the table
+    axios.get('http://192.168.30.106:8080/jobOrderList')
+      .then(response => {
+        const jobOrderListBody = document.getElementById('jobOrderListBody');
+
+        // Clear existing rows in case of multiple requests
+        jobOrderListBody.innerHTML = '';
+
+        // Iterate over the received data and create table rows
+        response.data.forEach(jobOrder => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${jobOrder.JobOrderNo}</td>
+            <td>${jobOrder.Date}</td>
+            <td>${jobOrder.Customer}</td>
+            <td>${jobOrder.Address}</td>
+            <td>${jobOrder.Technical}</td>
+            <td>${jobOrder.Month}</td>
+            <td>${jobOrder.WeekNo}</td>
+            <td><label class="badge badge-info">${jobOrder.Status}</label></td>
+            <td class="text-right">
+              <button class="btn btn-outline-primary btn-icon-text">
+                <i class="mdi mdi-eye btn-icon-prepend"></i>View
+              </button>
+              <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
+                <i class="mdi mdi-printer btn-icon-prepend"></i>Print
+              </button>
+            </td>
+          `;
+          jobOrderListBody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching job order list:', error);
+      });
+  });
+</script>
+
+
               </div>
             </div>
           </div>
@@ -832,6 +478,7 @@
   <!-- End plugin js for this page -->
   <!-- Custom js for this page-->
   <script src="../../../../css/js/data-table.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <!-- End custom js for this page-->
 </body>
 

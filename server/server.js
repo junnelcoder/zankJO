@@ -2,7 +2,10 @@ const express = require('express');
 const sql = require('mssql');
 const path = require('path');
 const app = express();
+const cors = require('cors');
 const port = 8080;
+
+app.use(cors());
 
 // SQL Server Database Connection
 const config = {
@@ -17,32 +20,23 @@ const config = {
 };
 
 // Middleware to handle SQL Server connection
-app.use((req, res, next) => {
-  sql.connect(config)
-    .then(() => {
-      console.log('Connected to SQL Server');
-      next(); // Continue with the request processing
-    })
-    .catch((err) => {
-      console.error('Error connecting to SQL Server:', err);
-      res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
-    });
+app.use(async (req, res, next) => {
+  try {
+    await sql.connect(config);
+    console.log('Connected to SQL Server');
+    next(); // Continue with the request processing
+  } catch (err) {
+    console.error('Error connecting to SQL Server:', err);
+    res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
+  }
 });
 
 // Express Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
-// Define static file serving for public folder
-app.use('/public', express.static(path.join(__dirname, 'public')));
-
-// Define static file serving for public folder
-app.use('/public', express.static(path.join(__dirname, 'public')));
-
-// Routes
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/pages/login.html'));
 });
-
 
 app.post('/login', async (req, res) => {
   const username = req.body.username;
@@ -74,6 +68,18 @@ app.post('/login', async (req, res) => {
     res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
   } catch (err) {
     console.error('Error checking login:', err);
+    res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
+  }
+});
+app.get('/jobOrderList', async (req, res) => {
+  try {
+    const query = 'SELECT * FROM dbo.JobOrderListing'; // Corrected table name
+    const request = new sql.Request();
+    const result = await request.query(query);
+
+    res.status(200).json(result.recordset);
+  } catch (err) {
+    console.error('Error fetching job orders:', err);
     res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
   }
 });
