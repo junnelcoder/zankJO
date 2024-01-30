@@ -8,7 +8,7 @@ const port = 8080;
 const config = {
   user: 'sa',
   password: 'zankojt@2024', // Replace with your SQL Server password
-  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014', // Replace with the actual IP address and instance name
+  server: '192.168.30.106\\SQLEXPRESS2014', // Replace with the actual IP address and instance name
   database: 'mydatabase',
   options: {
     enableArithAbort: true,
@@ -55,6 +55,6 @@ app.post('/store', (req, res) => {
 });
 
 // Start the server
-app.listen(port,() => {
+app.listen(port, () => {
   console.log(`Server is running at http://192.168.30.106:${port}`);
 });
