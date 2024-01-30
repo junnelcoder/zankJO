@@ -1,0 +1,237 @@
+/* Accordions */
+
+.accordion {
+  .card {
+    margin-bottom: .75rem;
+    box-shadow: 0px 1px 7px 1px rgba($white, 0.08);    
+    border-radius: 0;
+    .card-header {
+      background-color: transparent;
+      border: none;
+      padding: 1.3rem 1.25rem;
+      * {
+        font-weight: 500;
+        font-size: $default-font-size;        
+      }
+      a {
+        display: block;
+        color: inherit;
+        text-decoration: none;
+        font-size: inherit;
+        line-height: 1.3;
+        position: relative;
+        @include transition(color .5s ease);
+        padding-right: 1.5rem;
+        &:before {
+          font-family:"Material Design Icons";
+          position: absolute;
+          right: 7px;
+          top: 0;
+          font-size: .875rem;
+          display: block;
+        }
+        &[aria-expanded="true"] {
+          color: theme-color(primary);
+          &:before {
+            content: "\F374";
+          }
+        }
+        &[aria-expanded="false"] {
+          &:before{
+            content: "\F415";
+          }
+        }
+      }
+    }
+    .card-body {
+      font-size: 14px;
+      padding: 0 1.25rem 1.25rem 1.25rem;
+      font-weight: 400;
+      line-height: 1.5;
+      i {
+        font-size: 1.25rem;
+      }
+    }
+  }
+  &.accordion-bordered {
+    background: $card-bg;
+    box-shadow: 0px 1px 7px 1px rgba($white, 0.08);    
+    .card {
+      margin: 0 2rem;
+      border-top: 1px solid $border-color;
+      box-shadow: none;
+      border-radius: 0;
+      border-right: 0;
+      border-left: 0;
+      .card-header,
+      .card-body {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .card-header {
+        a {
+          &:before {
+            color: theme-color(danger);
+          }
+          &[aria-expanded="true"] {
+            color: inherit;
+            &:before {
+              content: "\F062";
+            }
+          }
+          &[aria-expanded="false"] {
+            &:before {
+              content: "\F04A";
+            }
+          }
+        }
+      }
+      &:first-child {
+        border-top: 0;
+      }
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+  &.accordion-filled {
+    .card {
+      padding: 0;
+      .card-header {
+        padding: 0;        
+        a {
+          padding: 1.3rem 1.25rem;
+          padding-right: 2.5rem;
+          @include transition(all .2s linear);
+          &:before {
+            top: 36%;
+            right: 20px;
+          }
+          &[aria-expanded="true"] {
+            background: theme-color(info);
+            color: $white;
+            &:before {
+              content: "\F143";
+              color: $white;
+            }
+          }
+          &[aria-expanded="false"] {
+            &:before {
+              content: "\F140";
+            }
+          }
+        }
+      }
+      .card-body {
+        padding: 0 2rem 2rem 2rem;
+        background: theme-color(info);
+        color: $white;
+      }
+    }
+  }
+  &.accordion-solid-header {
+    .card {
+      padding: 0;
+      .card-header {
+        padding: 0;        
+        a {
+          padding: 1.3rem 1.25rem;
+          padding-right: 2.5rem;
+          @include transition(all .2s linear);
+          &:before {
+            top: 36%;
+            right: 20px;
+          }
+          &[aria-expanded="true"] {
+            background: theme-color(primary);
+            color: $white;
+            &:before {
+              content: "\F143";
+              color: $white;
+            }
+          }
+          &[aria-expanded="false"] {
+            &:before {
+              content: "\F140";
+            }
+          }
+        }
+      }
+      .card-body {
+        padding: 0.875rem 1.25rem;
+      }
+    }
+  }
+  &.accordion-solid-content {
+    .card {
+      padding: 0;
+      .card-header {
+        padding: 0;        
+        a {
+          padding: 1.3rem 1.25rem;
+          padding-right: 2.5rem;
+          @include transition(all .2s linear);
+          &:before {
+            top: 36%;
+            right: 20px;
+          }
+          &[aria-expanded="true"] {
+            color: inherit;
+            &:before {
+              content: "\F143";
+            }
+          }
+          &[aria-expanded="false"] {
+            &:before {
+              content: "\F140";
+            }
+          }
+        }
+      }
+      .card-body {
+        padding: 0.875rem 1.25rem;
+        background: theme-color(success);
+        color: $white;
+      }
+    }
+  }
+  &.accordion-multi-colored {
+    .card {
+      .card-header,
+      .card-body {
+        background: transparent;
+        color: $white;
+      }
+      &:nth-child(1) {
+        background: theme-color(primary);
+      }
+      &:nth-child(2) {
+        background: theme-color(success);
+      }
+      &:nth-child(3) {
+        background: theme-color(danger);
+      }
+      &:nth-child(4) {
+        background: theme-color(warning);
+      }
+      &:nth-child(5) {
+        background: theme-color(info);
+      }
+      .card-header {
+        a {
+          &[aria-expanded="true"] {
+            color: inherit;
+            &:before {
+              content: "\F143";
+            }
+          }
+          &[aria-expanded="false"] {
+            &:before {
+              content: "\F140";
+            }
+          }
+        }
+      }
+    }
+  }
+}

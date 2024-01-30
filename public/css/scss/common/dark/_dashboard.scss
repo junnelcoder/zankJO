@@ -1,0 +1,311 @@
+.dashboard-header {
+  .btn {
+    font-weight: 500;
+    &.tx-12 {
+      font-size: 12px;
+    }
+  }
+  .btn-group {
+    .btn {
+      padding: .3rem 1rem;
+      i {
+        font-size: .875rem;
+      }
+    }
+  }
+}
+
+.audience-chart-wrapper {
+  position: relative;
+  margin-left: -48px;
+  margin-right: -39px;
+  .audience-flot-chart {
+    width: 100%;
+    height: 360px;
+    margin-top: -35px;
+  
+    @include media-breakpoint-only(lg) { height: 252px; }
+  
+    .flot-y-axis {
+      > div {
+        transform: translateX(50px);
+        text-shadow: 1px 1px rgba(#fff, .75);
+        color: $body-color;
+        font-weight: 700;
+        font-size: 11px;
+      }  
+    }
+  
+    .flot-x-axis {
+      > div {
+        color: $gray-500;
+        font-weight: 500;
+        font-size: 11px;
+      }
+    }  
+  }
+}
+
+.sales-chart-wrapper {
+  .sales-flot-chart-dark {
+    height: 170px;
+    width: 100%;
+  }
+}
+
+.visitors-chart-wrapper {
+  .visitors-flot-chart-dark {
+    height: 170px;
+    width: 100%;
+  }
+}
+
+.session-chart-wrapper {
+  height: 83px;
+  overflow: hidden;
+  margin-left: -16px;
+  margin-right: -16px;
+
+  @media(max-width: 767px) {
+    height: 37px;
+  }
+
+  .session-flot-chart {
+    height: 180px;
+    width: 100%;
+    margin-top: -93px;
+
+    .flot-x-axis {
+      > div {
+        text-transform: uppercase;
+        font-size: 10px;
+        font-weight: 700;
+        color: $gray-600;
+        display: none;
+
+        @include media-breakpoint-up(sm) { display: block; }
+
+        span:last-child {
+          padding-left: 2px;
+          font-weight: 700;
+          color: $gray-900;
+        }
+      }
+    }  
+  }
+}
+
+.traffic-chart-wrapper {
+  height: 83px;
+  overflow: hidden;
+  margin-left: -16px;
+  margin-right: -16px;
+
+  @media(max-width: 767px) {
+    height: 37px;
+  }
+
+  .traffic-flot-chart {
+    height: 180px;
+    width: 100%;
+    margin-top: -93px;
+
+    .flot-x-axis {
+      > div {
+        text-transform: uppercase;
+        font-size: 10px;
+        font-weight: 700;
+        color: $gray-600;
+        display: none;
+
+        @include media-breakpoint-up(sm) { display: block; }
+
+        span:last-child {
+          padding-left: 2px;
+          font-weight: 700;
+          color: $text-muted;
+        }
+      }
+    }  
+  }
+}
+
+.vmap-dark-wrapper {
+  width: 100%;
+  height: 180px;
+
+  @include media-breakpoint-up(sm) { height: 250px; }
+  @include media-breakpoint-up(md) { height: 100%; }
+
+  .jqvmap-zoomin,
+  .jqvmap-zoomout {
+    width: 24px;
+    height: 24px;
+    left: 15px;
+    @include border-radius(100%);
+    background-color: $gray-900;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    opacity: .2;
+
+    &:hover,
+    &:focus {
+      opacity: .8;
+    }
+  }
+
+  .jqvmap-zoomin { top: 15px; }
+  .jqvmap-zoomout { top: 45px; }
+}
+
+@include donut-chart('.chart-dark', 65, 130px, 15px,#1e1e2f , #27293d, $indigo);
+
+.donut-chart {
+  &.chart1 {
+    .chart-center span {
+      font-weight: 700;
+      font-size: 32px;
+    }
+  }
+}
+
+.card-chart {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-table-one {
+  .flag-icon {
+    font-size: 20px;
+    line-height: 1;
+    border-radius: 100%;
+  }
+}
+
+.recent-revenue-card {
+  .card-body {
+    position: relative;
+    .flot-wrapper {
+      position: relative;
+      bottom: -14px;
+      margin-right: -9px;
+      margin-left: -21px;
+      margin-top: -15px;
+
+      @media(max-width: 991px) {
+        margin-left: 10px;
+      }
+  
+      @include media-breakpoint-up(lg) {
+        margin-right: -6px;
+        margin-left: 10px;
+        margin-top: -25px;
+      }
+  
+      .flot-x-axis > div {
+        transform: translate(22px,-23px);
+        @include media-breakpoint-down(md) {
+          transform: translate(4px,0px);
+        }
+      }
+  
+      .flot-y-axis > div {
+        transform: translateX(-10px);
+        // @include media-breakpoint-down(lg) {
+        //   transform: translate(28px,-5px);
+        // }
+        @media(max-width: 767px) {
+          transform: translate(-10,-5px);
+        }
+      }
+    }
+  
+    .flot-chart {
+      width: 100%;
+      height: 180px;
+      position: relative;
+  
+      @include media-breakpoint-up(lg) { height: 305px; }
+    }
+
+    .more-info {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+  
+      @include media-breakpoint-down(md) {
+        display: none;
+      }
+  
+      @include media-breakpoint-up(lg) {
+        right: 30px;
+        top: 28px;
+      }
+  
+      div {
+        display: flex;
+        align-items: flex-start;
+        font-size: 13px;
+      }
+  
+      span:first-child {
+        width: 80px;
+        text-align: right;
+        color: $gray-600;
+        display: block;
+        line-height: 1.35;
+      }
+  
+      span:last-child {
+        margin-left: 15px;
+        // color: $body-color;
+        font-weight: 700;
+        font-size: 14px;
+      }
+    }
+    .gray-border-right {
+      border-right: 1px solid $border-color;
+      @media(max-width: 767px) {
+        border-right: 0;
+      }
+    }
+  }
+
+}
+
+.flot-pie-chart {
+  height: 171px;
+}
+
+.flot-pie-chart-2 {
+  height: 240px;
+}
+
+.dashboard-special-card {
+  background: #6f42c1;
+  border: 0;
+  .oval {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+  .rectangle {
+    position: absolute;
+    right: 75px;
+    bottom: 38px;
+  }
+  h4 {
+    font-size: 22px;
+    line-height: 25px;
+  }
+  .btn {
+    background: #f75f58;
+  }
+  .card-bottom {
+    z-index: 9;
+  }
+}

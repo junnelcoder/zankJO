@@ -1,0 +1,92 @@
+/* Buttons */
+
+.btn {
+  font-size: $btn-font-size;
+  font-weight: 500;
+  i {
+    font-size: 1rem;
+  }
+  &.btn-rounded {
+    @include border-radius(50px);
+  }
+  &.btn-sm {
+    font-size: $btn-font-size-sm;
+    padding: $btn-padding-y-sm $btn-padding-x-sm;
+  }
+  &.btn-lg {
+    font-size: $btn-font-size-lg;
+  }
+  &.btn-xs {
+    padding: $btn-padding-y-xs $btn-padding-x-xs;
+    font-size: $btn-font-size-xs;
+  }
+  /* Buttons with only icons */
+  &.btn-icon {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+  }
+  /* Buttons with icon and text */
+  &.btn-icon-text {
+    .btn-icon-prepend {
+      margin-right: .5rem;
+    }
+    .btn-icon-append {
+      margin-left: .5rem;
+    }
+  }
+  &.btn-social-icon {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+  }
+}
+
+.btn-toolbar {
+  .btn-group {
+    +.btn-group {
+      @extend .ml-2;
+    }
+  }
+}
+/*social buttons*/
+@each $color, $value in $social-colors {
+  .btn-#{$color} {
+    @include social-button(social-color($color));
+  }
+  .btn-outline-#{$color} {
+    @include social-outline-button(social-color($color));
+  }
+}
+/* inverse buttons */
+@each $color, $value in $theme-colors {
+  .btn-inverse-#{$color} {
+    @include button-inverse-variant($value);
+  }
+}
+
+
+.btn-outline-secondary {
+  border-color: lighten(theme-color(secondary), 25%);
+  &.active {
+    &:not(:disabled) {
+      &:not(.disabled) {
+        background-color: lighten(theme-color(secondary), 40%);
+        border-color: lighten(theme-color(secondary), 25%);
+        color: darken(theme-color(secondary), 35%);
+      } 
+    }
+  }
+  &:hover {
+    background-color: lighten(theme-color(secondary), 40%);
+    color: darken(theme-color(secondary), 35%);
+    border: 1px solid lighten(theme-color(secondary), 25%);
+  }
+}
+
+.btn-group-sm {
+  .btn {
+    font-weight: 500;
+  }
+}
+

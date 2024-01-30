@@ -1,58 +1,83 @@
 const express = require('express');
 const sql = require('mssql');
-
+const path = require('path');
 const app = express();
 const port = 8080;
 
 // SQL Server Database Connection
 const config = {
   user: 'sa',
-  password: 'zankojt@2024', // Replace with your SQL Server password
-  server: '192.168.30.106\\SQLEXPRESS2014', // Replace with the actual IP address and instance name
-  database: 'mydatabase',
+  password: 'zankojt@2024',
+  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',
+  database: 'JobOrder',
   options: {
     enableArithAbort: true,
-    encrypt: false, // Set encrypt option to false
+    encrypt: false,
   },
 };
 
-sql.connect(config, (err) => {
-  if (err) {
-    console.error('Error connecting to SQL Server:', err);
-  } else {
-    console.log('Connected to SQL Server');
-  }
+// Middleware to handle SQL Server connection
+app.use((req, res, next) => {
+  sql.connect(config)
+    .then(() => {
+      console.log('Connected to SQL Server');
+      next(); // Continue with the request processing
+    })
+    .catch((err) => {
+      console.error('Error connecting to SQL Server:', err);
+      res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
+    });
 });
 
 // Express Middleware
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '../public')));
+// Define static file serving for public folder
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
+// Define static file serving for public folder
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(path.join(__dirname, '../public/pages/login.html'));
 });
 
-app.post('/store', (req, res) => {
-  const userInput = parseInt(req.body.userInput);
 
-  if (!isNaN(userInput)) {
-    const query = 'INSERT INTO input_data (user_input) VALUES (@userInput)';
+app.post('/login', async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  if (!username || !password) {
+    return res.status(400).json({ status: 'error', message: 'Username and password are required.' });
+  }
+
+  try {
+    // Retrieve the user from the database
+    const query = 'SELECT * FROM AdminLogin WHERE username = @username';
     const request = new sql.Request();
-    request.input('userInput', sql.Int, userInput);
+    request.input('username', sql.NVarChar, username);
 
-    request.query(query, (err, result) => {
-      if (err) {
-        console.error('Error storing data:', err);
-        res.status(500).send('Internal Server Error');
-      } else {
-        res.status(200).send('Data stored successfully!');
+    const result = await request.query(query);
+
+    if (result.recordset.length > 0) {
+      const storedPassword = result.recordset[0].password;
+
+      // Compare the inputted password with the stored password (plain text)
+      if (password === storedPassword) {
+        // Successful login
+        return res.redirect('/pages/content/index.html');
       }
-    });
-  } else {
-    res.status(400).send('Invalid input. Please enter a valid number.');
+    }
+
+    // Invalid username or password
+    res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
+  } catch (err) {
+    console.error('Error checking login:', err);
+    res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
   }
 });
+
 
 // Start the server
 app.listen(port, () => {
