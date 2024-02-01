@@ -10741,8 +10741,8 @@ textarea.tt-hint {
 
 .form-check-input {
   position: absolute;
-  margin-top: 0.3rem;
-  margin-left: -1.25rem;
+  margin-top: 10px;
+  margin-left: 130px;
 }
 
 .form-check-input[disabled] ~ .form-check-label,
@@ -31345,4 +31345,84 @@ padding-left: 70px;
   border: 1px #808080 solid;
   border-radius: 5px;
   margin-top: 1px; /* Adjust as needed */
+}
+.btn-primary, .wizard > .actions a {
+  color: #fff;
+  background-color: #00b7ff;
+  border-color: #8b9789;
+  border-radius: 10px;
+}
+
+.btn-primary:hover, .wizard > .actions a:hover {
+  color: #fff;
+  background-color: #00b7ff;
+  border-color: #8b9789;
+}
+
+.btn-primary:focus, .wizard > .actions a:focus, .btn-primary.focus, .wizard > .actions a.focus {
+  color: #fff;
+  background-color: #00b7ff;
+  border-color: #8b9789;
+  box-shadow: 0 0 0 0.2rem rgba(138, 134, 250, 0.5);
+}
+
+.btn-primary.disabled, .wizard > .actions a.disabled, .btn-primary:disabled, .wizard > .actions a:disabled {
+  color: #fff;
+  background-color: #00b7ff;
+  border-color: #8b9789;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .wizard > .actions a:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .wizard > .actions a:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle,
+.wizard > .actions .show > a.dropdown-toggle {
+  color: #fff;
+  background-color: #8b9789;
+  border-color: #00b7ff;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus, .wizard > .actions a:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .wizard > .actions a:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle:focus,
+.wizard > .actions .show > a.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(138, 134, 250, 0.5);
+}
+
+.btn-secondary, .wizard > .actions .disabled a {
+  color: #fff;
+  background-color: #4A1964;
+  border-color: #4A1964;
+  border-radius:10px;
+  margin-top: 20px;
+}
+
+.btn-secondary:hover, .wizard > .actions .disabled a:hover {
+  color: #fff;
+  background-color: #2196F3;
+  border-color: #2196F3;
+}
+
+.btn-secondary:focus, .wizard > .actions .disabled a:focus, .btn-secondary.focus, .wizard > .actions .disabled a.focus {
+  color: #fff;
+  background-color: #2196F3;
+  border-color: #2196F3;
+  box-shadow: 0 0 0 0.2rem rgba(141, 153, 175, 0.5);
+}
+
+.btn-secondary.disabled, .wizard > .actions .disabled a.disabled, .btn-secondary:disabled, .wizard > .actions .disabled a:disabled {
+  color: #fff;
+  background-color: #2196F3;
+  border-color: #2196F3;
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active, .wizard > .actions .disabled a:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .wizard > .actions .disabled a:not(:disabled):not(.disabled).active,
+.show > .btn-secondary.dropdown-toggle,
+.wizard > .actions .disabled .show > a.dropdown-toggle {
+  color: #fff;
+  background-color: #5f6d88;
+  border-color: #5a6780;
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active:focus, .wizard > .actions .disabled a:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus, .wizard > .actions .disabled a:not(:disabled):not(.disabled).active:focus,
+.show > .btn-secondary.dropdown-toggle:focus,
+.wizard > .actions .disabled .show > a.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(141, 153, 175, 0.5);
 }
