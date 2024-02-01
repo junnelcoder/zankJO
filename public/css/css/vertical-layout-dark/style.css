@@ -30767,5 +30767,15 @@ div.tagsinput span.tag a {
     display: none;
   }
 }
-
+/* Static */
+.vanish{}
+@media (max-width: 600px) {
+/* Phone */
+.vanish{display:none;}
+}
+@media (min-width: 601px) and (max-width: 1024px) {
+/* Tablet */
+.vanish{display:none;}
+}
+@media (min-width: 1025px) {/* Desktop */}
 /*# sourceMappingURL=../maps/vertical-layout-dark/style.css.map */

@@ -417,14 +417,14 @@
                           <thead>
                               <tr class="bg-primary text-white">
                                   <th >Job Order No.</th>
-                                  <th id="custom-sort-th">Date</th>
+                                  <th id="custom-sort-th" class="vanish">Date</th>
                                   <th id="custom-sort-th">Customer</th>
-                                  <th id="custom-sort-th">Address</th>
-                                  <th id="custom-sort-th">Technical</th>
-                                  <th id="custom-sort-th">Month No.</th>
-                                  <th id="custom-sort-th">Week No.</th>
-                                  <th id="custom-sort-th">Status</th>
-                                  <th id="custom-sort-th" style="padding-left: 60px;">Actions</th>
+                                  <th id="custom-sort-th" class="vanish">Address</th>
+                                  <th id="custom-sort-th" class="vanish">Technical</th>
+                                  <th id="custom-sort-th" class="vanish">Month No.</th>
+                                  <th id="custom-sort-th" class="vanish">Week No.</th>
+                                  <th id="custom-sort-th" class="vanish">Status</th>
+                                  <th id="custom-sort-th" style="padding-left: 60px;"  class="vanish">Actions</th>
                               </tr>
                           </thead>
                           <tbody id="jobOrderListBody">
@@ -472,19 +472,19 @@
                         const formattedDate = dateObject.toLocaleDateString();
     
                         row.innerHTML = `
-                            <td>${jobOrder.JobOrderNo}</td>
-                            <td>${jobOrder.Date ? new Date(jobOrder.Date).toLocaleDateString() : 'Invalid Date'}</td>
+                            <td class="vanish">${jobOrder.JobOrderNo}</td>
+                            <td class="vanish">${jobOrder.Date ? new Date(jobOrder.Date).toLocaleDateString() : 'Invalid Date'}</td>
                             <td>${jobOrder.Customer}</td>
-                            <td>${jobOrder.Address}</td>
-                            <td>${jobOrder.Technical}</td>
-                            <td>${jobOrder.Month}</td>
-                            <td>${jobOrder.WeekNo}</td>
-                            <td><label class="badge badge-info">${jobOrder.Status}</label></td>
+                            <td class="vanish">${jobOrder.Address}</td>
+                            <td class="vanish">${jobOrder.Technical}</td>
+                            <td class="vanish">${jobOrder.Month}</td>
+                            <td class="vanish">${jobOrder.WeekNo}</td>
+                            <td class="vanish"><label class="badge badge-info">${jobOrder.Status}</label></td>
                             <td>
                                 <button class="btn btn-outline-primary btn-icon-text">
                                     <i class="mdi mdi-eye btn-icon-prepend"></i>View
                                 </button>
-                                <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
+                                <button class="vanish btn btn-outline-success btn-icon-text" onclick="window.print()">
                                     <i class="mdi mdi-printer btn-icon-prepend"></i>Print
                                 </button>
                             </td>
