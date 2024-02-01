@@ -31425,14 +31425,18 @@ padding-left: 70px;
 .wizard > .actions .disabled .show > a.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(141, 153, 175, 0.5);
 }
+/* Static */
 .vanish{}
+.move{}
 @media (max-width: 600px) {
 /* Phone */
 .vanish{display:none;}
+.move{position: relative; left: 100px;}
 }
 @media (min-width: 601px) and (max-width: 1024px) {
 /* Tablet */
 .vanish{display:none;}
+.move{position: relative; left: 100px;}
+.move2{padding-left: 60px;}
 }
 @media (min-width: 1025px) {/* Desktop */}
-/*# sourceMappingURL=../maps/vertical-layout-dark/style.css.map */

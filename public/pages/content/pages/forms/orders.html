@@ -424,7 +424,7 @@
           <th id="custom-sort-th" class="vanish">Month No.</th>
           <th id="custom-sort-th" class="vanish">Week No.</th>
           <th id="custom-sort-th" class="vanish">Status</th>
-          <th id="custom-sort-th" style="padding-left: 60px;">Actions</th>
+          <th id="custom-sort-th" style="padding-left: 60px;" class="move2">Actions</th>
         </tr>
       </thead>
       <tbody id="jobOrderListBody">
@@ -452,7 +452,7 @@
       <script defer>
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch job order list data and populate the table
-            axios.get('http://192.168.2.102:8080/jobOrderList')
+            axios.get('http://192.168.2.103:8080/jobOrderList')
                 .then(response => {
                     const jobOrderListBody = document.getElementById('jobOrderListBody');
     
@@ -474,11 +474,11 @@
                             <td class="vanish">${jobOrder.Month}</td>
                             <td class="vanish">${jobOrder.WeekNo}</td>
                             <td class="vanish"><label class="badge badge-info">${jobOrder.Status}</label></td>
-                            <td>
+                            <td class="move">
                                 <button class="btn btn-outline-primary btn-icon-text">
                                     <i class="mdi mdi-eye btn-icon-prepend"></i>View
                                 </button>
-                                <button class="vanish btn btn-outline-success btn-icon-text" onclick="window.print()">
+                                <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
                                     <i class="mdi mdi-printer btn-icon-prepend"></i>Print
                                 </button>
                             </td>
