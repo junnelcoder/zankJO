@@ -65,7 +65,8 @@ app.post('/login', async (req, res) => {
       // Compare the inputted password with the stored password (plain text)
       if (password === storedPassword) {
         // Successful login
-        return res.redirect('/pages/content/index.html');
+        // Send a success response
+        return res.status(200).json({ status: 'success' });
       }
     }
 
@@ -76,6 +77,7 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
   }
 });
+
 app.get('/jobOrderList', async (req, res) => {
   try {
     const query = 'SELECT * FROM dbo.JobOrderListing'; // Corrected table name
@@ -92,5 +94,5 @@ app.get('/jobOrderList', async (req, res) => {
 
 // Start the server
 server.listen(port, () => {
-  console.log(`Server is running at http://192.168.0.101:${port}`);
+  console.log(`Server is running at http://192.168.2.102:${port}`);
 });
