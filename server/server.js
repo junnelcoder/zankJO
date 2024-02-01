@@ -4,8 +4,16 @@ const path = require('path');
 const app = express();
 const cors = require('cors');
 const port = 8080;
+const http = require('http');
 
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  credentials: false,
+}));
+
+app.use(express.json());
+
+const server = http.createServer(app);
 
 // SQL Server Database Connection
 const config = {
@@ -20,16 +28,13 @@ const config = {
 };
 
 // Middleware to handle SQL Server connection
-app.use(async (req, res, next) => {
-  try {
-    await sql.connect(config);
+sql.connect(config)
+  .then(() => {
     console.log('Connected to SQL Server');
-    next(); // Continue with the request processing
-  } catch (err) {
+  })
+  .catch((err) => {
     console.error('Error connecting to SQL Server:', err);
-    res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
-  }
-});
+  });
 
 // Express Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -86,6 +91,6 @@ app.get('/jobOrderList', async (req, res) => {
 
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is running at http://192.168.30.106:${port}`);
+server.listen(port, () => {
+  console.log(`Server is running at http://192.168.0.101:${port}`);
 });

@@ -356,9 +356,8 @@
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="form-elements">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="../../pages/forms/job_ordering.html">Job Ordering Listing</a></li>                
-                <li class="nav-item"><a class="nav-link" href="../forms/orders.html">Orders</a></li>
+              <ul class="nav flex-column sub-menu">         
+                <li class="nav-item"><a class="nav-link" href="../forms/orders.html">Job Ordering Listing</a></li>
                 
               </ul>
             </div>
@@ -403,7 +402,7 @@
                     </div>
                     <div class="col-12">
                       <div class="button-container2">
-                        <button id="add_button"><i class="mdi mdi-plus-circle add"></i><span>Add</span></i></button>
+                        <a href="job_ordering.html"><button id="add_button"><i class="mdi mdi-plus-circle add"></i><span>Add</span></i></button></a>
                       </div>
                     </div>
                   </div>
@@ -459,7 +458,7 @@
       <script defer>
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch job order list data and populate the table
-            axios.get('http://192.168.30.106:8080/jobOrderList')
+            axios.get('http://192.168.0.101:8080/jobOrderList')
                 .then(response => {
                     const jobOrderListBody = document.getElementById('jobOrderListBody');
     
@@ -469,30 +468,32 @@
                     // Iterate over the received data and create table rows
                     response.data.forEach(jobOrder => {
                         const row = document.createElement('tr');
+                        const dateObject = new Date(jobOrder.Date);
+                        const formattedDate = dateObject.toLocaleDateString();
+    
                         row.innerHTML = `
                             <td>${jobOrder.JobOrderNo}</td>
-                            <td>${jobOrder.Date}</td>
+                            <td>${jobOrder.Date ? new Date(jobOrder.Date).toLocaleDateString() : 'Invalid Date'}</td>
                             <td>${jobOrder.Customer}</td>
                             <td>${jobOrder.Address}</td>
                             <td>${jobOrder.Technical}</td>
                             <td>${jobOrder.Month}</td>
                             <td>${jobOrder.WeekNo}</td>
                             <td><label class="badge badge-info">${jobOrder.Status}</label></td>
-                            <td >
+                            <td>
                                 <button class="btn btn-outline-primary btn-icon-text">
                                     <i class="mdi mdi-eye btn-icon-prepend"></i>View
                                 </button>
                                 <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
                                     <i class="mdi mdi-printer btn-icon-prepend"></i>Print
                                 </button>
-                            </td> 
-                            <hr></hr>
+                            </td>
                         `;
                         jobOrderListBody.appendChild(row);
                     });
     
                     // Destroy the existing DataTable instance if it exists
-                
+                    
                     // Initialize DataTables after populating the table dynamically
                     $('#order-listing').DataTable({
                         "order": [[0, "asc"]],
