@@ -414,29 +414,23 @@
                     <div class="col-12">
                       <div class="table-responsive">
                         <table id="order-listing" class="table">
-                          <thead>
-                              <tr class="bg-primary text-white">
-                                  <th >Job Order No.</th>
-                                  <th id="custom-sort-th" class="vanish">Date</th>
-                                  <th id="custom-sort-th">Customer</th>
-                                  <th id="custom-sort-th" class="vanish">Address</th>
-                                  <th id="custom-sort-th" class="vanish">Technical</th>
-                                  <th id="custom-sort-th" class="vanish">Month No.</th>
-                                  <th id="custom-sort-th" class="vanish">Week No.</th>
-                                  <th id="custom-sort-th" class="vanish">Status</th>
-                                  <th id="custom-sort-th" style="padding-left: 60px;"  class="vanish">Actions</th>
-                              </tr>
-                          </thead>
-                          <tbody id="jobOrderListBody">
-                              <!-- Job order list rows will be dynamically inserted here -->
-                          </tbody>
-                      </table>
-                      
-                      <div class="row grid-margin">
-                          <!-- Additional content if needed -->
-                      </div>
-                      
-                      </table>
+      <thead>
+        <tr class="bg-primary text-white">
+          <th class="vanish">Job Order No.</th>
+          <th id="custom-sort-th" class="vanish">Date</th>
+          <th class="widen">Customer</th>
+          <th id="custom-sort-th" class="vanish">Address</th>
+          <th id="custom-sort-th" class="vanish">Technical</th>
+          <th id="custom-sort-th" class="vanish">Month No.</th>
+          <th id="custom-sort-th" class="vanish">Week No.</th>
+          <th id="custom-sort-th" class="vanish">Status</th>
+          <th id="custom-sort-th" style="padding-left: 60px;">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="jobOrderListBody">
+        <!-- Job order list rows will be dynamically inserted here -->
+      </tbody>
+    </table>
                       </div>
                     </div>
                   </div>
@@ -458,7 +452,7 @@
       <script defer>
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch job order list data and populate the table
-            axios.get('http://192.168.0.101:8080/jobOrderList')
+            axios.get('http://192.168.2.102:8080/jobOrderList')
                 .then(response => {
                     const jobOrderListBody = document.getElementById('jobOrderListBody');
     
