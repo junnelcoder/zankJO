@@ -8636,6 +8636,7 @@
   }
 }
 
+
 /*-------------------------------------------------------------------*/
 /* === Boostrap Main SCSS === */
 /*!
@@ -11486,6 +11487,7 @@ fieldset:disabled .wizard > .actions a,
 .btn-outline-primary {
   color: #7571f9;
   border-color: #7571f9;
+  border-radius: 5px;
 }
 
 .btn-outline-primary:hover {
@@ -11552,6 +11554,7 @@ fieldset:disabled .wizard > .actions a,
 .btn-outline-success, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit {
   color: #3bb001;
   border-color: #3bb001;
+  border-radius: 5px;
 }
 
 .btn-outline-success:hover, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:hover {
@@ -22858,6 +22861,7 @@ code {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   -ms-box-shadow: none;
+  border-radius: 20px;
 }
 
 .card .card-body {
@@ -22877,7 +22881,7 @@ code {
   color: #1c273c;
   margin-bottom: 0.625rem;
   text-transform: capitalize;
-  font-size: .875rem;
+  font-size: 40px;
   font-weight: 700;
 }
 
@@ -31139,4 +31143,206 @@ div.tagsinput span.tag a {
   }
 }
 
+
+
+
 /*# sourceMappingURL=../maps/vertical-layout-light/style.css.map */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Style for the dropdown button */
+.dropbtn {
+  background-color: #4A1964;
+  color: white;
+  padding: 4px 25px 5px 5px; /* Adjusted padding to match the button */
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Style for the arrow indicator */
+.arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.arrow::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: white transparent transparent transparent;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+/* Style for the dropdown content (hidden by default) */
+/* Style for the dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.dropbtn {
+padding-left: 70px;
+  width: 200px;
+  box-sizing: border-box;
+  border: 1px #cccc solid;
+  border-radius: 5px;
+  padding: 10px 20px 10px 10px;
+}
+
+.dropbtn:hover {
+  background-color: #6497b1;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  margin-top: 8px; /* Adjust as needed */
+}
+
+/* Style for the links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #6497b1;
+}
+
+/* Style for the date picker container */
+.date-picker-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.date-picker-container label {
+  position: absolute;
+  top: -10px; /* Adjust as needed */
+  left: 10px;
+  font-size: .9em;
+  color: #808080;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  background-color: white;
+}
+
+.date-picker-container input[type="date"] {
+  padding-left: 70px;
+  width: 200px;
+  box-sizing: border-box;
+  border: 1px #808080 solid;
+  border-radius: 5px;
+  padding: 10px 20px 10px 10px;
+}
+
+/* Additional styles for buttons */
+.button-container {
+  display: inline-block;
+  margin-top: 8px;
+}
+
+.button-container button {
+  padding: 8px 25px;
+  margin-right: 2px;
+  cursor: pointer;
+  background-color: #005b96;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.button-container button:hover {
+  background-color: #6497b1;
+}
+
+.button-container2 {
+  display: inline-block;
+  margin-top: 8px;
+}
+
+.button-container2 button {
+  padding: 8px 10px;
+  margin-right: 2px;
+  cursor: pointer;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.button-container2 button span {
+  margin-left: 5px;
+}
+
+.button-container2 button .add {
+  color: white;
+}
+
+.button-container2 button:hover {
+  background-color: #6497b1;
+}
+
+
+/* 00 */
+
+.date-picker-container1 {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.date-picker-container1 label {
+  position: absolute;
+  top: -10px; /* Adjust as needed */
+  left: 10px;
+  font-size: .9em;
+  color: #808080;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  background-color: white;
+}
+
+.date-picker-container1 select {
+  padding: 10px;
+  width: 200px;
+  box-sizing: border-box;
+  border: 1px #808080 solid;
+  border-radius: 5px;
+  margin-top: 1px; /* Adjust as needed */
+}

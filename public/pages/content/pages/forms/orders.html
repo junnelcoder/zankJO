@@ -7,9 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>YoraUI Admin</title>
   <!-- base:css -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" href="../../../../css/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../../../css/vendors/css/vendor.bundle.base.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
   <!-- endinject -->
   <!-- plugin css for this page -->
   <link rel="stylesheet" href="../../../../css/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
@@ -18,6 +20,11 @@
   <link rel="stylesheet" href="../../../../css/css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="../../../../css/images/favicon.png" />
+
+
+
+  
+
 </head>
 
 <body class="sidebar-fixed">
@@ -366,83 +373,75 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Orders</h4>
+                  <h4 class="card-title">Job Ordering Listing</h4>
                   <div class="row grid-margin">
                     <div class="col-12">
-                      <div class="alert alert-warning" role="alert">
-                          <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+                      <br>
+                      <div class="date-picker-container1">
+                        <label for="end_date">Technical*</label>
+                        <select id="end_date" name="end_date" required>
+                            <option value="" disabled selected>All</option>
+                            <!-- Add your options here -->
+                            <option value="Example">Example</option>
+                            <option value="Example">Example</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                    </div></div>
+                      <div class="col-12">
+                      <div class="date-picker-container">
+                        <input type="date" id="start_date" name="start_date" required>
+                        <label for="start_date">Start Date</label>
+                      </div>
+                      <div class="date-picker-container">
+                        <input type="date" id="end_date" name="end_date" required>
+                        <label for="end_date">End Date</label>
+                      </div>
+                      <div class="button-container">
+                        <button id="filter_button"><span>Filter</span></button>
+                        <button id="reset_button"><span>Reset</span></button>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="button-container2">
+                        <button id="add_button"><i class="mdi mdi-plus-circle add"></i><span>Add</span></i></button>
                       </div>
                     </div>
                   </div>
+                  
+                 
+                  
                   <div class="row">
+                    
                     <div class="col-12">
                       <div class="table-responsive">
                         <table id="order-listing" class="table">
                           <thead>
-                            <tr class="bg-primary text-white">
-                              <th>Job Order No.</th>
-                              <th>Date</th>
-                              <th>Customer</th>
-                              <th>Address</th>
-                              <th>Technical</th>
-                              <th>Month No.</th>
-                              <th>Week No.</th>
-                              <th>Status</th>
-                              <th>Actions</th>
-                            </tr>
+                              <tr class="bg-primary text-white">
+                                  <th >Job Order No.</th>
+                                  <th id="custom-sort-th">Date</th>
+                                  <th id="custom-sort-th">Customer</th>
+                                  <th id="custom-sort-th">Address</th>
+                                  <th id="custom-sort-th">Technical</th>
+                                  <th id="custom-sort-th">Month No.</th>
+                                  <th id="custom-sort-th">Week No.</th>
+                                  <th id="custom-sort-th">Status</th>
+                                  <th id="custom-sort-th" style="padding-left: 60px;">Actions</th>
+                              </tr>
                           </thead>
                           <tbody id="jobOrderListBody">
-                            <!-- Job order list rows will be dynamically inserted here -->
+                              <!-- Job order list rows will be dynamically inserted here -->
                           </tbody>
-                        </table>
+                      </table>
+                      
+                      <div class="row grid-margin">
+                          <!-- Additional content if needed -->
+                      </div>
+                      
+                      </table>
                       </div>
                     </div>
                   </div>
                 </div>
-              
-                <!-- Add defer attribute to defer script execution until after the HTML is parsed -->
-<!-- Add defer attribute to defer script execution until after the HTML is parsed -->
-<script defer>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Fetch job order list data and populate the table
-    axios.get('http://192.168.30.106:8080/jobOrderList')
-      .then(response => {
-        const jobOrderListBody = document.getElementById('jobOrderListBody');
-
-        // Clear existing rows in case of multiple requests
-        jobOrderListBody.innerHTML = '';
-
-        // Iterate over the received data and create table rows
-        response.data.forEach(jobOrder => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${jobOrder.JobOrderNo}</td>
-            <td>${jobOrder.Date}</td>
-            <td>${jobOrder.Customer}</td>
-            <td>${jobOrder.Address}</td>
-            <td>${jobOrder.Technical}</td>
-            <td>${jobOrder.Month}</td>
-            <td>${jobOrder.WeekNo}</td>
-            <td><label class="badge badge-info">${jobOrder.Status}</label></td>
-            <td class="text-right">
-              <button class="btn btn-outline-primary btn-icon-text">
-                <i class="mdi mdi-eye btn-icon-prepend"></i>View
-              </button>
-              <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-              </button>
-            </td>
-          `;
-          jobOrderListBody.appendChild(row);
-        });
-      })
-      .catch(error => {
-        console.error('Error fetching job order list:', error);
-      });
-  });
-</script>
-
-
               </div>
             </div>
           </div>
@@ -457,6 +456,60 @@
         </footer>
         <!-- partial -->
       </div>
+      <script defer>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fetch job order list data and populate the table
+            axios.get('http://192.168.30.106:8080/jobOrderList')
+                .then(response => {
+                    const jobOrderListBody = document.getElementById('jobOrderListBody');
+    
+                    // Clear existing rows in case of multiple requests
+                    jobOrderListBody.innerHTML = '';
+    
+                    // Iterate over the received data and create table rows
+                    response.data.forEach(jobOrder => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${jobOrder.JobOrderNo}</td>
+                            <td>${jobOrder.Date}</td>
+                            <td>${jobOrder.Customer}</td>
+                            <td>${jobOrder.Address}</td>
+                            <td>${jobOrder.Technical}</td>
+                            <td>${jobOrder.Month}</td>
+                            <td>${jobOrder.WeekNo}</td>
+                            <td><label class="badge badge-info">${jobOrder.Status}</label></td>
+                            <td >
+                                <button class="btn btn-outline-primary btn-icon-text">
+                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
+                                </button>
+                                <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
+                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
+                                </button>
+                            </td> 
+                            <hr></hr>
+                        `;
+                        jobOrderListBody.appendChild(row);
+                    });
+    
+                    // Destroy the existing DataTable instance if it exists
+                
+                    // Initialize DataTables after populating the table dynamically
+                    $('#order-listing').DataTable({
+                        "order": [[0, "asc"]],
+                        "paging": true,
+                        "searching": true,
+                        "lengthMenu": [5, 10, 15],
+                        "iDisplayLength": 5, // Initial number of entries to show
+                        // Add other options as needed
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching job order list:', error);
+                });
+        });
+    </script>
+    
+    
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
@@ -478,7 +531,6 @@
   <!-- End plugin js for this page -->
   <!-- Custom js for this page-->
   <script src="../../../../css/js/data-table.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <!-- End custom js for this page-->
 </body>
 
