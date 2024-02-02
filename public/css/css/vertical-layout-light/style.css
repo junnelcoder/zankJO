@@ -31247,7 +31247,7 @@ padding-left: 70px;
 
 .date-picker-container label {
   position: absolute;
-  top: -10px; /* Adjust as needed */
+  top: -10px; 
   left: 10px;
   font-size: .9em;
   color: #808080;
@@ -31258,7 +31258,6 @@ padding-left: 70px;
 
 .date-picker-container input[type="date"] {
   padding-left: 70px;
-  width: 200px;
   box-sizing: border-box;
   border: 1px #808080 solid;
   border-radius: 5px;
@@ -31340,7 +31339,6 @@ padding-left: 70px;
 
 .date-picker-container1 select {
   padding: 10px;
-  width: 200px;
   box-sizing: border-box;
   border: 1px #808080 solid;
   border-radius: 5px;
@@ -31425,7 +31423,72 @@ padding-left: 70px;
 .wizard > .actions .disabled .show > a.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(141, 153, 175, 0.5);
 }
-.slide-in-left {
+/* Static */
+  .vanish{}
+  .move{}
+  .move2 {
+    padding-left: 60px;
+    text-align: left; 
+    text-align:left;
+  }
+  tr{text-align:left;}
+  .white{background-color: white;}
+  .date-picker-container1 select{ width:200px;}
+  .date-picker-container input[type="date"]{ width:200px;}
+  /* Phone */
+  @media (max-width: 600px) {
+  .vanish{display:none;}
+  .move{} 
+  .move2 {
+    padding-left: 60px;
+    text-align: left;
+    text-align:center;
+  }
+  tr{text-align:center;}
+  .white{}
+  .date-picker-container1 select{ width:300px;}
+  .date-picker-container input[type="date"]{ width:150px;}
+}
+/* Tablet */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .vanish { display: none; }
+  .move { padding-left: 100px; }
+  .move2 {
+    padding-left: 600px;
+    text-align: left;
+    text-align:center;
+  }
+  tr{text-align:center;}
+  .white{}
+  .date-picker-container1 select{ width:300px;}
+  .date-picker-container input[type="date"]{ width:150px;}
+}
+/* Desktop */
+@media (min-width: 1025px) {
+  .vanish{}
+  .move{}
+  .move2 {
+    padding-left: 60px;
+    text-align: right; 
+    text-align:center;
+  }
+  tr{text-align:left;}
+  .white{}
+
+}
+ .add2{
+   border: none; 
+   background: none; 
+   cursor: pointer;
+   margin-left: 20px;
+ }
+ .add1{
+   border: none; 
+   background: none; 
+   cursor: pointer;
+   margin-left: 5px;
+ }
+ .slide-in-left {
 	animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 /* ----------------------------------------------
@@ -31450,22 +31513,3 @@ padding-left: 70px;
     opacity: 1;
   }
 }
-
-
-
-.btn-1{
-  margin-left: 0px;
-  
- }
- .add{
-   border: none; 
-   background: none; 
-   cursor: pointer;
-   margin-left: 20px;
- }
- .add1{
-   border: none; 
-   background: none; 
-   cursor: pointer;
-   margin-left: 5px;
- }

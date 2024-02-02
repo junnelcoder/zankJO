@@ -5,6 +5,7 @@ const app = express();
 const cors = require('cors');
 const port = 8080;
 const http = require('http');
+const ip = require('ip');
 
 app.use(cors({
   origin: '*',
@@ -26,19 +27,38 @@ const config = {
     encrypt: false,
   },
 };
+const config2 = {
+  user: 'sa',
+  password: 'zankojt@2024',
+  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
+  database: 'JobOrder',
+  options: {
+    enableArithAbort: true,
+    encrypt: false,
+  },
+};
 
 // Middleware to handle SQL Server connection
 sql.connect(config)
+.then(() => {
+  console.log('Connected to SQL Server 1');
+})
+.catch((err) => {
+  console.error('Error connecting to SQL Server:\nTrying to connect with config/server 2');
+  sql.connect(config2)
   .then(() => {
     console.log('Connected to SQL Server');
   })
   .catch((err) => {
     console.error('Error connecting to SQL Server:', err);
   });
+});
+
 
 // Express Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/pages/login.html'));
 });
@@ -94,5 +114,6 @@ app.get('/jobOrderList', async (req, res) => {
 
 // Start the server
 server.listen(port, () => {
-  console.log(`Server is running at http://192.168.2.102:${port}`);
+  const ipAddress = ip.address(); 
+  console.log(`Server is running at http://${ipAddress}:${port}`);
 });
