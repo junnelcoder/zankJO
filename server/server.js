@@ -20,7 +20,7 @@ const server = http.createServer(app);
 const config = {
   user: 'sa',
   password: 'zankojt@2024',
-  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',
+  server: 'DESKTOP-EIR2A8B\SQLEXPRESS2014',
   database: 'JobOrder',
   options: {
     enableArithAbort: true,
@@ -30,7 +30,7 @@ const config = {
 const config2 = {
   user: 'sa',
   password: 'zankojt@2024',
-  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
+  server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
   database: 'JobOrder',
   options: {
     enableArithAbort: true,
@@ -40,19 +40,19 @@ const config2 = {
 
 // Middleware to handle SQL Server connection
 sql.connect(config)
-.then(() => {
-  console.log('Connected to SQL Server 1');
-})
-.catch((err) => {
-  console.error('Error connecting to SQL Server:\nTrying to connect with config/server 2');
-  sql.connect(config2)
   .then(() => {
-    console.log('Connected to SQL Server');
+    console.log('Connected to SQL Server 1');
   })
   .catch((err) => {
-    console.error('Error connecting to SQL Server:', err);
+    console.error('Error connecting to SQL Server:\nTrying to connect with config/server 2');
+    sql.connect(config2)
+    .then(() => {
+      console.log('Connected to SQL Server');
+    })
+    .catch((err) => {
+      console.error('Error connecting to SQL Server:', err);
+    });
   });
-});
 
 
 // Express Middleware
@@ -89,6 +89,29 @@ app.post('/login', async (req, res) => {
         return res.status(200).json({ status: 'success' });
       }
     }
+//Justin
+
+// Handle the POST request at /api/submitOrder
+app.post('/api/submitOrder', async (req, res) => {
+  try {
+    // Retrieve the JobOrderID from the request body
+    const jobOrderID = req.body.JobOrderID;
+
+    // Retrieve data based on JobOrderID
+    const query = 'SELECT * FROM dbo.JobOrderListing WHERE JobOrderNo = @jobOrderID';
+    const request = new sql.Request();
+    request.input('jobOrderID', sql.NVarChar, jobOrderID);
+
+    const result = await request.query(query);
+
+    // Send the retrieved data as a response
+    res.status(200).json(result.recordset);
+  } catch (err) {
+    console.error('Error retrieving data based on JobOrderID:', err);
+    res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
+  }
+});
+
 
     // Invalid username or password
     res.status(401).json({ status: 'error', message: 'Invalid username or password.' });

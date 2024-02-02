@@ -10,8 +10,9 @@
   <link rel="stylesheet" href="../../../../css/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../../../css/vendors/css/vendor.bundle.base.css">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script>var jobOrderIDsArray = [];</script>
+  <script src="../../../../css/js/local.js"></script>
   <!-- endinject -->
   <!-- plugin css for this page -->
   <link rel="stylesheet" href="../../../../css/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
@@ -20,11 +21,6 @@
   <link rel="stylesheet" href="../../../../css/css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="../../../../css/images/favicon.png" />
-
-
-
-  
-
 </head>
 
 <body class="sidebar-fixed " >
@@ -455,7 +451,7 @@
         </footer>
         <!-- partial -->
       </div>
-      <script defer>
+      <script defer> 
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch job order list data and populate the table
           axios.get(`http://${location.host}/jobOrderList`)
@@ -481,12 +477,15 @@
                             <td class="vanish">${jobOrder.WeekNo}</td>
                             <td class="vanish"><label class="badge badge-info">${jobOrder.Status}</label></td>
                             <td>
-                                <button class="btn btn-outline-primary btn-icon-text" onclick="window.location.href='joborderview.html'">
-                                    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-                                </button>
-                                <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-                                    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-                                </button>
+                              <form id="myForm_${jobOrder.JobOrderNo}">
+  <input type="text" style="display: none;" name="JobOrderID" id="JobOrderID_${jobOrder.JobOrderNo}" value="${jobOrder.JobOrderNo}">
+  <button type="button" class="btn btn-outline-primary btn-icon-text" onclick="submitForm('${jobOrder.JobOrderNo}')">
+    <i class="mdi mdi-eye btn-icon-prepend"></i>View
+  </button>
+  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
+    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
+  </button>
+</form>
                             </td>
                         `;
                         jobOrderListBody.appendChild(row);
@@ -517,6 +516,8 @@
   </div>
   <!-- container-scroller -->
   <!-- base:js -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
   <script src="../../../../css/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- inject:js -->
