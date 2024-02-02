@@ -27,8 +27,8 @@
 
 </head>
 
-<body class="sidebar-fixed">
-  <div class="container-scroller">
+<body class="sidebar-fixed " >
+  <div class="container-scroller slide-in-left">
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center">
@@ -414,23 +414,29 @@
                     <div class="col-12">
                       <div class="table-responsive">
                         <table id="order-listing" class="table">
-      <thead>
-        <tr class="bg-primary text-white">
-          <th class="vanish">Job Order No.</th>
-          <th id="custom-sort-th" class="vanish">Date</th>
-          <th class="widen">Customer</th>
-          <th id="custom-sort-th" class="vanish">Address</th>
-          <th id="custom-sort-th" class="vanish">Technical</th>
-          <th id="custom-sort-th" class="vanish">Month No.</th>
-          <th id="custom-sort-th" class="vanish">Week No.</th>
-          <th id="custom-sort-th" class="vanish">Status</th>
-          <th id="custom-sort-th" style="padding-left: 60px;" class="move2">Actions</th>
-        </tr>
-      </thead>
-      <tbody id="jobOrderListBody">
-        <!-- Job order list rows will be dynamically inserted here -->
-      </tbody>
-    </table>
+                          <thead>
+                              <tr class="bg-primary text-white">
+                                  <th >Job Order No.</th>
+                                  <th id="custom-sort-th" class="vanish">Date</th>
+                                  <th id="custom-sort-th">Customer</th>
+                                  <th id="custom-sort-th" class="vanish">Address</th>
+                                  <th id="custom-sort-th" class="vanish">Technical</th>
+                                  <th id="custom-sort-th" class="vanish">Month No.</th>
+                                  <th id="custom-sort-th" class="vanish">Week No.</th>
+                                  <th id="custom-sort-th" class="vanish">Status</th>
+                                  <th id="custom-sort-th" style="padding-left: 60px;"  class="vanish">Actions</th>
+                              </tr>
+                          </thead>
+                          <tbody id="jobOrderListBody">
+                              <!-- Job order list rows will be dynamically inserted here -->
+                          </tbody>
+                      </table>
+                      
+                      <div class="row grid-margin">
+                          <!-- Additional content if needed -->
+                      </div>
+                      
+                      </table>
                       </div>
                     </div>
                   </div>
@@ -452,7 +458,7 @@
       <script defer>
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch job order list data and populate the table
-            axios.get('http://192.168.2.103:8080/jobOrderList')
+            axios.get('http://192.168.0.101:8080/jobOrderList')
                 .then(response => {
                     const jobOrderListBody = document.getElementById('jobOrderListBody');
     
@@ -474,11 +480,11 @@
                             <td class="vanish">${jobOrder.Month}</td>
                             <td class="vanish">${jobOrder.WeekNo}</td>
                             <td class="vanish"><label class="badge badge-info">${jobOrder.Status}</label></td>
-                            <td class="move">
+                            <td>
                                 <button class="btn btn-outline-primary btn-icon-text">
                                     <i class="mdi mdi-eye btn-icon-prepend"></i>View
                                 </button>
-                                <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
+                                <button class="vanish btn btn-outline-success btn-icon-text" onclick="window.print()">
                                     <i class="mdi mdi-printer btn-icon-prepend"></i>Print
                                 </button>
                             </td>
