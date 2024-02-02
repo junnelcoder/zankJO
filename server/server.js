@@ -21,7 +21,7 @@ const config = {
   user: 'sa',
   password: 'zankojt@2024',
   server: 'DESKTOP-EIR2A8B\SQLEXPRESS2014',
-  database: 'JobOrder',
+  database: 'jo',
   options: {
     enableArithAbort: true,
     encrypt: false,
@@ -31,7 +31,7 @@ const config2 = {
   user: 'sa',
   password: 'zankojt@2024',
   server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
-  database: 'JobOrder',
+  database: 'jo',
   options: {
     enableArithAbort: true,
     encrypt: false,
@@ -73,7 +73,7 @@ app.post('/login', async (req, res) => {
 
   try {
     // Retrieve the user from the database
-    const query = 'SELECT * FROM AdminLogin WHERE username = @username';
+    const query = 'SELECT * FROM users WHERE username = @username';
     const request = new sql.Request();
     request.input('username', sql.NVarChar, username);
 
@@ -98,7 +98,7 @@ app.post('/api/submitOrder', async (req, res) => {
     const jobOrderID = req.body.JobOrderID;
 
     // Retrieve data based on JobOrderID
-    const query = 'SELECT * FROM dbo.JobOrderListing WHERE JobOrderNo = @jobOrderID';
+    const query = 'SELECT * FROM dbo.joborders WHERE joborder_id = @jobOrderID';
     const request = new sql.Request();
     request.input('jobOrderID', sql.NVarChar, jobOrderID);
 
@@ -120,19 +120,28 @@ app.post('/api/submitOrder', async (req, res) => {
     res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
   }
 });
-
 app.get('/jobOrderList', async (req, res) => {
   try {
-    const query = 'SELECT * FROM dbo.JobOrderListing'; // Corrected table name
+    const query = `
+      SELECT 
+        joborders.*, 
+        customer_erp.customer_name,
+        customer_erp.address as customer_address
+      FROM dbo.joborders
+      INNER JOIN dbo.customer_erp ON joborders.customer_id = customer_erp.id`;
+    
     const request = new sql.Request();
     const result = await request.query(query);
-
+    
     res.status(200).json(result.recordset);
   } catch (err) {
     console.error('Error fetching job orders:', err);
     res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
   }
 });
+
+
+
 
 
 // Start the server

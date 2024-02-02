@@ -360,7 +360,16 @@
         </ul>
       </nav>
       <!-- partial -->
-      <script>retrieveLocal();</script>
+      <script>
+        var storedData = localStorage.getItem('jobOrderID');
+        // Check if data exists
+        if (storedData !== null) {
+        // Use the retrieved data
+        console.log('Retrieved data:', storedData);
+        } else {
+        console.log('No data found in localStorage');
+        }
+      </script>
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">

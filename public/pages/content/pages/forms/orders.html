@@ -460,18 +460,16 @@
     
                     // Clear existing rows in case of multiple requests
                     jobOrderListBody.innerHTML = '';
-    
                     // Iterate over the received data and create table rows
                     response.data.forEach(jobOrder => {
                         const row = document.createElement('tr');
-                        const dateObject = new Date(jobOrder.Date);
+                        const dateObject = new Date(jobOrder.date);
                         const formattedDate = dateObject.toLocaleDateString();
-    
                         row.innerHTML = `
-                            <td class="vanish">${jobOrder.JobOrderNo}</td>
-                            <td class="vanish">${jobOrder.Date ? new Date(jobOrder.Date).toLocaleDateString() : 'Invalid Date'}</td>
-                            <td>${jobOrder.Customer}</td>
-                            <td class="vanish">${jobOrder.Address}</td>
+                            <td class="vanish">${jobOrder.joborder_id}</td>
+                            <td class="vanish">${jobOrder.date ? new Date(jobOrder.date).toLocaleString('en-US', { timeZone: 'UTC' }) : 'Invalid Date'}</td>
+                            <td>${jobOrder.customer_name}</td>
+                            <td class="vanish">${jobOrder.customer_address}</td>
                             <td class="vanish">${jobOrder.Technical}</td>
                             <td class="vanish">${jobOrder.Month}</td>
                             <td class="vanish">${jobOrder.WeekNo}</td>
