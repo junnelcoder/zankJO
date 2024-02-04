@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Zank POS</title>
+  <title>YoraUI Admin</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" href="../../../../css/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../../../css/vendors/css/vendor.bundle.base.css">
@@ -21,7 +21,7 @@
 </head>
 
 <body class="sidebar-fixed">
-  <div class="container-scroller slide-in-left">
+  <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center">
@@ -32,6 +32,18 @@
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
           <span class="mdi mdi-menu"></span>
         </button>
+        <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item nav-search d-none d-lg-block">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="search">
+                  <i class="mdi mdi-magnify"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control" placeholder="Search for anything..." aria-label="search" aria-describedby="search">
+            </div>
+          </li>
+        </ul>
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
@@ -359,11 +371,15 @@
       <div class="main-panel">        
         <div class="content-wrapper">
           <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+            </div>
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Job Order Form</h4>
-                  <form class="form-sample">
+                  <form class="form-sample" id="jobOrderForm">
                     <p class="card-description">
                       Personal info
                     </p>
@@ -373,15 +389,15 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">DATE: </label>
                           <div class="col-sm-9">
-                            <input type="date" class="form-control" id="datepicker" name="datepicker">
+                            <input type="date" class="form-control" id="date" name="date">
                         </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">CONTACT PERSON: </label>
+                          <label class="col-sm-3 col-form-label" >CONTACT PERSON: </label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="CONTACT PERSON"/>
+                            <input type="text" class="form-control"  id="contactPerson" name="contactPerson"/>
                           </div>
                         </div>
                       </div>
@@ -391,15 +407,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">TECHNICAL</label>
                           <div class="col-sm-9">
-                            <select class="form-control">
-                              <option value="" disabled selected hidden>TECHNICAL</option>
-                              <option>RALPH</option>
-                              <option>JON</option>
-                              <option>HAROLD</option>
-                              <option>WARREN</option>
-                              <option>MARK</option>
-                              <option>ALDRIN</option>
-                            </select>
+                            <select class="form-control" id="technical" name="technical"></select>
                           </div>
                         </div>
                       </div>
@@ -408,7 +416,7 @@
                             <label class="col-sm-3 col-form-label">CUSTOMER</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
-                                    <input class="form-control" placeholder="CUSTOMER" disabled>
+                                    <input class="form-control" placeholder="CUSTOMER" id="customerInput" name="customerInput" disabled>
                                     <div class="input-group-append">
                                         <!-- Button to trigger the modal -->
                                         <button type="button" class="btn btn-" data-toggle="modal" data-target="#myModal">
@@ -418,63 +426,55 @@
                                 </div>
                             </div>
                             <!-- Modal -->
-                        <div class="modal fade" id="myModal">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                            <!-- Modal Header -->
-                        <div class="modal-header">
-                          <h4 class="modal-title">Customer Form</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      </div>
-                      
-                          <!-- Modal Body -->
-                          <div class="modal-body">
-                       <form>
-                          <p>Customer Name:</p>
-                             <div class="form-group">
-                            <input type="text" class="form-control" id="cname" placeholder="Customer Name*">
-                        </div>
-                             <p>Address:</p>
-                            <div class="form-group">
-                            <input type="email" class="form-control" id="add" placeholder="Address">
-                        </div>
-                           <p>Telephone:</p>
-                          <div class="form-group">
-                          <input type="email" class="form-control" id="telephone" placeholder="Telephone*">
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+              <h4 class="modal-title">Customer Form</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          
+          <!-- Modal Body -->
+          <div class="modal-body">
+              <!-- Simple form -->
+              
+                  <div class="form-group">
+                      <input type="text" class="form-control" id="cname" name="cname" placeholder="Customer Name*">
+                  </div>
+                  <div class="form-group">
+                      <input type="email" class="form-control" id="add" name="add" placeholder="Address">
+                  </div>
+                  <div class="form-group">
+                    <input type="email" class="form-control" id="telephone" name="telephone" placeholder="Telephone*">
                 </div>
-                <p>Customer Email:</p>
                 <div class="form-group">
-                  <input type="email" class="form-control" id="cemail" placeholder="Customer email"*>
+                  <input type="email" class="form-control" id="cemail" name="cemail" placeholder="Customer email"*>
               </div>
-              <p>Type:</p>
               <div class="form-group">
-                <select class="form-control" id="cemail">
-                  <option value="" disabled selected hidden></option>
-                  <option value="REGULAR">REGULAR</option>
-                  <option value="IRREGULAR">IRREGULAR</option>
-              </select>
-              
-              
+                <select class="form-control" id="customerType" name="customerType">
+                    <option value="">Type</option>
+                    <option value="REGULAR">REGULAR</option>
+                    <option value="IRREGULAR">IRREGULAR</option>
+                </select>
             </div>
-            <p>Forms:</p>
             <div class="form-group">
-              <select class="form-control" id="cemail">
-                <option value="" disabled selected hidden></option>
+              <select class="form-control" id="terms" name="terms">
+                  <option value="">Forms</option>
                   <option value="N/A">N/A</option>
                   <option value="REGULAR">REGULAR</option>
-                                </select>
-                               </div>
-                             </form>
-                             </div>
+              </select>
+            </div>
+            </div>
           
            <!-- Modal Footer -->
-                                 <div class="modal-footer">
-                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  <button type="button" class="btn btn-primary">Save Changes</button>
-                              </div>
-                                </div>
-                             </div>
-                                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modalCloseBtn"data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="modalSaveBtn">Save Changes</button>
+               </div>
+             </div>
+           </div>
+          </div>
                         </div>
                     </div>
                     
@@ -484,8 +484,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">STATUS</label>
                           <div class="col-sm-9">
-                            <select class="form-control">
-                              <option value="" disabled selected hidden>STATUS</option>
+                            <select class="form-control" id="status" name="status">
                               <option>OPEN</option>
                               <option>CLOSED</option>
                             </select>
@@ -496,7 +495,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">TRANSPO</label>
                           <div class="col-sm-9">
-                            <input class="form-control" placeholder="0"/>
+                            <input class="form-control" placeholder="0" id="transpo" name="transpo" />
                           </div>
                         </div>
                       </div>
@@ -509,8 +508,8 @@
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label" style="padding-left: 20px;">PERMIT ISSUED</label>
-                        <input class="form-check-input" type="checkbox" id="dateCheckbox"></label> 
-                      </div>
+                        <input class="form-check-input" type="checkbox" id="permitIssued" name="permitIssued">
+                    </div>
                       <div class="form-group row">
                         <div class="col-sm-">
                         </div>
@@ -521,7 +520,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label" style="padding-left: 30px;">REMARKS</label>
                           <div class="col-sm-9"style="padding-left: 20px; padding-right: 20px;">
-                            <input type="text" class="form-control" placeholder="REMARKS"/>
+                            <input type="text" class="form-control" placeholder="REMARKS" id="remarks" name="remarks"/>
                           </div>
                         </div>
                       </div>
@@ -529,75 +528,147 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label"style="padding-left:30px;">DELIVERY REMARKS</label>
                           <div class="col-sm-9"style="padding-left: 20px; padding-right: 20px;">
-                            <input type="text" class="form-control" placeholder="DELIVERY REMARKS"/>
+                            <input type="text" class="form-control" id="deliveryRemarks" name="deliveryRemarks" />
                           </div>
                         </div>
                       </div>
                     </div>  
                     <hr></hr>
                     <center><h2>W O R K &nbsp; A C T I V I T Y</h2></center><br>
-                      <div id="work-activity-container">
-                        <div class="row work-activity">
-                           <div class="col-md-6">
-                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" style="padding-left: 30px;">DESCRIPTION: </label>
-                                  <div class="col-sm-9" style="padding-left: 20px; padding-right: 20px;">
-                                    <input type="text" class="form-control" placeholder="DESCRIPTION"/>
-                              </div>
-                          </div>
-                       </div>
-                              <div class="col-md-6">
-                                                <div class="form-group row">
-                                      <label class="col-sm-3 col-form-label" style="padding-left:30px;">REMARKS: </label>
-                                        <div class="col-sm-9" style="padding-left: 20px; padding-right: 20px;">
-                                        <input type="text" class="form-control" placeholder="REMARKS"/>
-                                           </div>
-                                       </div>
-                                      </div>
-                                                   </div>
-                                              </div>
-                                      <div class="row">
-                                        <div class="col-md-6">
-                                          <div class="form-group row">
-                                    
-                                            <button type="button" class="add2" onclick="addWorkActivity()">
-                                              <i class="mdi mdi-plus-circle text-primary"></i> Add New
-                                            </button>
-                                            <button type="button" class="add1" onclick="deleteLastWorkActivity()">
-                                              <i class="mdi mdi-minus-circle text-danger"></i> Delete Recent
-                                            </button>
-                                            <input type="submit" class="btn btn-secondary" value="Submit">
-                                            
-                                            
-                                       </div>
-                                         </div>
-                                              </div>
-                                                </div>
-                                                        <script>
-                                       function addWorkActivity() {
-                                         // Clone the first set of description and remarks fields
-                                           var clone = document.querySelector('.work-activity').cloneNode(true);
-  
-                                               // Clear the input values in the cloned fields
-                                         var inputs = clone.querySelectorAll('input');
-                                        inputs.forEach(function(input) {
-                               input.value = '';
-                                });
-  
-                         // Append the cloned fields to the container
-                           document.getElementById('work-activity-container').appendChild(clone);
-                        }
+<div id="work-activity-container">
+  <div class="row work-activity">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label" style="padding-left: 30px;">DESCRIPTION: </label>
+        <div class="col-sm-9" style="padding-left: 20px; padding-right: 20px;">
+          <input type="text" class="form-control description" id="description" name="description"/>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label" style="padding-left:30px;">REMARKS: </label>
+        <div class="col-sm-9" style="padding-left: 20px; padding-right: 20px;">
+          <input type="text" class="form-control remarks2" id="remarks2" name="remarks2" />
 
-                     function deleteLastWorkActivity() {
-                          var workActivities = document.querySelectorAll('.work-activity'); 
-                           if (workActivities.length > 1) {
-                           workActivities[workActivities.length - 1].remove();
-                         }
-                       }
-                    </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group row">
+      <div class="col-sm-9 offset-sm-3" style="padding-left:30px;">
+        <input type="submit" class="btn btn-secondary" value="Submit" id="submitBtn">
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group row">
+      <div class="col-sm-9 offset-sm-3" style="padding-left:30px;">
+        
+        <button type="button" class="btn btn-" onclick="addWorkActivity()">
+          <i class="mdi mdi-plus-circle text-primary"></i> Add New
+      </button>
+      <button type="button" class="btn btn-" onclick="deleteLastWorkActivity()">
+        <i class="mdi mdi-minus-circle text-danger"></i> Delete Recent 
+    </button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var formData = {
+  date: '',
+  contactPerson: '',
+  technical: '',
+  cname: '',
+  add: '',
+  telephone: '',
+  cemail: '',
+  customerType: '',
+  terms: '',
+  status: '',
+  transpo: '',
+  permitIssued: '',
+  remarks: '',
+  deliveryRemarks: '',
+  workActivities: []
+};
+  function addWorkActivity() {
+    // Clone the first set of description and remarks fields
+    var clone = document.querySelector('.work-activity').cloneNode(true);
+  
+    // Clear the input values in the cloned fields
+    var inputs = clone.querySelectorAll('input');
+    inputs.forEach(function(input) {
+      input.value = '';
+    });
+  
+    // Append the cloned fields to the container
+    document.getElementById('work-activity-container').appendChild(clone);
+
+    // Add event listeners to newly added elements to capture description and remarks2
+    var newInputs = clone.querySelectorAll('input');
+    newInputs.forEach(function(input) {
+      input.addEventListener('input', function() {
+        updateWorkActivitiesData();
+      });
+    });
+
+    // Call the function to update the workActivities data
+    updateWorkActivitiesData();
+  }
+
+  function deleteLastWorkActivity() {
+    var workActivities = document.querySelectorAll('.work-activity');
+    if (workActivities.length > 1) {
+      workActivities[workActivities.length - 1].remove();
+      // After removing the element, update the workActivities data
+      updateWorkActivitiesData();
+    }
+  }
+
+  function updateWorkActivitiesData() {
+  // Extract description and remarks2 values from all work activities
+  var workActivitiesData = [];
+  var workActivityElements = document.querySelectorAll('.work-activity');
+
+  workActivityElements.forEach(function(activityElement) {
+    var descriptionField = activityElement.querySelector('.description');
+    var remarks2Field = activityElement.querySelector('.remarks2');
+
+    if (descriptionField && remarks2Field) {
+      var description = descriptionField.value;
+      var remarks2 = remarks2Field.value;
+
+      workActivitiesData.push({ description, remarks2 });
+    } else {
+      console.error('Field elements not found for work activity:', activityElement);
+    }
+  });
+
+  // Update the global formData.workActivities array
+  formData.workActivities = workActivitiesData;
+}
+
+
+</script>
+
+
+                    
+                    
+                    
+                  
                   </form>
                 </div>
               </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">      
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
             </div>
           </div>
         </div>
@@ -633,15 +704,151 @@
   <!-- End plugin js for this page -->
   <!-- Custom js for this page-->
   <script src="../../../../css/js/file-upload.js"></script>
-  <script src="../../../../css/js/iCheck.js"></script>
   <script src="../../../../css/js/typeahead.js"></script>
   <script src="../../../../css/js/select2.js"></script>
-  <!-- End custom js for this page-->
-  
+
 <!-- Bootstrap JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- script for getting technical -->
+<script>
+  // Fetch data from the server endpoint
+  fetch('/get/technical')
+    .then(response => response.json())
+    .then(data => {
+      // Populate the dropdown with fetched data
+      const dropdown = document.getElementById('technical');
+      
+      data.forEach(entry => {
+        const { id, full_name } = entry;
+        
+        const option = document.createElement('option');
+        option.value = id;  // Set the value to the employee ID
+        option.textContent = full_name;  // Set the display text to the employee name
+        dropdown.appendChild(option);
+      });
+
+      // Add event listener to handle selection
+      dropdown.addEventListener('change', function () {
+        const selectedEmployeeId = this.value;
+        console.log('Selected Employee ID:', selectedEmployeeId);
+      });
+    })
+    .catch(error => console.error('Error fetching data:', error));
+</script>
+
+
+
+<!-- Include Bootstrap JavaScript library -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get the elements
+    const customerInput = document.getElementById('customerInput');
+    const modalSaveBtn = document.getElementById('modalSaveBtn');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const myModal = document.getElementById('myModal');
+
+    // Add an event listener to the Save Changes button in the modal
+    modalSaveBtn.addEventListener('click', function () {
+      // Get values from the modal form
+      const cname = document.getElementById('cname').value;
+      const add = document.getElementById('add').value;
+      const telephone = document.getElementById('telephone').value;
+      const cemail = document.getElementById('cemail').value;
+      const customerType = document.getElementById('customerType').value;
+      const terms = document.getElementById('terms').value;
+
+      // Update the disabled input field with the customer name
+      customerInput.value = cname;
+
+      // Close the modal
+      $('#myModal').modal('hide');
+      // Remove modal backdrop
+      $('.modal-backdrop').remove();
+    });
+
+    // Add an event listener to the modal's close button
+    modalCloseBtn.addEventListener('click', function () {
+      $('#myModal').modal('hide');
+      // Remove modal backdrop
+      $('.modal-backdrop').remove();
+    });
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const permitIssued = document.getElementById('permitIssued');
+
+      // Add an event listener to the checkbox
+      permitIssued.addEventListener('change', function () {
+          // Update the value based on the checkbox state
+          const value = this.checked ? 'Yes' : 'No';
+          console.log('Checkbox value:', value);
+          // You can use the 'value' variable as needed, for example, send it to the server or update other elements.
+      });
+  });
+
+  document.getElementById('submitBtn').addEventListener('click', function (e) {
+  e.preventDefault();
+
+  try {
+    // Collect form data
+    const formData = {
+      date: document.getElementById('date').value,
+      contactPerson: document.getElementById('contactPerson').value,
+      technical: document.getElementById('technical').value,
+      cname: document.getElementById('cname').value,
+      add: document.getElementById('add').value,
+      telephone: document.getElementById('telephone').value,
+      cemail: document.getElementById('cemail').value,
+      customerType: document.getElementById('customerType').value,
+      terms: document.getElementById('terms').value,
+      status: document.getElementById('status').value,
+      transpo: parseFloat(document.getElementById('transpo').value) || 0,
+      permitIssued: document.getElementById('permitIssued').checked ? 'Yes' : 'No',
+      remarks: document.getElementById('remarks').value,
+      deliveryRemarks: document.getElementById('deliveryRemarks').value,
+      workActivities: [],
+      userId: 1
+    };
+
+    // Collect work activities
+      const workActivityElements = document.querySelectorAll('.work-activity');
+      workActivityElements.forEach(function (activityElement, index) {
+        const descriptionField = activityElement.querySelector('.description');
+        const remarks2Field = activityElement.querySelector('.remarks2');
+
+        if (descriptionField && remarks2Field) {
+          const description = descriptionField.value;
+          const remarks2 = remarks2Field.value;
+
+          formData.workActivities.push({ description, remarks2 });
+        } else {
+          console.error(`Field elements not found for work activity at index ${index}.`);
+        }
+      });
+
+      
+    console.log('FormData:', formData);
+
+    // Send the form data to the server
+    axios.post('http://192.168.100.35:8080/submit-form', formData)
+    .then((res) => {
+      console.log(res);
+      // Redirect to the vehicle management page
+    })
+    .catch((err) => console.error(err));;
+  } catch (error) {
+    console.error('Error during form submission:', error);
+    if (!res.headersSent) {
+      res.status(500).send({ success: false, message: 'Internal Server Error' });
+    }
+  }
+});
+
+</script>
 
 
 

@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="../../../../css/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../../../css/vendors/css/vendor.bundle.base.css">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
   <script>var jobOrderIDsArray = [];</script>
   <script src="../../../../css/js/local.js"></script>
   <!-- endinject -->
@@ -461,23 +460,23 @@
                     // Clear existing rows in case of multiple requests
                     jobOrderListBody.innerHTML = '';
                     // Iterate over the received data and create table rows
-                    response.data.forEach(jobOrder => {
+                    response.data.forEach(jo => {
                         const row = document.createElement('tr');
-                        const dateObject = new Date(jobOrder.date);
+                        const dateObject = new Date(jo.date);
                         const formattedDate = dateObject.toLocaleDateString();
                         row.innerHTML = `
-                            <td class="vanish">${jobOrder.joborder_id}</td>
-                            <td class="vanish">${jobOrder.date ? new Date(jobOrder.date).toLocaleString('en-US', { timeZone: 'UTC' }) : 'Invalid Date'}</td>
-                            <td>${jobOrder.customer_name}</td>
-                            <td class="vanish">${jobOrder.customer_address}</td>
-                            <td class="vanish">${jobOrder.Technical}</td>
-                            <td class="vanish">${jobOrder.Month}</td>
-                            <td class="vanish">${jobOrder.WeekNo}</td>
-                            <td class="vanish"><label class="badge badge-info">${jobOrder.Status}</label></td>
+                            <td class="vanish">${jo.id}</td>
+                            <td class="vanish">${jo.date ? new Date(jo.date).toLocaleString('en-US', { timeZone: 'UTC' }) : 'Invalid Date'}</td>
+                            <td>${jo.customer_name}</td>
+                            <td class="vanish">${jo.customer_address}</td>
+                            <td class="vanish">${jo.technical}</td>
+                            <td class="vanish">${jo.Month}</td>
+                            <td class="vanish">${jo.WeekNo}</td>
+                            <td class="vanish"><label class="badge badge-info">${jo.status}</label></td>
                             <td>
-                              <form id="myForm_${jobOrder.JobOrderNo}">
-  <input type="text" style="display: none;" name="JobOrderID" id="JobOrderID_${jobOrder.JobOrderNo}" value="${jobOrder.JobOrderNo}">
-  <button type="button" class="btn btn-outline-primary btn-icon-text" onclick="submitForm('${jobOrder.JobOrderNo}')">
+                              <form id="myForm_${jo.id}">
+  <input type="text" style="display: none;" name="JobOrderID" id="JobOrderID_${jo.id}" value="${jo.id}">
+  <button type="button" class="btn btn-outline-primary btn-icon-text" onclick="submitForm('${jo.id}')">
     <i class="mdi mdi-eye btn-icon-prepend"></i>View
   </button>
   <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">

@@ -117,51 +117,52 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script>
-  // Your existing code for showSwal function
+    // Your existing code for showSwal function
 
-  // Assume you have an event listener for the form submission
-  $('#loginForm').submit(function (event) {
-  event.preventDefault();
+    // Assume you have an event listener for the form submission
+    $('#loginForm').submit(function (event) {
+      event.preventDefault();
 
-  const username = $('#exampleInputEmail1').val();
-  const password = $('#exampleInputPassword1').val();
+      const username = $('#exampleInputEmail1').val();
+      const password = $('#exampleInputPassword1').val();
 
-  // Make an AJAX request to the server
-  $.ajax({
-    type: 'POST',
-    url: '/login',
-    data: { username: username, password: password },
-    success: function (response) {
-      if (response.status === 'success') {
-        // Show success popup and redirect after clicking "OK"
-        showSwal('success-message', function() {
-          window.location.href = '/pages/content/index.html';
-        });
-      } else {
-        // Show error popup and refresh input fields
-        showSwal('warning-message-and-cancel', function() {
-          // Optionally, you can refresh the input fields here
-          $('#exampleInputEmail1').val('');
-          $('#exampleInputPassword1').val('');
-        });
-      }
-    },
-    error: function (xhr, status, error) {
-  if (xhr.status === 401) {
-    showSwal('unauthorized-error', function () {
-      // Optionally, you can refresh the input fields here
-      $('#exampleInputEmail1').val('');
-      $('#exampleInputPassword1').val('');
+      // Make an AJAX request to the server
+      $.ajax({
+        type: 'POST',
+        url: '/login',
+        data: { username: username, password: password },
+        success: function (response) {
+          if (response.status === 'success') {
+            // Store user ID in sessionStorage
+            sessionStorage.setItem('userId', response.userid);
+
+            // Show success popup and redirect after clicking "OK"
+            showSwal('success-message', function () {
+              window.location.href = '/pages/content/index.html';
+            });
+          } else {
+            // Show error popup and refresh input fields
+            showSwal('warning-message-and-cancel', function () {
+              // Optionally, you can refresh the input fields here
+              $('#exampleInputEmail1').val('');
+              $('#exampleInputPassword1').val('');
+            });
+          }
+        },
+        error: function (xhr, status, error) {
+          if (xhr.status === 401) {
+            showSwal('unauthorized-error', function () {
+              // Optionally, you can refresh the input fields here
+              $('#exampleInputEmail1').val('');
+              $('#exampleInputPassword1').val('');
+            });
+          } else {
+            console.error('Error during login:', error);
+          }
+        },
+      });
     });
-  } else {
-    console.error('Error during login:', error);
-  }
-},
-
-  });
-});
-
-</script>
+  </script>
 
   <!-- endinject -->
 </body>
