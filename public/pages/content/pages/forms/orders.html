@@ -453,7 +453,7 @@
       <script defer> 
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch job order list data and populate the table
-          axios.get(`http://${location.host}/jobOrderList`)
+          axios.get(`/jobOrderList`)
                 .then(response => {
                     const jobOrderListBody = document.getElementById('jobOrderListBody');
     

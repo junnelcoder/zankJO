@@ -20,7 +20,7 @@ const server = http.createServer(app);
 const config = {
   user: 'sa',
   password: 'zankojt@2024',
-  server: 'DESKTOP-SA4VIBJ\\SQLEXPRESS',
+  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',
   database: 'jo',
   options: {
     enableArithAbort: true,
@@ -43,21 +43,19 @@ sql.connect(config)
   .then(() => {
     console.log('Connected to SQL Server 1');
   })
-  .catch((err) => {
-    console.error('Error connecting to SQL Server:\nTrying to connect with config/server 2');
-    sql.connect(config2)
-    .then(() => {
-      console.log('Connected to SQL Server');
-    })
     .catch((err) => {
       console.error('Error connecting to SQL Server:', err);
     });
-  });
 
 
 const pool = new sql.ConnectionPool(config);
 const poolConnect = pool.connect();
 
+pool.connect().then(() => {
+  // Your query execution logic goes here
+}).catch(err => {
+  console.error('Database connection error:', err);
+});
 poolConnect.then(() => {
   console.log('Connected to SQL Server');
 }).catch((err) => {
@@ -65,11 +63,13 @@ poolConnect.then(() => {
 });
 // Express Middleware
 app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/pages/login.html'));
 });
+
 app.post('/login', async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -105,6 +105,8 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
   }
 });
+
+
 app.get('/jobOrderList', async (req, res) => {
   try {
     const query = `
@@ -119,7 +121,6 @@ app.get('/jobOrderList', async (req, res) => {
     INNER JOIN dbo.customer_erp ON joborders.customer_id = customer_erp.id
     INNER JOIN dbo.employee_listing ON joborders.employee_id = employee_listing.id`;
 
-    
     const request = new sql.Request();
     const result = await request.query(query);
     
@@ -143,10 +144,23 @@ app.get('/get/technical', async (req, res) => {
   } catch (err) {
     console.error('Error retrieving data from the database:', err.message);
     res.status(500).send('Internal Server Error');
-  } finally {
-    // Close the database connection
-    sql.close();
-  }
+  } 
+});
+
+app.get('/get/users', async (req, res) => {
+  try {
+    // Connect to the database
+    await sql.connect(config);
+
+    // Query the database to get id and full_name values
+    const result = await sql.query('SELECT [username] FROM [dbo].[users]');
+
+    // Send the result as a JSON response
+    res.json(result.recordset);
+  } catch (err) {
+    console.error('Error retrieving data from the database:', err.message);
+    res.status(500).send('Internal Server Error');
+  } 
 });
 
 app.post('/submit-form', async (req, res) => {
@@ -189,8 +203,8 @@ app.post('/submit-form', async (req, res) => {
         .input('address', sql.NVarChar(255), add)
         .input('telephone', sql.NVarChar(255), telephone)
         .input('email', sql.NVarChar(255), cemail)
-        .input('type', sql.VarChar(255), customerType)
-        .input('terms', sql.VarChar(255), terms)
+        .input('type', sql.NVarChar(255), customerType)
+        .input('terms', sql.NVarChar(255), terms)
         .execute('InsertCustomer');
 
       // Get the customer ID from the result
@@ -255,6 +269,5 @@ app.post('/submit-form', async (req, res) => {
 
 // Start the server
 server.listen(port, () => {
-  const ipAddress = ip.address(); 
-  console.log(`Server is running at http://${ipAddress}:${port}`);
+  console.log(`Server is running at http://192.168.2.102:${port}`);
 });

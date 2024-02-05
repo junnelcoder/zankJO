@@ -387,17 +387,17 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">DATE: </label>
+                          <label  for="date" class="col-sm-3 col-form-label">DATE: </label>
                           <div class="col-sm-9">
-                            <input type="date" class="form-control" id="date" name="date">
+                            <input type="date" class="form-control" id="date" name="date" required>
                         </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label" >CONTACT PERSON: </label>
+                          <label for="contactPerson"class="col-sm-3 col-form-label" >CONTACT PERSON: </label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control"  id="contactPerson" name="contactPerson"/>
+                            <input type="text" class="form-control"  id="contactPerson" name="contactPerson" required>
                           </div>
                         </div>
                       </div>
@@ -405,7 +405,7 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">TECHNICAL</label>
+                          <label for="technical" class="col-sm-3 col-form-label">TECHNICAL</label>
                           <div class="col-sm-9">
                             <select class="form-control" id="technical" name="technical"></select>
                           </div>
@@ -413,7 +413,7 @@
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">CUSTOMER</label>
+                            <label for="customerInput" class="col-sm-3 col-form-label">CUSTOMER</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <input class="form-control" placeholder="CUSTOMER" id="customerInput" name="customerInput" disabled>
@@ -440,29 +440,30 @@
               <!-- Simple form -->
               
                   <div class="form-group">
-                      <input type="text" class="form-control" id="cname" name="cname" placeholder="Customer Name*">
+                      <input type="text" class="form-control" id="cname" name="cname" placeholder="Customer Name*" required>
                   </div>
                   <div class="form-group">
-                      <input type="email" class="form-control" id="add" name="add" placeholder="Address">
+                      <input type="email" class="form-control" id="add" name="add" placeholder="Address" required>
                   </div>
                   <div class="form-group">
-                    <input type="email" class="form-control" id="telephone" name="telephone" placeholder="Telephone*">
+                    <input type="email" class="form-control" id="telephone" name="telephone" placeholder="Telephone*" required>
                 </div>
                 <div class="form-group">
-                  <input type="email" class="form-control" id="cemail" name="cemail" placeholder="Customer email"*>
+                  <input type="email" class="form-control" id="cemail" name="cemail" placeholder="Customer email"* required>
               </div>
               <div class="form-group">
                 <select class="form-control" id="customerType" name="customerType">
-                    <option value="">Type</option>
                     <option value="REGULAR">REGULAR</option>
-                    <option value="IRREGULAR">IRREGULAR</option>
+                    <option value="OTHERS">OTHERS</option>
+                    <option value="DEALER">DEALER</option>
                 </select>
             </div>
             <div class="form-group">
               <select class="form-control" id="terms" name="terms">
-                  <option value="">Forms</option>
                   <option value="N/A">N/A</option>
-                  <option value="REGULAR">REGULAR</option>
+                  <option value="45">45</option>
+                  <option value="30">30</option>
+                  <option value="15">15</option>
               </select>
             </div>
             </div>
@@ -482,7 +483,7 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">STATUS</label>
+                          <label for="status" class="col-sm-3 col-form-label">STATUS</label>
                           <div class="col-sm-9">
                             <select class="form-control" id="status" name="status">
                               <option>OPEN</option>
@@ -493,9 +494,9 @@
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">TRANSPO</label>
+                          <label for="transpo" class="col-sm-3 col-form-label">TRANSPO</label>
                           <div class="col-sm-9">
-                            <input class="form-control" placeholder="0" id="transpo" name="transpo" />
+                            <input class="form-control" placeholder="0" id="transpo" name="transpo"required>
                           </div>
                         </div>
                       </div>
@@ -507,7 +508,7 @@
                     </div>
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-sm-3 col-form-label" style="padding-left: 20px;">PERMIT ISSUED</label>
+                        <label for="permitIssued"class="col-sm-3 col-form-label" style="padding-left: 20px;">PERMIT ISSUED</label>
                         <input class="form-check-input" type="checkbox" id="permitIssued" name="permitIssued">
                     </div>
                       <div class="form-group row">
@@ -518,17 +519,17 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label" style="padding-left: 30px;">REMARKS</label>
+                          <label for="remarks"class="col-sm-3 col-form-label" style="padding-left: 30px;">REMARKS</label>
                           <div class="col-sm-9"style="padding-left: 20px; padding-right: 20px;">
-                            <input type="text" class="form-control" placeholder="REMARKS" id="remarks" name="remarks"/>
+                            <input type="text" class="form-control" placeholder="REMARKS" id="remarks" name="remarks" required>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label"style="padding-left:30px;">DELIVERY REMARKS</label>
+                          <label for="deliveryRemarks" class="col-sm-3 col-form-label"style="padding-left:30px;">DELIVERY REMARKS</label>
                           <div class="col-sm-9"style="padding-left: 20px; padding-right: 20px;">
-                            <input type="text" class="form-control" id="deliveryRemarks" name="deliveryRemarks" />
+                            <input type="text" class="form-control" id="deliveryRemarks" name="deliveryRemarks" required>
                           </div>
                         </div>
                       </div>
@@ -539,17 +540,17 @@
   <div class="row work-activity">
     <div class="col-md-6">
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label" style="padding-left: 30px;">DESCRIPTION: </label>
+        <label for="description" class="col-sm-3 col-form-label" style="padding-left: 30px;">DESCRIPTION: </label>
         <div class="col-sm-9" style="padding-left: 20px; padding-right: 20px;">
-          <input type="text" class="form-control description" id="description" name="description"/>
+          <input type="text" class="form-control description" id="description" name="description" required>
         </div>
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label" style="padding-left:30px;">REMARKS: </label>
+        <label for="remarks2"class="col-sm-3 col-form-label" style="padding-left:30px;">REMARKS: </label>
         <div class="col-sm-9" style="padding-left: 20px; padding-right: 20px;">
-          <input type="text" class="form-control remarks2" id="remarks2" name="remarks2" />
+          <input type="text" class="form-control remarks2" id="remarks2" name="remarks2" required>
 
         </div>
       </div>
@@ -711,6 +712,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- script for getting technical -->
 <script>
   // Fetch data from the server endpoint
@@ -791,30 +793,36 @@
   });
 
   document.getElementById('submitBtn').addEventListener('click', function (e) {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    // Collect form data
-    const formData = {
-      date: document.getElementById('date').value,
-      contactPerson: document.getElementById('contactPerson').value,
-      technical: document.getElementById('technical').value,
-      cname: document.getElementById('cname').value,
-      add: document.getElementById('add').value,
-      telephone: document.getElementById('telephone').value,
-      cemail: document.getElementById('cemail').value,
-      customerType: document.getElementById('customerType').value,
-      terms: document.getElementById('terms').value,
-      status: document.getElementById('status').value,
-      transpo: parseFloat(document.getElementById('transpo').value) || 0,
-      permitIssued: document.getElementById('permitIssued').checked ? 'Yes' : 'No',
-      remarks: document.getElementById('remarks').value,
-      deliveryRemarks: document.getElementById('deliveryRemarks').value,
-      workActivities: [],
-      userId: 1
-    };
+    try {
+      // Validate all fields are filled
+      if (!validateForm()) {
+        // Show SweetAlert indicating that all fields must be filled
+        showSwal('error-message', 'All fields must be filled.');
+        return;
+      }
 
-    // Collect work activities
+      // Collect form data
+      const formData = {
+        date: document.getElementById('date').value,
+        contactPerson: document.getElementById('contactPerson').value,
+        technical: document.getElementById('technical').value,
+        cname: document.getElementById('cname').value,
+        add: document.getElementById('add').value,
+        telephone: document.getElementById('telephone').value,
+        cemail: document.getElementById('cemail').value,
+        customerType: document.getElementById('customerType').value,
+        terms: document.getElementById('terms').value,
+        status: document.getElementById('status').value,
+        transpo: parseFloat(document.getElementById('transpo').value) || 0,
+        permitIssued: document.getElementById('permitIssued').checked ? 'Yes' : 'No',
+        remarks: document.getElementById('remarks').value,
+        deliveryRemarks: document.getElementById('deliveryRemarks').value,
+        workActivities: [],
+        userId: 1
+      };
+
       const workActivityElements = document.querySelectorAll('.work-activity');
       workActivityElements.forEach(function (activityElement, index) {
         const descriptionField = activityElement.querySelector('.description');
@@ -828,25 +836,63 @@
         } else {
           console.error(`Field elements not found for work activity at index ${index}.`);
         }
+      });axios.post(`/submit-form`, formData)
+  .then((res) => {
+    console.log(res);
+    // Show success message with SweetAlert
+    showSwal('success-message');
+  })
+  .catch((err) => {
+    console.error(err);
+    // Show error message with SweetAlert
+    showSwal('error-message');
+  })
+        .catch((err) => {
+          console.error(err);
+          // Show error message with SweetAlert
+          showSwal('error-message', function () {
+            window.location.href = '/pages/content/pages/forms/job_ordering.html';
+          });
+        });
+    } catch (error) {
+      console.error('Error during form submission:', error);
+      // Show generic error message with SweetAlert
+      showSwal('error-message', function () {
+        window.location.href = '/pages/content/pages/forms/job_ordering.html';
       });
+    }
+  });
 
-      
-    console.log('FormData:', formData);
+  // Function to show SweetAlert
+  function showSwal(type) {
+  Swal.fire({
+    icon: type === 'success-message' ? 'success' : 'error',
+    title: type === 'success-message' ? 'Success' : 'Error',
+    text: type === 'success-message' ? 'Form submitted successfully' : 'Error submitting form',
+  }).then((result) => {
+    if (result.isConfirmed && type === 'success-message') {
+      console.log('Redirecting to job_ordering.html');
+      try {
+        window.location.href = '/pages/content/pages/forms/job_ordering.html';
+      } catch (error) {
+        console.error('Error during redirect:', error);
+      }
+    }
+  });
+}
 
-    // Send the form data to the server
-    axios.post('http://192.168.100.35:8080/submit-form', formData)
-    .then((res) => {
-      console.log(res);
-      // Redirect to the vehicle management page
-    })
-    .catch((err) => console.error(err));;
-  } catch (error) {
-    console.error('Error during form submission:', error);
-    if (!res.headersSent) {
-      res.status(500).send({ success: false, message: 'Internal Server Error' });
+
+  // Function to validate all fields are filled
+  function validateForm() {
+  const requiredFields = document.querySelectorAll('.form-control[required]');
+  for (const field of requiredFields) {
+    console.log('Field:', field.id, 'Value:', field.value.trim());
+    if (!field.value.trim()) {
+      return false;
     }
   }
-});
+  return true;
+}
 
 </script>
 
