@@ -440,26 +440,34 @@
               <!-- Simple form -->
               
                   <div class="form-group">
+                      <p>Customer Name</p>
                       <input type="text" class="form-control" id="cname" name="cname" placeholder="Customer Name*" required>
                   </div>
                   <div class="form-group">
+                    <p>Address</p>
                       <input type="email" class="form-control" id="add" name="add" placeholder="Address" required>
                   </div>
                   <div class="form-group">
+                    <p>Telephone</p>
                     <input type="email" class="form-control" id="telephone" name="telephone" placeholder="Telephone*" required>
                 </div>
                 <div class="form-group">
+                  <p>Customer Email</p>
                   <input type="email" class="form-control" id="cemail" name="cemail" placeholder="Customer email"* required>
               </div>
               <div class="form-group">
+                <p>Type</p>
                 <select class="form-control" id="customerType" name="customerType">
+                    <option value="" disabled selected hidden>Type</option>
                     <option value="REGULAR">REGULAR</option>
                     <option value="OTHERS">OTHERS</option>
                     <option value="DEALER">DEALER</option>
                 </select>
             </div>
             <div class="form-group">
+              <p>Terms</p>
               <select class="form-control" id="terms" name="terms">
+                  <option value="" disabled selected hidden>Terms</option>
                   <option value="N/A">N/A</option>
                   <option value="45">45</option>
                   <option value="30">30</option>
@@ -529,7 +537,7 @@
                         <div class="form-group row">
                           <label for="deliveryRemarks" class="col-sm-3 col-form-label"style="padding-left:30px;">DELIVERY REMARKS</label>
                           <div class="col-sm-9"style="padding-left: 20px; padding-right: 20px;">
-                            <input type="text" class="form-control" id="deliveryRemarks" name="deliveryRemarks" required>
+                            <input type="text" class="form-control" placeholder="DELIVERY REMARKS" id="deliveryRemarks" name="deliveryRemarks" required>
                           </div>
                         </div>
                       </div>
@@ -542,7 +550,7 @@
       <div class="form-group row">
         <label for="description" class="col-sm-3 col-form-label" style="padding-left: 30px;">DESCRIPTION: </label>
         <div class="col-sm-9" style="padding-left: 20px; padding-right: 20px;">
-          <input type="text" class="form-control description" id="description" name="description" required>
+          <input type="text" class="form-control description" placeholder="DESCRIPTION" id="description" name="description" required>
         </div>
       </div>
     </div>
@@ -550,7 +558,7 @@
       <div class="form-group row">
         <label for="remarks2"class="col-sm-3 col-form-label" style="padding-left:30px;">REMARKS: </label>
         <div class="col-sm-9" style="padding-left: 20px; padding-right: 20px;">
-          <input type="text" class="form-control remarks2" id="remarks2" name="remarks2" required>
+          <input type="text" class="form-control remarks2" placeholder="REMARKS" id="remarks2" name="remarks2" required>
 
         </div>
       </div>
@@ -561,20 +569,14 @@
   <div class="col-md-6">
     <div class="form-group row">
       <div class="col-sm-9 offset-sm-3" style="padding-left:30px;">
-        <input type="submit" class="btn btn-secondary" value="Submit" id="submitBtn">
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <div class="form-group row">
-      <div class="col-sm-9 offset-sm-3" style="padding-left:30px;">
         
-        <button type="button" class="btn btn-" onclick="addWorkActivity()">
+        <input type="submit" class="btn btn-secondary" value="Submit">
+        <button type="button" class="add1" onclick="addWorkActivity()">
           <i class="mdi mdi-plus-circle text-primary"></i> Add New
-      </button>
-      <button type="button" class="btn btn-" onclick="deleteLastWorkActivity()">
-        <i class="mdi mdi-minus-circle text-danger"></i> Delete Recent 
-    </button>
+        </button>
+        <button type="button" class="add1" onclick="deleteLastWorkActivity()">
+          <i class="mdi mdi-minus-circle text-danger"></i> Delete Recent
+        </button>
        
       </div>
     </div>
@@ -683,7 +685,7 @@
   </div>
   <footer class="footer">
     <div class="d-sm-flex justify-content-center justify-content-sm-between">
-      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"></a>.|.</span>
+      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"></a></span>
       <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart-outline text-primary"></i></span>
     </div>
   </footer>
