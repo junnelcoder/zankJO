@@ -27,21 +27,13 @@ const config = {
     encrypt: false,
   },
 };
-const config2 = {
-  user: 'sa',
-  password: 'zankojt@2024',
-  server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
-  database: 'jo',
-  options: {
-    enableArithAbort: true,
-    encrypt: false,
-  },
-};
+//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
+//server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',
 
 // Middleware to handle SQL Server connection
 sql.connect(config)
   .then(() => {
-    console.log('Connected to SQL Server 1');
+    console.log('Connected to SQL Server');
   })
     .catch((err) => {
       console.error('Error connecting to SQL Server:', err);
