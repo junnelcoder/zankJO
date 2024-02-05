@@ -715,6 +715,23 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- script for getting technical -->
 <script>
+  // Retrieve the user ID from sessionStorage
+  const userId = sessionStorage.getItem('userId');
+
+  // Check if the user ID is available
+  if (userId) {
+    console.log('User ID retrieved on other page:', userId);
+
+    // Display the user ID wherever you want
+    const userIdElement = document.createElement('p');
+    userIdElement.textContent = 'User ID: ' + userId;
+    document.body.appendChild(userIdElement);
+  } else {
+    console.error('User ID not found in sessionStorage on other page');
+  }
+</script>
+
+<script>
   // Fetch data from the server endpoint
   fetch('/get/technical')
     .then(response => response.json())
@@ -803,6 +820,16 @@
         return;
       }
 
+          const userId = sessionStorage.getItem('userId');
+
+        // Check if user ID is available
+        if (!userId) {
+          // If user ID is not available, show an error message
+          console.error('User ID not found in sessionStorage.');
+          showSwal('error-message', 'User ID not found.');
+          return;
+        }
+
       // Collect form data
       const formData = {
         date: document.getElementById('date').value,
@@ -820,9 +847,10 @@
         remarks: document.getElementById('remarks').value,
         deliveryRemarks: document.getElementById('deliveryRemarks').value,
         workActivities: [],
-        userId: 1
+        userId: userId,
       };
 
+      // Collect work activities
       const workActivityElements = document.querySelectorAll('.work-activity');
       workActivityElements.forEach(function (activityElement, index) {
         const descriptionField = activityElement.querySelector('.description');

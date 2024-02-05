@@ -159,7 +159,9 @@
         success: function (response) {
           if (response.status === 'success') {
             // Store user ID in sessionStorage
-            sessionStorage.setItem('userId', response.userid);
+            sessionStorage.setItem('userId', response.id);
+            console.log('User ID stored:', response.id);
+
 
             // Show success popup and redirect after clicking "OK"
             showSwal('success-message', function () {

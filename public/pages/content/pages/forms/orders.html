@@ -380,8 +380,7 @@
                             <option value="Example">Example</option>
                             <!-- Add more options as needed -->
                         </select>
-                    </div></div>
-                      <div class="col-12">
+                    </div>
                       <div class="date-picker-container">
                         <input type="date" id="start_date" name="start_date" required>
                         <label for="start_date">Start Date</label>
@@ -453,7 +452,7 @@
       <script defer> 
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch job order list data and populate the table
-          axios.get(`/jobOrderList`)
+          axios.get(`http://${location.host}/jobOrderList`)
                 .then(response => {
                     const jobOrderListBody = document.getElementById('jobOrderListBody');
     
