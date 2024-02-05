@@ -58,7 +58,7 @@
                 <div class="form-group">
                   <div class="input-container">
                     <i class="fas fa-user"></i>
-                    <select class="form-control" id="username" name="username"></select>
+                    <select  class="form-control" id="username" name="username" style="padding-left: 28px;"></select>
                   </div>
                 </div>
                 
@@ -147,7 +147,8 @@
     $('#loginForm').submit(function (event) {
       event.preventDefault();
 
-      const username = $('#exampleInputEmail1').val();
+      const username = $('#username').val();
+
       const password = $('#exampleInputPassword1').val();
 
       // Make an AJAX request to the server
