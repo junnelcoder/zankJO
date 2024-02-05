@@ -31445,7 +31445,7 @@ padding-left: 70px;
     text-align:center;
   }
   tr{text-align:center;}
-  .white{}
+  .white{background-color: white;}
   .date-picker-container1 select{ width:300px;}
   .date-picker-container input[type="date"]{ width:150px;}
 }
@@ -31459,7 +31459,7 @@ padding-left: 70px;
     text-align:center;
   }
   tr{text-align:center;}
-  .white{}
+  .white{background-color: white;}
   .date-picker-container1 select{ width:300px;}
   .date-picker-container input[type="date"]{ width:150px;}
 }
@@ -31473,7 +31473,7 @@ padding-left: 70px;
     text-align:center;
   }
   tr{text-align:left;}
-  .white{}
+  .white{background-color: white;}
 
 }
  .add2{

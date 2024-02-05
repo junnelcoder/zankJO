@@ -373,7 +373,7 @@
                       <br>
                       <div class="date-picker-container1">
                         <label for="end_date">Technical*</label>
-                        <select id="end_date" name="end_date" required>
+                        <select id="end_date" class="white" name="end_date" required>
                             <option value="" disabled selected>All</option>
                             <!-- Add your options here -->
                             <option value="Example">Example</option>
@@ -382,11 +382,11 @@
                         </select>
                     </div>
                       <div class="date-picker-container">
-                        <input type="date" id="start_date" name="start_date" required>
+                        <input type="date" id="start_date" class="white" name="start_date" required>
                         <label for="start_date">Start Date</label>
                       </div>
                       <div class="date-picker-container">
-                        <input type="date" id="end_date" name="end_date" required>
+                        <input type="date" id="end_date" class="white" name="end_date" required>
                         <label for="end_date">End Date</label>
                       </div>
                       <div class="button-container">
@@ -464,7 +464,7 @@
                         const dateObject = new Date(jo.date);
                         const formattedDate = dateObject.toLocaleDateString();
                         row.innerHTML = `
-                            <td class="vanish">${jo.id}</td>
+                            <td class="vanish">${jo.joborder_id}</td>
                             <td class="vanish">${jo.date ? new Date(jo.date).toLocaleString('en-US', { timeZone: 'UTC' }) : 'Invalid Date'}</td>
                             <td>${jo.customer_name}</td>
                             <td class="vanish">${jo.customer_address}</td>
@@ -473,9 +473,9 @@
                             <td class="vanish">${jo.WeekNo}</td>
                             <td class="vanish"><label class="badge badge-info">${jo.status}</label></td>
                             <td>
-                              <form id="myForm_${jo.id}">
-  <input type="text" style="display: none;" name="JobOrderID" id="JobOrderID_${jo.id}" value="${jo.id}">
-  <button type="button" class="btn btn-outline-primary btn-icon-text" onclick="submitForm('${jo.id}')">
+                              <form id="myForm_${jo.joborder_id}">
+  <input type="text" style="display: none;" name="JobOrderID" id="JobOrderID_${jo.joborder_id}" value="${jo.joborder_id}">
+  <button type="button" class="btn btn-outline-primary btn-icon-text" onclick="submitForm('${jo.joborder_id }')">
     <i class="mdi mdi-eye btn-icon-prepend"></i>View
   </button>
   <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
