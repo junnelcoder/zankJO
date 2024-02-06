@@ -20,15 +20,18 @@ const server = http.createServer(app);
 const config = {
   user: 'sa',
   password: 'zankojt@2024',
-  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',
+  server: 'DESKTOP-U6G6LH1\\SQLEXPRESS2014', 
   database: 'jo',
   options: {
     enableArithAbort: true,
     encrypt: false,
   },
 };
-//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
-//server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',
+//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014', Justin
+//server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014', Junnel
+//server: 'DESKTOP-U6G6LH1\\SQLEXPRESS2014', Axl    192.168.2.100
+
+
 
 // Middleware to handle SQL Server connection
 sql.connect(config)
@@ -262,5 +265,5 @@ app.post('/submit-form', async (req, res) => {
 
 // Start the server
 server.listen(port, () => {
-  console.log(`Server is running at http://192.168.2.102:${port}`);
+  console.log(`Server is running at http://192.168.2.100:${port}`);
 });
