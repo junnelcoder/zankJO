@@ -6,7 +6,7 @@ const cors = require('cors');
 const port = 8080;
 const http = require('http');
 const ip = require('ip');
-
+const jwt = require('jsonwebtoken');
 app.use(cors({
   origin: '*',
   credentials: false,
@@ -81,11 +81,12 @@ app.post('/login', async (req, res) => {
     if (result.recordset.length > 0) {
       const storedPassword = result.recordset[0].password;
       const userid = result.recordset[0].id;
+      const token = jwt.sign({ role: "admin" }, "jwt-secret-key", { expiresIn: '1d' });
       // Compare the inputted password with the stored password (plain text)
       if (password === storedPassword) {
-        // Successful login
-        // Send a success response
+      res.cookie('token', token);
         console.log('User ID:', userid);
+        console.log(' ID:', token);
         return res.status(200).json({ status: 'success', id: userid });
       }
     }

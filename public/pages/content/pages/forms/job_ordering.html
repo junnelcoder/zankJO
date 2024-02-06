@@ -400,7 +400,9 @@
     <div class="form-group row">
       <div class="col-sm-9 offset-sm-3" style="padding-left:30px;">
         
-        <input type="submit" class="btn btn-secondary" value="Submit">
+        
+        <button id="submitBtn"  class="btn btn-secondary" value="Submit">Submit</button>
+
         <button type="button" class="add1" onclick="addWorkActivity()">
           <i class="mdi mdi-plus-circle text-primary"></i> Add New
         </button>
@@ -548,11 +550,11 @@
 <!-- script for getting technical -->
 <script>
   // Retrieve the user ID from sessionStorage
-  const userId = sessionStorage.getItem('userId');
-
+  const userId = localStorage.getItem('userId');
+  const auth = localStorage.getItem('auth');
   // Check if the user ID is available
   if (userId) {
-    console.log('User ID retrieved on other page:', userId);
+    console.log('User ID retrieved on other page:', userId,auth);
 
     // Display the user ID wherever you want
     const userIdElement = document.createElement('p');
@@ -652,7 +654,7 @@
         return;
       }
 
-          const userId = sessionStorage.getItem('userId');
+          const userId = localStorage.getItem('userId');
 
         // Check if user ID is available
         if (!userId) {

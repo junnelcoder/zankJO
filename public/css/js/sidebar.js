@@ -34,3 +34,29 @@ function includeHTML(url, containerId) {
 // Include sidebar.html in the specified container
 includeHTML('navigations/header.html', 'header-container');
 
+
+  // Check if the user is authenticated
+  function checkAuthentication() {
+    // Check if the user is authenticated
+    const isAuthenticated = localStorage.getItem('auth') === 'true';
+
+    // Define the base path for protected routes
+    const basePath = '/pages/content';
+
+    // Get the current path without the base path
+    const currentPath = window.location.pathname.substring(basePath.length);
+
+    // Redirect to login if not authenticated and trying to access a protected route
+    if (!isAuthenticated && currentPath.startsWith('/')) {
+      window.location.href = '/pages/login.html';
+    }
+  }
+
+  // Check authentication on initial page load
+  checkAuthentication();
+
+  // Add an event listener for the pageshow event
+  window.addEventListener('pageshow', function (event) {
+    // Check authentication when the page is shown
+    checkAuthentication();
+  });
