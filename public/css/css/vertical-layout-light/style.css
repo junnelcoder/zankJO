@@ -31324,6 +31324,7 @@ padding-left: 70px;
   position: relative;
   display: inline-block;
   margin-bottom: 20px;
+  
 }
 
 .date-picker-container1 label {
@@ -31343,6 +31344,8 @@ padding-left: 70px;
   border: 1px #808080 solid;
   border-radius: 5px;
   margin-top: 1px; /* Adjust as needed */
+  width: 100%; /* Make the select box fill the container's width */
+  height:44px;
 }
 .btn-primary, .wizard > .actions a {
   color: #fff;

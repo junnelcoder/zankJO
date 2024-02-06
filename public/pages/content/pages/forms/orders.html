@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../../../../css/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../../../css/vendors/css/vendor.bundle.base.css">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script>var jobOrderIDsArray = [];</script>
+  
   <script src="../../../../css/js/local.js"></script>
   <!-- endinject -->
   <!-- plugin css for this page -->
@@ -213,13 +213,7 @@
                       <br>
                       <div class="date-picker-container1">
                         <label for="end_date">Technical*</label>
-                        <select id="end_date" class="white" name="end_date" required>
-                            <option value="" disabled selected>All</option>
-                            <!-- Add your options here -->
-                            <option value="Example">Example</option>
-                            <option value="Example">Example</option>
-                            <!-- Add more options as needed -->
-                        </select>
+                        <select class="form-control" id="technical" name="technical"></select>
                     </div>
                       <div class="date-picker-container">
                         <input type="date" id="start_date" class="white" name="start_date" required>
@@ -289,6 +283,45 @@
         </footer>
         <!-- partial -->
       </div>
+      <script>var jobOrderIDsArray = [];</script>
+      <script>
+        // Fetch data from the server endpoint
+        fetch('/get/technical')
+            .then(response => response.json())
+            .then(data => {
+                // Populate the dropdown with fetched data
+                const dropdown = document.getElementById('technical');
+    
+                // Create an "ALL" option
+                const allOption = document.createElement('option');
+                allOption.value = 'ALL'; // Set the value for the option
+                allOption.textContent = 'ALL*';
+                allOption.style.fontStyle = 'italic';  // Set the font style to italic
+                dropdown.appendChild(allOption);
+    
+                // Add fetched data to the dropdown
+                data.forEach(entry => {
+                    const { id, full_name } = entry;
+    
+                    const option = document.createElement('option');
+                    option.value = id; // Set the value to the employee ID
+                    option.textContent = full_name; 
+                    option.style.fontStyle = 'italic';// Set the display text to the employee name
+                    dropdown.appendChild(option);
+                });
+    
+                // Add event listener to handle selection
+                dropdown.addEventListener('change', function () {
+                    const selectedTechnicalId = this.value;
+                    console.log('Selected Technical ID:', selectedTechnicalId);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+    
+    
+    
+      
       <script defer> 
         document.addEventListener('DOMContentLoaded', function () {
             // Fetch job order list data and populate the table
