@@ -13,6 +13,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.set('view engine', 'ejs');
 
 const server = http.createServer(app);
 
@@ -266,4 +267,5 @@ app.post('/submit-form', async (req, res) => {
 // Start the server
 server.listen(port, () => {
   console.log(`Server is running at http://192.168.2.102:${port}`);
+
 });

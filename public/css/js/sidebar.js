@@ -60,3 +60,4 @@ includeHTML('navigations/header.html', 'header-container');
     // Check authentication when the page is shown
     checkAuthentication();
   });
+
