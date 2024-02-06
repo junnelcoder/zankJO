@@ -26,49 +26,6 @@
 
 <body class="sidebar-fixed">
   <body class="sidebar-fixed">
-
-    <!-- Assuming you are using EJS syntax -->
-  <input type="text" id="myTextbox" placeholder="Type something..." value="<%= valueToSet %>">
-  
-  <!-- Modal -->
-  <div class="modal" id="myModal">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <!-- Modal Header -->
-              <div class="modal-header">
-                  <h4 class="modal-title">Modal Title</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-              <!-- Modal Body -->
-              <div class="modal-body">
-                  <p>This is a modal body.</p>
-              </div>
-              <!-- Modal Footer   data-dismiss="modal"    onclick="resetModal()-->
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-          </div>
-      </div>
-  </div>
-  
-  <!-- JavaScript to check textbox value and trigger the modal -->
-  <script>
-      // Get the textbox element
-      var myTextbox = document.getElementById('myTextbox').value;
-      // Check if the textbox has a value
-      if (myTextbox.value !== '<%= valueToSet %>') {
-          // If the textbox has a value, trigger the modal
-          $('#myModal').modal('show');
-          console.log("show");
-      }
-      else if(myTextbox.value == '<%= valueToSet %>') {
-        $('#myModal').modal('hide');
-          console.log("hide");
-      }
-      function resetModal(){
-        window.location.href = "/closeSettings";
-      }
-  </script>
   
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->

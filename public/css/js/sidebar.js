@@ -61,10 +61,3 @@ includeHTML('navigations/header.html', 'header-container');
     checkAuthentication();
   });
 
-  document.addEventListener('DOMContentLoaded', function() {
-    // Assuming valueToSet is a variable with your desired value
-    const valueToSet = 'Hello from Node.js!';
-    
-    // Set the value of the textbox
-    document.getElementById('myTextbox').value = valueToSet;
-});

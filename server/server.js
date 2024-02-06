@@ -21,7 +21,7 @@ const server = http.createServer(app);
 const config = {
   user: 'sa',
   password: 'zankojt@2024',
-  server: 'DESKTOP-U6G6LH1\\SQLEXPRESS2014', 
+  server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014', 
   database: 'jo',
   options: {
     enableArithAbort: true,
@@ -126,15 +126,6 @@ app.get('/jobOrderList', async (req, res) => {
     console.error('Error fetching job orders:', err);
     res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
   }
-});
-
-app.get('/settings', (req, res) => {
-  // Set a value to the textbox (assuming you have the textbox ID as 'myTextbox')
-  const valueToSet = 'Hello';
-  console.log("justin");
-  // Render your HTML file using EJS
-  res.sendFile(path.join(__dirname, '../public/pages/content/pages/forms/job_ordering.html'));
-  
 });
 
 app.get('/get/technical', async (req, res) => {
@@ -275,5 +266,5 @@ app.post('/submit-form', async (req, res) => {
 
 // Start the server
 server.listen(port, () => {
-  console.log(`Server is running at http://192.168.2.100:${port}`);
+  console.log(`Server is running at http://192.168.43.55:${port}`);
 });
