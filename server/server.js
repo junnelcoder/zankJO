@@ -13,6 +13,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.set('view engine', 'ejs');
 
 const server = http.createServer(app);
 
@@ -125,6 +126,15 @@ app.get('/jobOrderList', async (req, res) => {
     console.error('Error fetching job orders:', err);
     res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
   }
+});
+
+app.get('/settings', (req, res) => {
+  // Set a value to the textbox (assuming you have the textbox ID as 'myTextbox')
+  const valueToSet = 'Hello';
+  console.log("justin");
+  // Render your HTML file using EJS
+  res.sendFile(path.join(__dirname, '../public/pages/content/pages/forms/job_ordering.html'));
+  
 });
 
 app.get('/get/technical', async (req, res) => {
