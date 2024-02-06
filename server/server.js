@@ -21,27 +21,50 @@ const server = http.createServer(app);
 const config = {
   user: 'sa',
   password: 'zankojt@2024',
-  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014', 
+  server: 'DESKTOP-EIR2A8B\SQLEXPRESS2014',
   database: 'jo',
   options: {
     enableArithAbort: true,
     encrypt: false,
   },
 };
-//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014', Justin
-//server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014', Junnel
-//server: 'DESKTOP-U6G6LH1\\SQLEXPRESS2014', Axl    192.168.2.100
-
-
+const config2 = {
+  user: 'sa',
+  password: 'zankojt@2024',
+  server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
+  database: 'jo',
+  options: {
+    enableArithAbort: true,
+    encrypt: false,
+  },
+};
 
 // Middleware to handle SQL Server connection
 sql.connect(config)
   .then(() => {
-    console.log('Connected to SQL Server');
-  })
-    .catch((err) => {
-      console.error('Error connecting to SQL Server:', err);
+    console.log('\nWelcome Junnel');
+    server.listen(port, () => {
+      const ipAddress = ip.address(); 
+      console.log(`Server is running at http://${ipAddress}:${port}`);
     });
+  })
+  .catch((err) => {
+    console.error('Error connecting to SQL Server 1:\nTrying to connect with config/server 2');
+    sql.connect(config2)
+    .then(() => {
+      console.log('\nWelcome Justin');
+      server.listen(port, () => {
+        const ipAddress = ip.address(); 
+        console.log(`Server is running at http://${ipAddress}:${port}`);
+      });
+    })
+    .catch((err) => {
+      console.error('Error connecting to SQL Server:');
+    });
+  });
+//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014', Justin
+//server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014', Junnel
+//server: 'DESKTOP-U6G6LH1\\SQLEXPRESS2014', Axl    192.168.2.100
 
 
 const pool = new sql.ConnectionPool(config);
@@ -50,13 +73,28 @@ const poolConnect = pool.connect();
 pool.connect().then(() => {
   // Your query execution logic goes here
 }).catch(err => {
-  console.error('Database connection error:', err);
+  console.error('Pool database 1 connection error:');
 });
 poolConnect.then(() => {
-  console.log('Connected to SQL Server');
+  console.log('Pool connected to SQL Server 1');
 }).catch((err) => {
-  console.error('Error connecting to SQL Server:', err);
+  console.error('Pool error connecting to SQL Server 1:');
 });
+
+const pool2 = new sql.ConnectionPool(config2);
+const poolConnect2 = pool.connect();
+
+pool2.connect().then(() => {
+  // Your query execution logic goes here
+}).catch(err => {
+  console.error('Pool database 2 connection error:');
+});
+poolConnect2.then(() => {
+  console.log('Pool connected to SQL Server 2');
+}).catch((err) => {
+  console.error('Pool error connecting to SQL Server 2:');
+});
+
 // Express Middleware
 app.use(express.urlencoded({ extended: true }));
 
@@ -265,7 +303,3 @@ app.post('/submit-form', async (req, res) => {
 });
 
 // Start the server
-server.listen(port, () => {
-  console.log(`Server is running at http://192.168.2.102:${port}`);
-
-});
