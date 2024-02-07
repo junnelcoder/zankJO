@@ -37,7 +37,7 @@ app.set('view engine', 'ejs');
 const config = {
   user: 'sa',
   password: 'zankojt@2024',
-  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
+  server: 'DESKTOP-SA4VIBJ\\SQLEXPRESS',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
   database: 'jo',
   options: {
     enableArithAbort: true,
@@ -162,6 +162,30 @@ app.get('/jobOrderList', async (req, res) => {
     res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
   }
 });
+
+app.get('/jobOrderDetails/:jobOrderId', async (req, res) => {
+  try {
+    const jobOrderId = req.params.jobOrderId;
+    console.log('Requested Job Order ID:', jobOrderId); // Logging the requested job order ID
+
+    // Construct the query to fetch details of the specific job order
+    const query = ` SELECT * FROM dbo.joborders WHERE joborders.joborder_id = '${jobOrderId}'
+    `;
+
+    const request = new sql.Request();
+    const result = await request.query(query);
+
+    if (result.recordset.length > 0) {
+      res.status(200).json(result.recordset[0]); // Sending the details of the job order as JSON response
+    } else {
+      res.status(404).json({ status: 'error', message: 'Job order not found.' }); // If job order is not found
+    }
+  } catch (err) {
+    console.error('Error fetching job order details:', err);
+    res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
+  }
+});
+
 
 
 app.get('/get/technical', async (req, res) => {
