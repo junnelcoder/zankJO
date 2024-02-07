@@ -215,22 +215,41 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Add New Technical</h4>
-                  <form class="form-sample" id="addTechForm" action="/addNewTechForm" method="POST">
+                  <form class="form-sample" id="addTechForm" action="" method="POST" onsubmit="return validatePassword()">
                     <p class="card-description"></p>
                     <hr></hr>
                     <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label for="date" class="col-sm-3 col-form-label">USERNAME: </label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" id="username" name="username" required>
-                          </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="date" class="col-sm-3 col-form-label">USERNAME: </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                    <input type="hidden" id="password" name="password">
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
                     <button id="submitBtn" class="btn btn-secondary" type="submit">Submit</button>
-                  </form>
-                  
+                </form>
+                
+                <script>
+                    function validatePassword() {
+                        const usernameInput = document.getElementById('username').value;
+                        const passwordInput = prompt('Please enter your password:', 'Enter Password');
+                        if (!passwordInput) {
+                            alert('Password is required.');
+                            return false; // Prevent form submission
+                        }else if (!usernameInput) {
+                            alert('Username is required.');
+                            return false; // Prevent form submission
+                        }else{
+                        document.getElementById('password').value = passwordInput;
+                        return true; // Allow form submission
+                    }
+                      }
+                </script>
+                
+                
                     <hr></hr>
                     <h4 class="card-title">Add New User</h4>
                     <form class="form-sample" id="addNewUserForm" action="/addNewUserForm" method="POST">

@@ -6,11 +6,17 @@ const ip = require('ip');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
+const { LocalStorage } = require('node-localstorage');
+const localStorage = new LocalStorage('./scratch');
+const readline = require('readline');
 
 const app = express();
 const server = http.createServer(app);
 const port = 8080;
-
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -103,6 +109,7 @@ app.post('/login', async (req, res) => {
       res.cookie('token', token);
         console.log('User ID:', userid);
         console.log(' ID:', token);
+        localStorage.setItem('userId', userid);
         return res.status(200).json({ status: 'success', id: userid });
       }
     }
@@ -293,9 +300,25 @@ app.post('/submit-form', async (req, res) => {
   }
 });
 
-// Handle form submission to add new technician
+// Handle form submission to add new tech
 app.post('/addNewTechForm', async (req, res) => {
   try {
+    
+    // Connect to the database
+    await sql.connect(config);
+    
+    // Retrieve data
+    const data = localStorage.getItem('userId');
+    // Query the database to get id and full_name values
+    const techresult = await sql.query(`
+    SELECT [id], [password] 
+    FROM [dbo].[users] 
+    WHERE [id] = ${data}
+    `);
+    
+const userData = techresult.recordset[0];
+const password = userData ? userData.password : null;
+    
     // Retrieve form data from request body
     const { username } = req.body;
     console.log('Username from request body:', username);
