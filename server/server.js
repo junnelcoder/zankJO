@@ -21,7 +21,7 @@ app.set('view engine', 'ejs');
 // const config = {
 //   user: 'sa',
 //   password: 'zankojt@2024',
-//   server: 'DESKTOP-EIR2A8B\SQLEXPRESS2014',
+//   server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
 //   database: 'jo',
 //   options: {
 //     enableArithAbort: true,
@@ -118,27 +118,44 @@ app.post('/login', async (req, res) => {
 
 app.get('/jobOrderList', async (req, res) => {
   try {
-    const query = `
-    SELECT 
-    joborders.*, 
-    customer_erp.customer_name,
-    customer_erp.address as customer_address,
-    employee_listing.full_name as technical,
-    MONTH(joborders.date) as Month,
-    DATEPART(WEEK, joborders.date) as WeekNo
-    FROM dbo.joborders
-    INNER JOIN dbo.customer_erp ON joborders.customer_id = customer_erp.id
-    INNER JOIN dbo.employee_listing ON joborders.employee_id = employee_listing.id`;
+    const { technical, start_date, end_date } = req.query;
+    console.log('Request Parameters - Technical:', technical, 'Start Date:', start_date, 'End Date:', end_date); // Logging request parameters
+
+    let query = `
+      SELECT 
+      joborders.*, 
+      customer_erp.customer_name,
+      customer_erp.address as customer_address,
+      employee_listing.full_name as technical,
+      MONTH(joborders.date) as Month,
+      DATEPART(WEEK, joborders.date) as WeekNo
+      FROM dbo.joborders
+      INNER JOIN dbo.customer_erp ON joborders.customer_id = customer_erp.id
+      INNER JOIN dbo.employee_listing ON joborders.employee_id = employee_listing.id
+    `;
+
+    if (technical && technical !== 'ALL') {
+      query += ` WHERE joborders.employee_id = '${technical}'`;
+    }
+
+    if (start_date && end_date) {
+      if (query.includes('WHERE')) {
+        query += ` AND joborders.date >= '${start_date}' AND joborders.date <= '${end_date}'`;
+      } else {
+        query += ` WHERE joborders.date >= '${start_date}' AND joborders.date <= '${end_date}'`;
+      }
+    }
 
     const request = new sql.Request();
     const result = await request.query(query);
-    
+
     res.status(200).json(result.recordset);
   } catch (err) {
     console.error('Error fetching job orders:', err);
     res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
   }
 });
+
 
 app.get('/get/technical', async (req, res) => {
   try {
@@ -371,4 +388,9 @@ console.log(reult);
     console.error('Error adding user:', error.message);
     res.status(500).send('An error occurred while adding the user.');
   }
+});
+
+app.get('/logout', (req, res) => {
+  // Redirect the user to a different URL, such as the login page
+  res.redirect('/');
 });

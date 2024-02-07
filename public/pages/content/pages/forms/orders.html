@@ -322,61 +322,113 @@
     
     
       
-      <script defer> 
-        document.addEventListener('DOMContentLoaded', function () {
-            // Fetch job order list data and populate the table
-          axios.get(`http://${location.host}/jobOrderList`)
-                .then(response => {
-                    const jobOrderListBody = document.getElementById('jobOrderListBody');
+    <!-- Add this script to the end of the HTML file -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          // Initialize the DataTable
+          let dataTable = $('#order-listing').DataTable({
+    "order": [[0, "asc"]],
+    "paging": true,
+    "searching": true,
+    "lengthMenu": [5, 10, 15],
+    "iDisplayLength": 5, // Initial number of entries to show
+    "columnDefs": [
+        { "targets": [0, 1, 3, 4, 5, 6, 7], "className": "vanish" } // Apply 'vanish' class to specified columns
+    ]
+});
+
+  
+          // Function to fetch and populate the job order list data
+          const populateJobOrderList = () => {
+              console.log('Populating job order list...');
+  
+              const selectedTechnicalId = technicalDropdown.value;
+              const startDate = startDateInput.value;
+              const endDate = endDateInput.value;
+  
+              console.log('Selected Technical ID:', selectedTechnicalId);
+              console.log('Start Date:', startDate);
+              console.log('End Date:', endDate);
+  
+              axios.get(`http://${location.host}/jobOrderList?technical=${selectedTechnicalId}&start_date=${startDate}&end_date=${endDate}`)
+                  .then(response => {
+                      // Clear existing rows in the table body
+                      dataTable.clear().draw();
+  
+                      // Check if data is available in the response
+                      if (response.data.length === 0) {
+                        const noDataMessageRow = document.createElement('tr');
+               
+                jobOrderListBody.appendChild(noDataMessageRow);
+                      } else {
+                          // Iterate over the received data and add rows to the DataTable
+                          response.data.forEach(joborders => {
+                              const formattedDate = new Date(joborders.date).toLocaleDateString('en-US'); // Format date
+                              dataTable.row.add([
+                                  joborders.joborder_id,
+                                  formattedDate,
+                                  joborders.customer_name,
+                                  joborders.customer_address,
+                                  joborders.technical,
+                                  joborders.Month,
+                                  joborders.WeekNo,
+                                  joborders.status,
+                                  `<form id="myForm_${joborders.joborder_id}">
+                                      <input type="text" style="display: none;" name="JobOrderID" id="JobOrderID_${joborders.joborder_id}" value="${joborders.joborder_id}">
+                                      <button type="button" class="btn btn-outline-primary btn-icon-text" onclick="submitForm('${joborders.joborder_id}')">
+                                          <i class="mdi mdi-eye btn-icon-prepend"></i>View
+                                      </button>
+                                      <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
+                                          <i class="mdi mdi-printer btn-icon-prepend"></i>Print
+                                      </button>
+                                  </form>`
+                              ]).draw();
+                          });
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Error fetching job order list:', error);
+                  });
+          };
+  
+          const filterButton = document.getElementById('filter_button');
+          const resetButton = document.getElementById('reset_button');
+          const technicalDropdown = document.getElementById('technical');
+          const startDateInput = document.getElementById('start_date');
+          const endDateInput = document.getElementById('end_date');
+  
+          // Attach event listener to the filter button
+          filterButton.addEventListener('click', function () {
+              console.log('Filter button clicked');
+              populateJobOrderList();
+          });
+  
+          // Attach event listener to the reset button
+          resetButton.addEventListener('click', function () {
+              technicalDropdown.value = 'ALL';
+              startDateInput.value = '';
+              endDateInput.value = '';
+  
+              console.log('Reset button clicked');
+              // Trigger filter button click event to reset the table
+              filterButton.click();
+          });
+  
+          // Populate the job order list when the page loads
+          populateJobOrderList();
+      });
+  
+  </script>
+
     
-                    // Clear existing rows in case of multiple requests
-                    jobOrderListBody.innerHTML = '';
-                    // Iterate over the received data and create table rows
-                    response.data.forEach(jo => {
-                        const row = document.createElement('tr');
-                        const dateObject = new Date(jo.date);
-                        const formattedDate = dateObject.toLocaleDateString();
-                        row.innerHTML = `
-                            <td class="vanish">${jo.joborder_id}</td>
-                            <td class="vanish">${jo.date ? new Date(jo.date).toLocaleString('en-US', { timeZone: 'UTC' }) : 'Invalid Date'}</td>
-                            <td>${jo.customer_name}</td>
-                            <td class="vanish">${jo.customer_address}</td>
-                            <td class="vanish">${jo.technical}</td>
-                            <td class="vanish">${jo.Month}</td>
-                            <td class="vanish">${jo.WeekNo}</td>
-                            <td class="vanish"><label class="badge badge-info">${jo.status}</label></td>
-                            <td>
-                              <form id="myForm_${jo.joborder_id}">
-  <input type="text" style="display: none;" name="JobOrderID" id="JobOrderID_${jo.joborder_id}" value="${jo.joborder_id}">
-  <button type="button" class="btn btn-outline-primary btn-icon-text" onclick="submitForm('${jo.joborder_id }')">
-    <i class="mdi mdi-eye btn-icon-prepend"></i>View
-  </button>
-  <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-    <i class="mdi mdi-printer btn-icon-prepend"></i>Print
-  </button>
-</form>
-                            </td>
-                        `;
-                        jobOrderListBody.appendChild(row);
-                    });
     
-                    // Destroy the existing DataTable instance if it exists
-                    
-                    // Initialize DataTables after populating the table dynamically
-                    $('#order-listing').DataTable({
-                        "order": [[0, "asc"]],
-                        "paging": true,
-                        "searching": true,
-                        "lengthMenu": [5, 10, 15],
-                        "iDisplayLength": 5, // Initial number of entries to show
-                        // Add other options as needed
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching job order list:', error);
-                });
-        });
-    </script>
+    
+    
+
+    
+    
+    
+    
     
     
       <!-- main-panel ends -->
@@ -385,6 +437,7 @@
   </div>
   <!-- container-scroller -->
   <!-- base:js -->
+  
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script src="../../../../css/vendors/js/vendor.bundle.base.js"></script>
@@ -401,7 +454,7 @@
   <script src="../../../../css/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
   <!-- End plugin js for this page -->
   <!-- Custom js for this page-->
-  <script src="../../../../css/js/data-table.js"></script>
+
   <!-- End custom js for this page-->
 </body>
 <!-- End custom js for this page-->
