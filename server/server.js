@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 app.set('view engine', 'ejs');
 
-// SQL Server Database Connection
+// Server ni Junnel
 // const config = {
 //   user: 'sa',
 //   password: 'zankojt@2024',
@@ -28,6 +28,8 @@ app.set('view engine', 'ejs');
 //     encrypt: false,
 //   },
 // };
+
+//Server ni Justin
 const config = {
   user: 'sa',
   password: 'zankojt@2024',
@@ -371,4 +373,9 @@ console.log(reult);
     console.error('Error adding user:', error.message);
     res.status(500).send('An error occurred while adding the user.');
   }
+});
+
+app.get('/logout', (req, res) => {
+  // Redirect the user to a different URL, such as the login page
+  res.redirect('/');
 });
