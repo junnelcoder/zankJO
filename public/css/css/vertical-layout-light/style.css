@@ -11653,6 +11653,7 @@ fieldset:disabled .wizard > .actions a,
 .btn-outline-danger {
   color: #f10075;
   border-color: #f10075;
+  border-radius: 5px;
 }
 
 .btn-outline-danger:hover {
@@ -31468,17 +31469,34 @@ padding-left: 70px;
 }
 /* Desktop */
 @media (min-width: 1025px) {
-  .vanish{}
-  .move{}
+  .vanish {}
+  .move {}
   .move2 {
-    padding-left: 60px;
-    text-align: right; 
-    text-align:center;
+      padding-left: 60px;
+      text-align: right;
+      text-align: center;
   }
-  tr{text-align:left;}
-  .white{background-color: white;}
-
+  tr {
+      text-align: left;
+  }
+  .white {
+      background-color: white;
+  }
+  .button-label {
+      display: inline-block; /* Show the button label on screens wider than 1024px */
+  }
+  .btn {
+      padding: 5px 10px; /* Adjust the button padding */
+  }
 }
+
+@media (max-width: 1024px) {
+  .button-label {
+      display: none; /* Hide the button label on screens narrower than 1025px */
+  }
+}
+
+
  .add2{
    border: none; 
    background: none; 
