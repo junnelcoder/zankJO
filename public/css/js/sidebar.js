@@ -60,4 +60,7 @@ includeHTML('navigations/header.html', 'header-container');
     // Check authentication when the page is shown
     checkAuthentication();
   });
-
+function windowBack(){ 
+  localStorage.clear();
+  window.location.href="/";
+}

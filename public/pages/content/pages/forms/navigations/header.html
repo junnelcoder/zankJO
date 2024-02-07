@@ -2,12 +2,13 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-        // Function to close the dropdown menu when an item is clicked
-        function closeDropdown() {
+      
+  // Function to close the dropdown menu when an item is clicked
+  function closeDropdown() {
     $('.dropdown-menu.settings').dropdown('hide');
-}
+  }
+      </script>
 
-    </script>
     <div class="text-center navbar-brand-wrapper d-flex align-items-center">
       <a class="navbar-brand brand-logo" href="../../index.html"><img src="../../../../css/images/logo.png" alt="logo"/></a>
       <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="../../../../css/images/logo-mini.png" alt="logo"/></a>
@@ -139,7 +140,7 @@
                 <!-- Add more dropdown items for settings as needed -->
             </div>
             <!-- Logout item -->
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" onclick="windowBack()">
                 <i class="mdi mdi-logout"></i>
                 Logout
             </a>
@@ -159,3 +160,4 @@
       </button>
     </div>
   </nav>
+  

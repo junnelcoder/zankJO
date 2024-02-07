@@ -17,17 +17,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 app.set('view engine', 'ejs');
 
-//SQL Server Database Connection
-const config = {
-  user: 'sa',
-  password: 'zankojt@2024',
-  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',
-  database: 'jo',
-  options: {
-    enableArithAbort: true,
-    encrypt: false,
-  },
-};
+// SQL Server Database Connection
 // const config = {
 //   user: 'sa',
 //   password: 'zankojt@2024',
@@ -38,6 +28,16 @@ const config = {
 //     encrypt: false,
 //   },
 // };
+const config = {
+  user: 'sa',
+  password: 'zankojt@2024',
+  server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
+  database: 'jo',
+  options: {
+    enableArithAbort: true,
+    encrypt: false,
+  },
+};
 //server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014', Justin
 //server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014', Junnel
 //server: 'DESKTOP-U6G6LH1\\SQLEXPRESS2014', Axl    192.168.2.100
@@ -388,4 +388,9 @@ console.log(reult);
     console.error('Error adding user:', error.message);
     res.status(500).send('An error occurred while adding the user.');
   }
+});
+
+app.get('/logout', (req, res) => {
+  // Redirect the user to a different URL, such as the login page
+  res.redirect('/');
 });
