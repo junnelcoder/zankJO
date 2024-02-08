@@ -23,7 +23,7 @@
 </head>
 
 <body class="sidebar-fixed " >
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -45,7 +45,6 @@
                   <th>Delivery Remarks</th>
                   <th>Status</th>
                   <th>Permit Issue</th>
-                  <th>Work Activity</th>
                 </tr>
               </thead>
               <tbody>
@@ -58,16 +57,20 @@
                   <td><span id="jobOrderDeliveryRemarks"></span></td>
                   <td><label class="badge badge-danger"><span id="jobOrderStatus"></span></label></td>
                   <td><span id="permit"></span></td>
-                  <td><select>
-                    <option value="option1">Description: <span id="wDesc"></span></option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                  </select></td>
-                  <!-- <td><label class="badge badge-danger">Pending</label></td> -->
+                  
+                  <td><label class="badge badge-danger">Pending</label></td> 
                 </tr>
                
               </tbody>
             </table>
+          </div>
+        </div> -->
+        <!-- <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">WORK ACTIVITY</h5>
+          <div class="modal-body">
+            <div class="row">
+              hahah
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -76,7 +79,80 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --> 
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">JOB ORDER DETAILS</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Job Order Id</th>
+                        <th>Date</th>
+                        <th>Contact Person</th>
+                        <th>Transport</th>
+                        <th>Remarks</th>
+                        <th>Delivery Remarks</th>
+                        <th>Status</th>
+                        <th>Permit Issue</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><span id="jobOrderId"></span></td>
+                        <td><span id="jobOrderDate"></td>
+                        <td><span id="jobOrderContactPerson"></td>
+                        <td>P <span id="jobOrderTransport"></span>.00</td>
+                        <td><span id="jobOrderRemarks"></span></td>
+                        <td><span id="jobOrderDeliveryRemarks"></span></td>
+                        <td><label class="badge badge-danger"><span id="jobOrderStatus"></span></label></td>
+                        <td><span id="permit"></span></td>
+                        
+                        <!-- <td><label class="badge badge-danger">Pending</label></td> -->
+                      </tr>
+                     
+                    </tbody>
+                  </table>
+                </div><br><br>
+                  <center><h2>W O R K &nbsp; A C T I V I T Y</h2></center>
+                    <div class="modal-body">
+                        <div class="row">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Description</th>
+                                <th>Remarks</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                
+                                <td><span id="desc"></span></td>
+                                <td><span id="remarks2"></span></td>
+                                <!-- <td><label class="badge badge-danger">Pending</label></td> -->
+                              </tr>
+                             
+                            </tbody>
+                          </table>
+                        </div>
+                    </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success">Print</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
   <div class="container-scroller ">
     <!-- partial:../../partials/_navbar.html -->
     <!-- partial -->
@@ -327,36 +403,59 @@
   document.addEventListener('DOMContentLoaded', function () {
     // Attach double click event listener to table rows
     $('#order-listing tbody').on('dblclick', 'tr', function () {
-      const jobOrderId = $(this).find('td:first').text(); // Extract job order ID from the first column of the clicked row
-      
-      // Fetch job order details for the clicked job order ID
-      axios.get(`/jobOrderDetails/${jobOrderId}`)
-        .then(response => {
-          const jobOrderDetails = response.data;
-          populateModal(jobOrderDetails); // Populate the modal with job order details
-          $('#exampleModal').modal('show'); // Show the modal
-        })
-        .catch(error => {
-          console.error('Error fetching job order details:', error);
-        });
-    });
-  });
+        const jobOrderId = $(this).find('td:first').text(); // Extract job order ID from the first column of the clicked row
 
-  // Function to populate modal with job order details
-  function populateModal(jobOrderDetails) {
-                        // Update modal content with job order details
-                        document.getElementById('jobOrderId').textContent = jobOrderDetails.joborder_id;
-                        document.getElementById('jobOrderDate').textContent = new Date(jobOrderDetails.date).toLocaleDateString('en-US');
-                        document.getElementById('jobOrderContactPerson').textContent = jobOrderDetails.contactPerson;
-                        document.getElementById('jobOrderTransport').textContent = jobOrderDetails.transportForMoney;
-                        document.getElementById('jobOrderRemarks').textContent = jobOrderDetails.remarks;
-                        document.getElementById('jobOrderDeliveryRemarks').textContent = jobOrderDetails.deliveryRemarks;
-                        document.getElementById('jobOrderStatus').textContent = jobOrderDetails.status;
-                        document.getElementById('permit').textContent = jobOrderDetails.permitIssue;
-                        // document.getElementById('wDesc').textContent = jobOrderDetails.work_activity_description;
-                        // document.getElementById('wRemarks').textContent = jobOrderDetails.remarks;
-                        // Update other details as needed
-                      }
+        // Fetch job order details for the clicked job order ID
+        fetch(`/jobOrderDetails/${jobOrderId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(jobOrderDetails => {
+                console.log("Job Order Details:", jobOrderDetails);
+                populateModal(jobOrderDetails); // Populate the modal with job order details
+                $('#exampleModal').modal('show'); // Show the modal
+            })
+            .catch(error => {
+                console.error('Error fetching job order details:', error);
+            });
+    });
+});
+
+// Function to populate modal with job order details
+function populateModal(jobOrderDetails) {
+    console.log("Populating modal with job order details:", jobOrderDetails);
+    
+    // Retrieve references to the HTML elements
+    const jobOrderIdElement = document.getElementById('jobOrderId');
+    const jobOrderDateElement = document.getElementById('jobOrderDate');
+    const jobOrderContactPersonElement = document.getElementById('jobOrderContactPerson');
+    const jobOrderTransportElement = document.getElementById('jobOrderTransport');
+    const jobOrderRemarksElement = document.getElementById('jobOrderRemarks');
+    const jobOrderDeliveryRemarksElement = document.getElementById('jobOrderDeliveryRemarks');
+    const jobOrderStatusElement = document.getElementById('jobOrderStatus');
+    const permitElement = document.getElementById('permit');
+    const desc = document.getElementById('desc');
+    const remarks2 = document.getElementById('remarks2');
+    // Assign values to the HTML elements
+    jobOrderIdElement.textContent = jobOrderDetails.joborder_id || '';
+    jobOrderDateElement.textContent = jobOrderDetails.date ? new Date(jobOrderDetails.date).toLocaleDateString('en-US') : '';
+    jobOrderContactPersonElement.textContent = jobOrderDetails.contactPerson || '';
+    jobOrderTransportElement.textContent = jobOrderDetails.transportForMoney || '';
+    jobOrderRemarksElement.textContent = jobOrderDetails.remarks || '';
+    jobOrderDeliveryRemarksElement.textContent = jobOrderDetails.deliveryRemarks || '';
+    jobOrderStatusElement.textContent = jobOrderDetails.status || '';
+    permitElement.textContent = jobOrderDetails.permitIssue ? 'Yes' : 'No';
+    desc.textContent = jobOrderDetails.description || '';
+    remarks2.textContent = jobOrderDetails.remarks2 || '';
+    
+    // Update other details as needed
+}
+
+
+
 </script>
     
     

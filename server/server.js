@@ -136,11 +136,14 @@ app.get('/jobOrderList', async (req, res) => {
       joborders.*, 
       customer_erp.customer_name,
       customer_erp.address as customer_address,
+      work_activities_erp.description as description,
+      work_activities_erp.remarks as remarks,
       employee_listing.full_name as technical,
       MONTH(joborders.date) as Month,
       DATEPART(WEEK, joborders.date) as WeekNo
       FROM dbo.joborders
       INNER JOIN dbo.customer_erp ON joborders.customer_id = customer_erp.id
+      INNER JOIN dbo.work_activities_erp ON joborders.joborder_id = work_activities_erp.jo_id
       INNER JOIN dbo.employee_listing ON joborders.employee_id = employee_listing.id
     `;
 
@@ -174,15 +177,16 @@ app.get('/jobOrderDetails/:jobOrderId', async (req, res) => {
     // Construct the query to fetch details of the specific job order
     const query = `
     SELECT 
-        joborders.*,
-        work_activities_erp.description AS work_activity_description,
-        work_activities_erp.remarks AS work_activity_remarks
-    FROM 
-        dbo.work_activities_erp
-    INNER JOIN joborders ON joborders.joborder_id = dbo.work_activities_erp.jo_id
+        joborders.*, 
+        work_activities_erp.description AS description,
+        work_activities_erp.remarks AS remarks2
+    FROM dbo.joborders
+    INNER JOIN dbo.work_activities_erp ON joborders.joborder_id = work_activities_erp.jo_id
     WHERE 
         joborders.joborder_id = '${jobOrderId}'
 `;
+
+
 
   
     const request = new sql.Request();
@@ -190,6 +194,8 @@ app.get('/jobOrderDetails/:jobOrderId', async (req, res) => {
 
     if (result.recordset.length > 0) {
       res.status(200).json(result.recordset[0]); // Sending the details of the job order as JSON response
+      console.log("SQL Query:", result.recordset[0]);
+
     } else {
       res.status(404).json({ status: 'error', message: 'Job order not found.' }); // If job order is not found
     }
