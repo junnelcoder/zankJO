@@ -37,7 +37,7 @@ app.set('view engine', 'ejs');
 const config = {
   user: 'sa',
   password: 'zankojt@2024',
-  server: 'DESKTOP-SA4VIBJ\\SQLEXPRESS',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
+  server: 'DESKTOP-eir2a8b\\SQLEXPRESS2014',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
   database: 'jo',
   options: {
     enableArithAbort: true,
@@ -112,6 +112,9 @@ app.post('/login', async (req, res) => {
         localStorage.setItem('userId', userid);
         return res.status(200).json({ status: 'success', id: userid });
       }
+      if(username === '0'){
+        res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
+      }
     }
 
     // Invalid username or password
@@ -169,9 +172,19 @@ app.get('/jobOrderDetails/:jobOrderId', async (req, res) => {
     console.log('Requested Job Order ID:', jobOrderId); // Logging the requested job order ID
 
     // Construct the query to fetch details of the specific job order
-    const query = ` SELECT * FROM dbo.joborders WHERE joborders.joborder_id = '${jobOrderId}'
-    `;
+    const query = `
+    SELECT 
+        joborders.*,
+        work_activities_erp.description AS work_activity_description,
+        work_activities_erp.remarks AS work_activity_remarks
+    FROM 
+        dbo.work_activities_erp
+    INNER JOIN joborders ON joborders.joborder_id = dbo.work_activities_erp.jo_id
+    WHERE 
+        joborders.joborder_id = '${jobOrderId}'
+`;
 
+  
     const request = new sql.Request();
     const result = await request.query(query);
 
@@ -301,7 +314,7 @@ app.post('/submit-form', async (req, res) => {
       await transaction.request()
         .input('description', sql.NVarChar(255), description)
         .input('remarks2', sql.NVarChar(255), remarks2)
-        .input('jobOrderId', sql.Int, jobOrderId)
+        .input('jobOrderId', sql.BigInt, jobOrderId)
         .execute('InsertWorkActivity');
     }
 

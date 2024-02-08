@@ -10220,6 +10220,10 @@ pre code {
   color: #212529;
   background-color: #eaeaf1;
 }
+.table tbody tr:hover {
+  color: #212529;
+  background-color: #eaeaf1;
+}
 
 .table-primary,
 .table-primary > th,
