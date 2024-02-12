@@ -9,6 +9,7 @@ const cors = require('cors');
 const { LocalStorage } = require('node-localstorage');
 const localStorage = new LocalStorage('./scratch');
 const readline = require('readline');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const server = http.createServer(app);
@@ -90,14 +91,14 @@ app.post('/login', async (req, res) => {
     const result = await request.query(query);
 
     if (result.recordset.length > 0) {
-      const storedPassword = result.recordset[0].password;
+      const storedPasswordHash = result.recordset[0].password;
       const userid = result.recordset[0].id;
       const token = jwt.sign({ role: "admin" }, "jwt-secret-key", { expiresIn: '1d' });
-      // Compare the inputted password with the stored password (plain text)
-      if (password === storedPassword) {
-      res.cookie('token', token);
+      const passwordMatch = await bcrypt.compare(password, storedPasswordHash);
+      if (passwordMatch) {
+        res.cookie('token', token);
         console.log('User ID:', userid);
-        console.log(' ID:', token);
+        //console.log(' ID:', token);
         localStorage.setItem('userId', userid);
         return res.status(200).json({ status: 'success', id: userid });
       }
@@ -161,11 +162,6 @@ app.get('/jobOrderDetails/:jobOrderId', async (req, res) => {
     console.log('Requested Job Order ID:', jobOrderId); // Logging the requested job order ID
 
     // Construct the query to fetch details of the specific job order
-<<<<<<< HEAD
-    const query = ` SELECT * FROM dbo.joborders WHERE joborders.joborder_id = '${jobOrderId}'
-    `;
-
-=======
     const query = `
     SELECT 
         joborders.*, 
@@ -180,7 +176,6 @@ app.get('/jobOrderDetails/:jobOrderId', async (req, res) => {
 
 
   
->>>>>>> c5da791e4adeba6ef47f1cb7287e7e85b16df68f
     const request = new sql.Request();
     const result = await request.query(query);
 
@@ -410,59 +405,36 @@ const DBpassword = userData.password;
 });
 
 
+
 app.post('/addNewUserForm', async (req, res) => {
   try {
     // Retrieve form data from request body
     const { username, password, role } = req.body;
-    console.log('Username from request body:', username);
-    console.log('Password from request body:', password);
-    console.log('Role from request body:', role);
 
     if (!username || !password || !role) {
       throw new Error('Username, password, or role is missing in request body.');
     }
 
-    console.log('Retrieved username from request body:', username);
-    console.log('Retrieved password from request body:', password);
-    console.log('Retrieved role from request body:', role);
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10); // Using 10 salt rounds
 
     // Connect to the SQL Server database
     await poolConnect;
-    console.log('Database connection established successfully.');
-
-    // Get today's date
-    const today = new Date().toISOString().slice(0, 10);
 
     // Insert the new user into the users table
     const request = pool.request();
     request.input('username', sql.NVarChar, username);
-    request.input('password', sql.NVarChar, password);
+    request.input('password', sql.NVarChar, hashedPassword); // Store the hashed password
     request.input('role', sql.NVarChar, role);
-    request.input('createdAt', sql.Date, Date());
-    request.input('updatedAt', sql.Date, Date());
+    request.input('createdAt', sql.Date, new Date());
+    request.input('updatedAt', sql.Date, new Date());
     const result = await request.query(`
       INSERT INTO users (username, password, role, createdAt, updatedAt)
       VALUES (@username, @password, @role, @createdAt, @updatedAt)
     `);
-    console.log('User added successfully:', username); // Log successful insertion
 
     // Respond with success message
     res.status(200).send('User added successfully.');
-    
-
-    const now = new Date(); // Create a new Date object representing the current date and time
-
-// Get the date and time in ISO 8601 format
-let isoString = now.toISOString();
-
-// Extract milliseconds and UTC offset
-let milliseconds = String(now.getMilliseconds()).padStart(7, '0');
-let utcOffset = now.toTimeString().split(' ')[1];
-
-// Combine all parts
-let reult = isoString.slice(0, -1) + ' ' + milliseconds + ' ' + utcOffset;
-
-console.log(reult);
 
   } catch (error) {
     // If an error occurs, respond with an error message

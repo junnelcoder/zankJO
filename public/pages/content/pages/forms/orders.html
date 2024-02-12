@@ -37,9 +37,6 @@
 </head>
 
 <body class="sidebar-fixed " >
-<<<<<<< HEAD
-  <div class="container-scroller slide-in-left">
-=======
   <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -171,7 +168,6 @@
 </div>
 
   <div class="container-scroller ">
->>>>>>> c5da791e4adeba6ef47f1cb7287e7e85b16df68f
     <!-- partial:../../partials/_navbar.html -->
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
@@ -448,35 +444,6 @@
   document.addEventListener('DOMContentLoaded', function () {
     // Attach double click event listener to table rows
     $('#order-listing tbody').on('dblclick', 'tr', function () {
-<<<<<<< HEAD
-      const jobOrderId = $(this).find('td:first').text(); // Extract job order ID from the first column of the clicked row
-      
-      // Fetch job order details for the clicked job order ID
-      axios.get(`/jobOrderDetails/${jobOrderId}`)
-        .then(response => {
-          const jobOrderDetails = response.data;
-          populateModal(jobOrderDetails); // Populate the modal with job order details
-          $('#jobOrderModal').modal('show'); // Show the modal
-        })
-        .catch(error => {
-          console.error('Error fetching job order details:', error);
-        });
-    });
-  });
-
-  // Function to populate modal with job order details
-  function populateModal(jobOrderDetails) {
-                        // Update modal content with job order details
-                        document.getElementById('jobOrderId').textContent = jobOrderDetails.joborder_id;
-                        document.getElementById('jobOrderDate').textContent = new Date(jobOrderDetails.date).toLocaleDateString('en-US');
-                        document.getElementById('jobOrderContactPerson').textContent = jobOrderDetails.contactPerson;
-                        document.getElementById('jobOrderTransport').textContent = jobOrderDetails.transportForMoney;
-                        document.getElementById('jobOrderRemarks').textContent = jobOrderDetails.remarks;
-                        document.getElementById('jobOrderDeliveryRemarks').textContent = jobOrderDetails.deliveryRemarks;
-                        document.getElementById('jobOrderStatus').textContent = jobOrderDetails.status;
-                        // Update other details as needed
-                      }
-=======
         const jobOrderId = $(this).find('td:first').text(); // Extract job order ID from the first column of the clicked row
 
         // Fetch job order details for the clicked job order ID
@@ -530,7 +497,6 @@ function populateModal(jobOrderDetails) {
 
 
 
->>>>>>> c5da791e4adeba6ef47f1cb7287e7e85b16df68f
 </script>
     
     
