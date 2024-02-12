@@ -140,25 +140,23 @@
         <form>
             <div class="form">
                 <div>
-                    <p>Customer Name: <span  id="jobOrderId"></span></p>
+                    <p>Customer Name: <span  id="name"></span></p>
                 </div>
                 <div>
-                    <p>Phone:</p>
-                    <input type="text" placeholder="" disabled>
+                    <p>Phone: <span  id="num"></span></p>
                 </div>
                 <div>
-                    <p>Status:</p>
-                    <input type="text" placeholder="" disabled>
+                    <p>Status: <span  id="status"></span></p>
                 </div>
                 <div>
-                    <p>Technical:</p>
-                    <input type="text" placeholder="" disabled>
+                    <p>Technical: <span  id="tech"></span></p>
                 </div>
             </div>
 <br>
             <!-- Inner Form -->
             <div class="inner-form">
                 <input type="text" id="inner_field" name="inner_field" placeholder="January 30, 2024" disabled style="width: 98%;"><br>
+                <h1 style="font-size: 13px; margin-top: 8px;"><span id="date"></span></h1><hr>
                 <h1 style="font-size: 13px; margin-top: 8px;">RONALD PHARMACY X IFUEL</h1><hr>
                 <h1 style="font-size: 12px; margin-top: 5px;">JHONALEEN LUYANG</h1>
                 <h1 style="font-size: 12px; margin-top: 5px;">20-C5 URCI TOWNHOMESPAMPLONA TRES 1740s CITY OF LAS PINAS NCR, FOURTH DISTRICT PHILIPPINES</h1><hr>
@@ -227,9 +225,17 @@
         const { jobOrderDetails, workActivities } = response.data;
 
         // Update the input elements with the fetched data
-        const jobOrderIdElement = document.getElementById('jobOrderId');
-        jobOrderIdElement.textContent = jobOrderDetails.joborder_id || '';
-
+        const jobOrderNameElement = document.getElementById('name');
+        jobOrderNameElement.textContent = jobOrderDetails.customer_name || '';
+        const jobOrderNumElement = document.getElementById('num');
+        jobOrderNumElement.textContent = jobOrderDetails.telephone_no || '';
+        const jobOrderStatusElement = document.getElementById('status');
+        jobOrderStatusElement.textContent = jobOrderDetails.status || '';
+        const jobOrderTechElement = document.getElementById('tech');
+        jobOrderTechElement.textContent = jobOrderDetails.full_name || '';
+        const jobOrderDateElement = document.getElementById('date');
+        const formattedDate = new Date(jobOrderDetails.date).toLocaleDateString('en-US');
+        jobOrderDateElement.textContent = formattedDate || '';
         // Update other elements with their corresponding data
         // For example:
         // const customerNameElement = document.getElementById('customerName');
