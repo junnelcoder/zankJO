@@ -15278,6 +15278,11 @@ a.close.disabled {
   margin-bottom: 0;
   line-height: 1.5;
 }
+.modal-title .center {
+  margin-bottom: 0;
+  line-height: 1.5;
+  text-align: center;
+}
 
 .modal-body {
   position: relative;
