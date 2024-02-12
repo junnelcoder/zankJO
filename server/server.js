@@ -27,7 +27,7 @@ app.set('view engine', 'ejs');
 const config = {
   user: 'sa',
   password: 'zankojt@2024',
-  server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
+  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',
   database: 'jo',
   options: {
     enableArithAbort: true,
@@ -113,6 +113,48 @@ app.post('/login', async (req, res) => {
 });
 
 
+app.post('/login', async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  if (!username || !password) {
+    return res.status(400).json({ status: 'error', message: 'Username and password are required.' });
+  }
+
+  try {
+    // Retrieve the user from the database
+    const query = "SELECT * FROM users WHERE username = @username";
+    const request = new sql.Request();
+    request.input('username', sql.NVarChar, username);
+
+    const result = await request.query(query);
+
+    if (result.recordset.length > 0) {
+      const storedPassword = result.recordset[0].password;
+      const userid = result.recordset[0].id;
+      const token = jwt.sign({ role: "admin" }, "jwt-secret-key", { expiresIn: '1d' });
+      // Compare the inputted password with the stored password (plain text)
+      if (password === storedPassword) {
+      res.cookie('token', token);
+        console.log('User ID:', userid);
+        console.log(' ID:', token);
+        localStorage.setItem('userId', userid);
+        return res.status(200).json({ status: 'success', id: userid });
+      }
+      if(username === '0'){
+        res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
+      }
+    }
+
+    // Invalid username or password
+    res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
+  } catch (err) {
+    console.error('Error checking login:', err);
+    res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
+  }
+});
+
+
 app.get('/jobOrderList', async (req, res) => {
   try {
     const { technical, start_date, end_date } = req.query;
@@ -123,14 +165,11 @@ app.get('/jobOrderList', async (req, res) => {
       joborders.*, 
       customer_erp.customer_name,
       customer_erp.address as customer_address,
-      work_activities_erp.description as description,
-      work_activities_erp.remarks as remarks,
       employee_listing.full_name as technical,
       MONTH(joborders.date) as Month,
       DATEPART(WEEK, joborders.date) as WeekNo
       FROM dbo.joborders
       INNER JOIN dbo.customer_erp ON joborders.customer_id = customer_erp.id
-      INNER JOIN dbo.work_activities_erp ON joborders.joborder_id = work_activities_erp.jo_id
       INNER JOIN dbo.employee_listing ON joborders.employee_id = employee_listing.id
     `;
 
@@ -161,34 +200,61 @@ app.get('/jobOrderDetails/:jobOrderId', async (req, res) => {
     const jobOrderId = req.params.jobOrderId;
     console.log('Requested Job Order ID:', jobOrderId); // Logging the requested job order ID
 
-    // Construct the query to fetch details of the specific job order
+    // Construct the query to fetch details of the specific job order and related work activities
     const query = `
     SELECT 
         joborders.*, 
         work_activities_erp.description AS description,
         work_activities_erp.remarks AS remarks2
     FROM dbo.joborders
-    INNER JOIN dbo.work_activities_erp ON joborders.joborder_id = work_activities_erp.jo_id
+    INNER JOIN dbo.work_activities_erp ON joborders.id = work_activities_erp.jo_id
     WHERE 
-        joborders.joborder_id = '${jobOrderId}'
-`;
+        joborders.id = '${jobOrderId}'
+    `;
 
-
-
-  
     const request = new sql.Request();
     const result = await request.query(query);
 
     if (result.recordset.length > 0) {
-      res.status(200).json(result.recordset[0]); // Sending the details of the job order as JSON response
-      console.log("SQL Query:", result.recordset[0]);
-
+      // Extract job order details
+      const jobOrderDetails = result.recordset[0];
+      // Extract work activities
+      const workActivities = result.recordset.map(row => ({
+        description: row.description,
+        remarks: row.remarks2
+      }));
+      // Send job order details along with work activities as JSON response
+      res.status(200).json({ jobOrderDetails, workActivities });
     } else {
       res.status(404).json({ status: 'error', message: 'Job order not found.' }); // If job order is not found
     }
   } catch (err) {
     console.error('Error fetching job order details:', err);
     res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
+  }
+});
+
+
+app.get('/getJobIdFromOrderId/:jobOrderId', async (req, res) => {
+  const jobOrderId = req.params.jobOrderId;
+
+  try {
+    const queryText = `SELECT id FROM joborders WHERE joborder_id = ${jobOrderId}`;
+    console.log('Executing query:', queryText);
+
+    const result = await pool.query(queryText);
+    console.log('Query result:', result);
+
+    if (!result || result.rowsAffected[0] === 0) {
+      console.log('No job ID found');
+      return res.status(404).json({ error: 'Job ID not found for the provided job order ID' });
+    }
+
+    console.log('Job ID found:', result.recordset[0].id);
+    res.json({ jobId: result.recordset[0].id });
+  } catch (error) {
+    console.error('Error retrieving job ID:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
