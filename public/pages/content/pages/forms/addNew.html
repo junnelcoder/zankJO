@@ -22,6 +22,34 @@
   <link rel="stylesheet" href="../../../../css/css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="../../../../css/images/favicon.png" />
+  <script>
+    function submits(){
+      alert("New Tech added successfully");
+      window.location.href="addNew.html"
+    }
+
+    
+const userId = localStorage.getItem('userId');
+
+// Make an AJAX request to fetch data from the server
+const xhr = new XMLHttpRequest();
+xhr.open('GET', `/getDataFromServer/${userId}`, true); // Include userId in the URL
+xhr.onload = function() {
+  if (xhr.status >= 200 && xhr.status < 300) {
+    // Parse the JSON response
+    const data = JSON.parse(xhr.responseText);
+    // Use the retrieved data in your JavaScript code
+    console.log('Password from server:', data.password);
+  } else {
+    console.error('Request failed:', xhr.statusText);
+  }
+};
+xhr.onerror = function() {
+  console.error('Request failed');
+};
+xhr.send();
+
+  </script>
 </head>
 
 <body class="sidebar-fixed">
@@ -215,40 +243,89 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Add New Technical</h4>
-                  <form class="form-sample" id="addTechForm" action="" method="POST" onsubmit="return validatePassword()">
+                  <form class="form-sample" id="addTechForm"  method="POST">
                     <p class="card-description"></p>
-                    <hr></hr>
+                    <hr>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label for="date" class="col-sm-3 col-form-label">USERNAME: </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="username" name="username" required>
-                                    <input type="hidden" id="password" name="password">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button id="submitBtn" class="btn btn-secondary" type="submit">Submit</button>
+                    <!-- Hidden input field for password -->
+                    <!-- Button to trigger modal -->
+                    <button class="btn btn-secondary" type="button" id="submitBtn">Submit</button>
+                
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Hello, Please enter your password.</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <!-- Modal Body -->
+                                <div class="modal-body">
+                                    <!-- Simple form -->
+                                    <div class="form-group">
+                                        <p>Password:</p>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                    </div>
+                                </div>
+                                <!-- Modal Footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" id="modalCloseBtn" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" id="modalSaveBtn" onclick="submits()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
-                
                 <script>
-                    function validatePassword() {
-                        const usernameInput = document.getElementById('username').value;
-                        const passwordInput = prompt('Please enter your password:', 'Enter Password');
-                        if (!passwordInput) {
-                            alert('Password is required.');
-                            return false; // Prevent form submission
-                        }else if (!usernameInput) {
-                            alert('Username is required.');
-                            return false; // Prevent form submission
-                        }else{
-                        document.getElementById('password').value = passwordInput;
-                        return true; // Allow form submission
-                    }
+                  // Get the username input field
+                  const username = document.getElementById('username');
+              
+                  // Get the submit button
+                  const submitBtn = document.getElementById('submitBtn');
+              
+                  // Add an input event listener to the username input field
+                  username.addEventListener('input', function() {
+                      // Check if the username input field is empty
+                      if (username.value.trim() === '') {
+                          // If empty, add the 'disabled' class to the submit button
+                          submitBtn.classList.add('disabled');
+                      } else {
+                          // If not empty, remove the 'disabled' class from the submit button
+                          submitBtn.classList.remove('disabled');
                       }
-                </script>
-                
+                  });
+              </script>
+              <style>
+                              
+              .disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+              }
+              </style>
+                <script>
+                  // Function to validate and open modal
+                  document.getElementById('submitBtn').addEventListener('click', function() {
+                      // Get the value of the username input field
+                      const username = document.getElementById('username').value;
+              
+                      // If username is empty, show an alert and prevent modal from opening
+                      if (!username.trim()) {
+                      } else {
+                          // If username is not empty, open the modal
+                          $('#myModal').modal('show');
+                      }
+                  });
+              </script>
                 
                     <hr></hr>
                     <h4 class="card-title">Add New User</h4>
@@ -279,7 +356,7 @@
                               <select class="form-control" id="role" name="role" required onchange="toggleTextBox()">
                                 <option value="">Select Role</option>
                                 <option value="Zank">Zank</option>
-                                <option value="admin">Admin</option>
+                                <option value="Admin">Admin</option>
                                 <option value="Other">Other (Specify)</option>
                               </select>
                               <input type="text" class="form-control mt-2" id="otherRole" name="otherRole" placeholder="Enter Role" style="display: none;">
@@ -354,6 +431,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <script>
   // Function to handle form submission
   async function submitForm(event) {
@@ -362,13 +440,15 @@
     // Get form data
     const formData = new FormData(event.target);
     const username = formData.get('username');
+    const password = formData.get('password');
 
     try {
       // Send POST request to server
-      const response = await axios.post('/addNewTechForm', { username });
+      const response = await axios.post('/addNewTechForm', { username, password });
       // Handle response
       console.log('Server response:', response.data);
-      alert('Username added successfully.');
+      console.log({password});
+      alert('Username and password added successfully.');
     } catch (error) {
       // Handle errors
       console.error('Error:', error.message);

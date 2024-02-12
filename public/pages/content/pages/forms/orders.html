@@ -10,7 +10,21 @@
   <link rel="stylesheet" href="../../../../css/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../../../css/vendors/css/vendor.bundle.base.css">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  
+  <style>
+    .modal-backdrop {
+  z-index: 1040 !important; /* Adjust z-index to ensure it's above other elements */
+}
+
+.modal.fade.show {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  overflow: hidden;
+}
+  </style>
   <script src="../../../../css/js/local.js"></script>
   <!-- endinject -->
   <!-- plugin css for this page -->
@@ -23,61 +37,7 @@
 </head>
 
 <body class="sidebar-fixed " >
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">JOB ORDER DETAILS</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Job Order Id</th>
-                  <th>Date</th>
-                  <th>Contact Person</th>
-                  <th>Transport</th>
-                  <th>Remarks</th>
-                  <th>Delivery Remarks</th>
-                  <th>Status</th>
-                  <th>Permit Issue</th>
-                  <th>Work Activity</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><span id="jobOrderId"></span></td>
-                  <td><span id="jobOrderDate"></td>
-                  <td><span id="jobOrderContactPerson"></td>
-                  <td>P <span id="jobOrderTransport"></span>.00</td>
-                  <td><span id="jobOrderRemarks"></span></td>
-                  <td><span id="jobOrderDeliveryRemarks"></span></td>
-                  <td><label class="badge badge-danger"><span id="jobOrderStatus"></span></label></td>
-                  <td><span id="permit"></span></td>
-                  <td><select>
-                    <option value="option1">Description: <span id="wDesc"></span></option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                  </select></td>
-                  <!-- <td><label class="badge badge-danger">Pending</label></td> -->
-                </tr>
-               
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success">Print</button>
-          <button type="button" class="btn btn-light" data-dismiss="modal">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container-scroller ">
+  <div class="container-scroller slide-in-left">
     <!-- partial:../../partials/_navbar.html -->
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
@@ -161,7 +121,34 @@
                     
 
                     <!-- Modal Markup -->
-
+<div class="modal fade" id="jobOrderModal"   >
+  <div class="modal-dialog " >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Job Order Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <p><strong>ID:</strong> <span id="jobOrderId"></span></p>
+            <p><strong>Date:</strong> <span id="jobOrderDate"></span></p>
+            <p><strong>Contact Person:</strong> <span id="jobOrderContactPerson"></span></p>
+            <p><strong>Transport for Money:</strong> <span id="jobOrderTransport"></span></p>
+            <!-- Add more details here as needed -->
+          </div>
+          <div class="col-md-6">
+            <p><strong>Remarks:</strong> <span id="jobOrderRemarks"></span></p>
+            <p><strong>Delivery Remarks:</strong> <span id="jobOrderDeliveryRemarks"></span></p>
+            <p><strong>Status:</strong> <span id="jobOrderStatus"></span></p>
+            <!-- Add more details here as needed -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
                   </div>
                 </div>
@@ -334,7 +321,7 @@
         .then(response => {
           const jobOrderDetails = response.data;
           populateModal(jobOrderDetails); // Populate the modal with job order details
-          $('#exampleModal').modal('show'); // Show the modal
+          $('#jobOrderModal').modal('show'); // Show the modal
         })
         .catch(error => {
           console.error('Error fetching job order details:', error);
@@ -352,9 +339,6 @@
                         document.getElementById('jobOrderRemarks').textContent = jobOrderDetails.remarks;
                         document.getElementById('jobOrderDeliveryRemarks').textContent = jobOrderDetails.deliveryRemarks;
                         document.getElementById('jobOrderStatus').textContent = jobOrderDetails.status;
-                        document.getElementById('permit').textContent = jobOrderDetails.permitIssue;
-                        // document.getElementById('wDesc').textContent = jobOrderDetails.work_activity_description;
-                        // document.getElementById('wRemarks').textContent = jobOrderDetails.remarks;
                         // Update other details as needed
                       }
 </script>

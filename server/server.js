@@ -23,21 +23,10 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 app.set('view engine', 'ejs');
 
-// SQL Server Database Connection
-// const config = {
-//   user: 'sa',
-//   password: 'zankojt@2024',
-//   server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
-//   database: 'jo',
-//   options: {
-//     enableArithAbort: true,
-//     encrypt: false,
-//   },
-// };
 const config = {
   user: 'sa',
   password: 'zankojt@2024',
-  server: 'DESKTOP-eir2a8b\\SQLEXPRESS2014',//server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
+  server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014',
   database: 'jo',
   options: {
     enableArithAbort: true,
@@ -46,7 +35,7 @@ const config = {
 };
 //server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014', Justin
 //server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014', Junnel
-//server: 'DESKTOP-U6G6LH1\\SQLEXPRESS2014', Axl    192.168.2.100
+//server: 'DESKTOP-U6G6LH1\\SQLEXPRESS2014', Axl   
 
 // Middleware to handle SQL Server connection
 sql.connect(config)
@@ -112,9 +101,6 @@ app.post('/login', async (req, res) => {
         localStorage.setItem('userId', userid);
         return res.status(200).json({ status: 'success', id: userid });
       }
-      if(username === '0'){
-        res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
-      }
     }
 
     // Invalid username or password
@@ -172,19 +158,9 @@ app.get('/jobOrderDetails/:jobOrderId', async (req, res) => {
     console.log('Requested Job Order ID:', jobOrderId); // Logging the requested job order ID
 
     // Construct the query to fetch details of the specific job order
-    const query = `
-    SELECT 
-        joborders.*,
-        work_activities_erp.description AS work_activity_description,
-        work_activities_erp.remarks AS work_activity_remarks
-    FROM 
-        dbo.work_activities_erp
-    INNER JOIN joborders ON joborders.joborder_id = dbo.work_activities_erp.jo_id
-    WHERE 
-        joborders.joborder_id = '${jobOrderId}'
-`;
+    const query = ` SELECT * FROM dbo.joborders WHERE joborders.joborder_id = '${jobOrderId}'
+    `;
 
-  
     const request = new sql.Request();
     const result = await request.query(query);
 
@@ -314,7 +290,7 @@ app.post('/submit-form', async (req, res) => {
       await transaction.request()
         .input('description', sql.NVarChar(255), description)
         .input('remarks2', sql.NVarChar(255), remarks2)
-        .input('jobOrderId', sql.BigInt, jobOrderId)
+        .input('jobOrderId', sql.Int, jobOrderId)
         .execute('InsertWorkActivity');
     }
 
@@ -337,13 +313,34 @@ app.post('/submit-form', async (req, res) => {
   }
 });
 
+
+// Handle GET request to fetch data from the server
+app.get('/getDataFromServer/:userId', (req, res) => {
+  // Retrieve the user ID from the URL parameter
+  const userId = req.params.userId;
+
+  // Perform database query to retrieve password based on user ID
+  // Replace this with your database query logic
+  const query = `
+    SELECT [password]
+    FROM [jo].[dbo].[users]
+    WHERE [id] = ${userId}
+  `;
+  
+  // Execute the query and retrieve the password from the database
+  // This is just a placeholder and should be replaced with your database query logic
+  const password = 'dummyPassword'; // Replace with actual password retrieved from the database
+
+  // Send the password as a JSON response
+  res.json({ password });
+});
+
 // Handle form submission to add new tech
 app.post('/addNewTechForm', async (req, res) => {
   try {
-    
     // Connect to the database
     await sql.connect(config);
-    
+    const referer = req.header('referer');
     // Retrieve data
     const data = localStorage.getItem('userId');
     // Query the database to get id and full_name values
@@ -352,20 +349,20 @@ app.post('/addNewTechForm', async (req, res) => {
     FROM [dbo].[users] 
     WHERE [id] = ${data}
     `);
-    
 const userData = techresult.recordset[0];
-const password = userData ? userData.password : null;
-    
+const DBpassword = userData.password;
     // Retrieve form data from request body
     const { username } = req.body;
-    console.log('Username from request body:', username);
-    
+    //console.log('Username from request body:', username);
     if (!username) {
       throw new Error('No username found in request body.');
     }
-
-    console.log('Retrieved username from request body:', username);
-
+    const { password } = req.body;
+    //console.log('password from request body:', password);
+    if (!password) {
+      throw new Error('No password found in request body.');
+    }
+    if(DBpassword==password){
     // Connect to the SQL Server database
     await poolConnect;
     console.log('Database connection established successfully.');
@@ -373,14 +370,16 @@ const password = userData ? userData.password : null;
     // Insert the new username into the employee_listing table
     const request = pool.request();
     request.input('username', sql.NVarChar, username);
-    const result = await request.query(`
-      INSERT INTO employee_listing (full_name)
-      VALUES (@username)
-    `);
-    console.log('Username added successfully:', username); // Log successful insertion
-
+      const result = await request.query(`
+        INSERT INTO employee_listing (full_name)
+        VALUES (@username)
+      `);
+      console.log('Technical added sssuccessfully:', username); // Log successful insertion
     // Respond with success message
-    res.status(200).send('New technical added successfully.');
+    }else{
+      console.log("doesn't match");
+    }
+    
   } catch (error) {
     // If an error occurs, respond with an error message
     console.error('Error adding username:', error.message);

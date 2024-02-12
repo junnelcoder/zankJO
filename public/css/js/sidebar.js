@@ -64,3 +64,10 @@ function windowBack(){
   localStorage.clear();
   window.location.href="/";
 }
+function logout() {
+  localStorage.clear();
+  window.location.href="/";
+}
+function closeDropdown() {
+  $('.dropdown-menu.settings').dropdown('hide');
+}
