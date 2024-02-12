@@ -234,6 +234,51 @@ app.get('/jobOrderDetails/:jobOrderId', async (req, res) => {
   }
 });
 
+app.get('/jobOrderDetails2/:jobOrderId', async (req, res) => {
+  try {
+    const jobOrderId = req.params.jobOrderId;
+    console.log('Requested Job Order ID:', jobOrderId); // Logging the requested job order ID
+
+    // Construct the query to fetch details of the specific job order and related work activities
+    const query = `
+    SELECT 
+        joborders.*, 
+        customer_erp.*,
+        users.*,
+        employee_listing.*,
+        work_activities_erp.description AS description,
+        work_activities_erp.remarks AS remarks2
+    FROM dbo.joborders
+    INNER JOIN dbo.work_activities_erp ON joborders.id = work_activities_erp.jo_id
+    INNER JOIN dbo.customer_erp ON joborders.customer_id = customer_erp.id
+    INNER JOIN dbo.users ON joborders.user_id = users.id
+    INNER JOIN dbo.employee_listing ON joborders.employee_id = employee_listing.id
+    WHERE 
+        joborders.id = '${jobOrderId}'
+    `;
+
+    const request = new sql.Request();
+    const result = await request.query(query);
+
+    if (result.recordset.length > 0) {
+      // Extract job order details
+      const jobOrderDetails = result.recordset[0];
+      // Extract work activities
+      const workActivities = result.recordset.map(row => ({
+        description: row.description,
+        remarks: row.remarks2
+      }));
+      // Send job order details along with work activities as JSON response
+      res.status(200).json({ jobOrderDetails, workActivities });
+    } else {
+      res.status(404).json({ status: 'error', message: 'Job order not found.' }); // If job order is not found
+    }
+  } catch (err) {
+    console.error('Error fetching job order details:', err);
+    res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
+  }
+});
+
 
 app.get('/getJobIdFromOrderId/:jobOrderId', async (req, res) => {
   const jobOrderId = req.params.jobOrderId;

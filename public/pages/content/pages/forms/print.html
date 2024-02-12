@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Zank POS</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../../../../css/js/local.js"></script>
+    <link rel="stylesheet" href="../../../../css/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../../../css/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="../../../../css/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="../../../../css/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../../../css/images/favicon.png" />
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3/dist/JsBarcode.all.min.js"></script>
+    <script>
+        // Triggered after the printing process is completed (whether printing or canceling)
+        // window.onafterprint = function() {
+        //     // Close the current tab or window
+        //     window.close();
+        // };
+    
+        // Trigger the print dialog when the page is loaded
+        window.onload = function() {
+    fetchJobOrderDetails(jobOrderId);
+    //window.print();
+};
+
+    </script>
+    
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        
+       
+        .barcode-container {
+         display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+
+        #barcodeCanvas {
+        width: 200px; /* Set a fixed width for the canvas */
+        height: 100px; /* Set a fixed height for the canvas */
+        border-radius: 5px;
+        margin-bottom: 10px;
+        }
+
+        #barcodeCanvas {
+        width: 200px; /* Set a fixed width for the canvas */
+        height: 100px; /* Set a fixed height for the canvas */
+        border-radius: 5px;
+        margin-bottom: 10px;
+        }
+
+        #barcodeData::placeholder {
+            text-align: center;
+        }
+        h1 {
+            text-align: left;
+            margin-top: 0;
+        }
+        .job-order {
+            font-size: 14px;
+            margin-top: -10px; /* Adjust this value to align with the company name */
+        }
+        p {
+            font-size: 13px;
+            margin: 0;
+        }
+        .form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+        }
+        .form p {
+            margin: 0;
+        }
+        .form input[type="text"] {
+            width: 85%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .barcode-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        #barcodeCanvas {
+            width: 50%;
+        }
+        #barcodeData {
+            flex-grow: 1;
+
+        }
+        #generateBarcodeBtn {
+            flex-shrink: 0;
+        }
+        label {
+            font-weight: bold;
+        }
+        .inner-form {
+            background-color: #f9f9f9;
+            border: 1px solid;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 
+            4px;
+        }
+        .three-row-text {
+            font-size: 12px;
+            line-height: 1.5;
+            margin-top: 20px;
+            word-spacing: 10px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <p style="font-family: impact; font-size: 40px;">ZANK POS ENTERPRISES</p>
+        <p>Unit 1012 G/F IT Village 696 Brgy Aurora Blvd Cubao Quezon</p>
+        <p>City Metro Manila Philippines 1109</p>
+        <p>E-mail: admin@zankpos.com</p>
+        <p>Hotline Number: 0905-308-9906 / 0943-128-6796</p>
+        <p>881-6248 / 721-1561</p><br>
+        <form>
+            <div class="form">
+                <div>
+                    <p>Customer Name: <span  id="jobOrderId"></span></p>
+                </div>
+                <div>
+                    <p>Phone:</p>
+                    <input type="text" placeholder="" disabled>
+                </div>
+                <div>
+                    <p>Status:</p>
+                    <input type="text" placeholder="" disabled>
+                </div>
+                <div>
+                    <p>Technical:</p>
+                    <input type="text" placeholder="" disabled>
+                </div>
+            </div>
+<br>
+            <!-- Inner Form -->
+            <div class="inner-form">
+                <input type="text" id="inner_field" name="inner_field" placeholder="January 30, 2024" disabled style="width: 98%;"><br>
+                <h1 style="font-size: 13px; margin-top: 8px;">RONALD PHARMACY X IFUEL</h1><hr>
+                <h1 style="font-size: 12px; margin-top: 5px;">JHONALEEN LUYANG</h1>
+                <h1 style="font-size: 12px; margin-top: 5px;">20-C5 URCI TOWNHOMESPAMPLONA TRES 1740s CITY OF LAS PINAS NCR, FOURTH DISTRICT PHILIPPINES</h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;">095589789589&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Transpo: ? 0</h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;">Remarks:</h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;">1. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;">2. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;">3. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;">4. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;">5. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;">6. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;">7. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;">8. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;">Details:</h1><hr>
+                <h1 style="font-size: 12px; margin-top: 5px;">Total:</h1><hr>
+                <input type="text" id="inner_field" name="inner_field" placeholder="Prepared by: Admin" disabled style="font-style: italic; width: 98%;"><br>
+            </div>
+        </form>
+        
+        <h1 style="font-size: 13px; margin-top: 15px;">DATE REPORT: January 30, 2024</h1>
+        <h1 style="font-size: 13px; margin-bottom: 20px;">ASSIGNED TECH: HAROLD</h1>
+        <input type="text" id="inner_field" name="inner_field" placeholder=" WORK ACTIVITY" disabled style="margin-top: 10px; height: 30px; width: 100%; border: 1px solid black;"><br>
+
+        <div class="three-row-text">
+            <div>
+            &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+            &nbsp;    [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+            &nbsp;    [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+            &nbsp;  [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+            &nbsp;    [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+            &nbsp;   [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+            &nbsp;   [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+            &nbsp;  [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+
+            </div>
+        </div>
+        <input type="text" id="inner_field" name="inner_field" placeholder=" STATUS OF WORK" disabled style="margin-top: 15px; height: 30px; width: 100%; border: 1px solid black;"><br>
+
+       
+             <h1 style="font-size: 12px; margin-top: 15px;">[ ] FOR RE-SCHEDULE <span style="padding-left: 50px;">ITEM:</span></h1>
+             <h1 style="font-size: 12px; margin-top: 15px;">[ ] WORK SERVICE <span style="padding-left: 70px;">SERIAL AND MODEL:</span></h1>
+             <h1 style="font-size: 12px; margin-top: 15px;">[ ] DELIVERY <span style="padding-left: 105px;">NAME OF RECIEVER:</span></h1>
+             <h1 style="font-size: 12px; margin-top: 15px;">[ ] APULL-OUT</h1>
+             <h1 style="font-size: 12px; margin-top: 15px;">[ ] ITEM RETURN <span style="padding-left: 80px;">OTHERS PLEASE SPECIFY:</span></h1><br>
+             <h1 style="font-size: 13px; margin-top: 15px;">TIME OF ARRIVAL: <span style="padding-left: 60px;">TOTAL SERVICE TIME:</span></h1>
+             <h1 style="font-size: 13px; margin-top: 15px;">TIME OF DEPART: <span style="padding-left: 65px;">CUSTOMER AME AND SIGNATURE:</span></h1>
+             
+    <!-- Barcode section -->
+    <div class="barcode-container">
+        <canvas id="barcodeCanvas"></canvas>
+        <!-- Barcode data input -->
+        <p>JOB ORDER SERVICE REPORT NO:</p>
+        <input type="text" id="barcodeData" placeholder="Enter barcode data">
+    </div>
+
+    <!-- JavaScript to generate the barcode -->
+    <script>
+        // Function to fetch job order details from the server
+        function fetchJobOrderDetails(jobOrderId) {
+            console.log(jobOrderId);
+
+            // Make an HTTP GET request to fetch job order details
+            axios.get(`http://${location.host}/jobOrderDetails2/${jobOrderId}`)
+    .then(response => {
+        // Extract job order details and work activities from the response
+        const { jobOrderDetails, workActivities } = response.data;
+
+        // Update the input elements with the fetched data
+        const jobOrderIdElement = document.getElementById('jobOrderId');
+        jobOrderIdElement.textContent = jobOrderDetails.joborder_id || '';
+
+        // Update other elements with their corresponding data
+        // For example:
+        // const customerNameElement = document.getElementById('customerName');
+        // customerNameElement.textContent = jobOrderDetails.customer_name || '';
+
+        // Generate barcode if needed
+        generateBarcode();
+    })
+    .catch(error => {
+        console.error('Error fetching job order details:', error);
+        // Handle error if needed
+    });
+
+        }
+    
+        // Function to generate the barcode
+        function generateBarcode() {
+            var barcodeData = document.getElementById("barcodeData").value;
+            if (barcodeData) {
+                JsBarcode("#barcodeCanvas", barcodeData, {
+                    format: "CODE128",
+                    displayValue: true,
+                    width: 2, // Set the width of the barcode bars
+                    height: 40 // Set the height of the barcode
+                });
+            }
+        }
+    
+        // Extract job order ID from the URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const jobOrderId = urlParams.get('jobOrderId');
+    
+        // Automatically fetch job order details when the page is loaded
+        
+    </script>
+        
+    </body>
+</html>
