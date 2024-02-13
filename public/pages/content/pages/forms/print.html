@@ -17,22 +17,7 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="../../../../css/images/favicon.png" />
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3/dist/JsBarcode.all.min.js"></script>
-    <script>
-        // Triggered after the printing process is completed (whether printing or canceling)
-        // window.onafterprint = function() {
-        //     // Close the current tab or window
-        //     window.close();
-        // };
-    
-        // Trigger the print dialog when the page is loaded
-        window.onload = function() {
-    fetchJobOrderDetails(jobOrderId);
-    //window.print();
-};
 
-    </script>
-    
-    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -40,10 +25,13 @@
             margin: 0;
             padding: 20px;
         }
-        
+
        
         .barcode-container {
-         display: flex;
+        position: absolute;
+        top: 15px;
+        left:1550px;
+        display: flex;
         flex-direction: column;
         align-items: center;
         margin-bottom: 20px;
@@ -62,7 +50,9 @@
         border-radius: 5px;
         margin-bottom: 10px;
         }
-
+        #barcodeCanvas {
+        border: none; /* Remove border */
+        }
         #barcodeData::placeholder {
             text-align: center;
         }
@@ -99,9 +89,27 @@
             justify-content: space-between;
             margin-bottom: 20px;
         }
+
+        @media print {
+            /* Adjust the position of the barcode */
+            .barcode-container {
+                position: absolute; /* Set position to absolute */
+                top: 10px; /* Adjust top margin as needed */
+                left: 420px; /* Align to the left edge */
+                right: 0; /* Align to the right edge */
+                margin-left: auto; /* Center horizontally */
+                margin-right: auto;
+                text-align: center;
+            }
+          }
+
         #barcodeCanvas {
-            width: 50%;
+            width: 300px; /* Set a larger width for printing */
+            height: auto; /* Let the height adjust proportionally */
+            border-radius: 5px;
+            margin-bottom: 5px;
         }
+    
         #barcodeData {
             flex-grow: 1;
 
@@ -124,7 +132,6 @@
             font-size: 12px;
             line-height: 1.5;
             margin-top: 20px;
-            word-spacing: 10px;
         }
     </style>
 </head>
@@ -140,36 +147,32 @@
         <form>
             <div class="form">
                 <div>
-                    <p>Customer Name: <span  id="name"></span></p>
+                    <p>Name: </p>
+                    <input type="text" id="name" placeholder="" disabled>
                 </div>
                 <div>
-                    <p>Phone: <span  id="num"></span></p>
+                    <p>Phone:</p>
+                    <input type="text" id="num" placeholder="" disabled>
                 </div>
                 <div>
-                    <p>Status: <span  id="status"></span></p>
+                    <p>Status:</p>
+                    <input type="text" id="status" placeholder="" disabled>
                 </div>
                 <div>
-                    <p>Technical: <span  id="tech"></span></p>
+                    <p>Technical:</p>
+                    <input type="text" id="tech" placeholder="" disabled>
                 </div>
             </div>
-<br>
+<br><br>
             <!-- Inner Form -->
             <div class="inner-form">
-                <input type="text" id="inner_field" name="inner_field" placeholder="January 30, 2024" disabled style="width: 98%;"><br>
-                <h1 style="font-size: 13px; margin-top: 8px;"><span id="date"></span></h1><hr>
-                <h1 style="font-size: 13px; margin-top: 8px;">RONALD PHARMACY X IFUEL</h1><hr>
-                <h1 style="font-size: 12px; margin-top: 5px;">JHONALEEN LUYANG</h1>
-                <h1 style="font-size: 12px; margin-top: 5px;">20-C5 URCI TOWNHOMESPAMPLONA TRES 1740s CITY OF LAS PINAS NCR, FOURTH DISTRICT PHILIPPINES</h1><hr>
-                <h1 style="font-size: 13px; margin-top: 5px;">095589789589&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Transpo: ? 0</h1><hr>
+                <input type="text" id="date" name="inner_field" placeholder="" disabled style="width: 98%;"><br>
+                <h1 style="font-size: 13px; margin-top: 8px;" id="name2"></h1><hr>
+                <h1 style="font-size: 12px; margin-top: 5px;" id="cPer"></h1>
+                <h1 style="font-size: 12px; margin-top: 5px;" id="add"></h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;"><span id="num2"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Transpo: Php <span id="trans"></span>.00</h1><hr>
                 <h1 style="font-size: 13px; margin-top: 5px;">Remarks:</h1><hr>
-                <h1 style="font-size: 13px; margin-top: 5px;">1. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
-                <h1 style="font-size: 13px; margin-top: 5px;">2. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
-                <h1 style="font-size: 13px; margin-top: 5px;">3. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
-                <h1 style="font-size: 13px; margin-top: 5px;">4. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
-                <h1 style="font-size: 13px; margin-top: 5px;">5. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
-                <h1 style="font-size: 13px; margin-top: 5px;">6. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
-                <h1 style="font-size: 13px; margin-top: 5px;">7. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
-                <h1 style="font-size: 13px; margin-top: 5px;">8. DELIVERY INSTALL / TRAINING <span style="padding-left: 50px;">ZENTYAL SOFTWARE </h1><hr>
+                <div id="workActivitiesContainer"></div>
                 <h1 style="font-size: 13px; margin-top: 5px;">Details:</h1><hr>
                 <h1 style="font-size: 12px; margin-top: 5px;">Total:</h1><hr>
                 <input type="text" id="inner_field" name="inner_field" placeholder="Prepared by: Admin" disabled style="font-style: italic; width: 98%;"><br>
@@ -182,14 +185,14 @@
 
         <div class="three-row-text">
             <div>
-            &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-            &nbsp;    [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-            &nbsp;    [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-            &nbsp;  [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-            &nbsp;    [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-            &nbsp;   [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-            &nbsp;   [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-            &nbsp;  [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
 
             </div>
         </div>
@@ -203,74 +206,158 @@
              <h1 style="font-size: 12px; margin-top: 15px;">[ ] ITEM RETURN <span style="padding-left: 80px;">OTHERS PLEASE SPECIFY:</span></h1><br>
              <h1 style="font-size: 13px; margin-top: 15px;">TIME OF ARRIVAL: <span style="padding-left: 60px;">TOTAL SERVICE TIME:</span></h1>
              <h1 style="font-size: 13px; margin-top: 15px;">TIME OF DEPART: <span style="padding-left: 65px;">CUSTOMER AME AND SIGNATURE:</span></h1>
-             
-    <!-- Barcode section -->
-    <div class="barcode-container">
-        <canvas id="barcodeCanvas"></canvas>
-        <!-- Barcode data input -->
+<!-- Barcode section -->
+<div class="barcode-container">
+    <canvas id="barcodeCanvas"></canvas>
+    <!-- Barcode data input -->
+    <div class="barcode-input-container">
         <p>JOB ORDER SERVICE REPORT NO:</p>
-        <input type="text" id="barcodeData" placeholder="Enter barcode data">
+        <!-- <input type="text" id="barcodeData" placeholder="Enter barcode data" maxlength="12" style="border: none;">  -->
     </div>
+</div>
 
-    <!-- JavaScript to generate the barcode -->
-    <script>
-        // Function to fetch job order details from the server
-        function fetchJobOrderDetails(jobOrderId) {
-            console.log(jobOrderId);
+<!-- JavaScript to generate the barcode -->
+<script>
+    // Initial barcode data
+    var initialBarcodeData = "111111111111"; // Example data
 
-            // Make an HTTP GET request to fetch job order details
-            axios.get(`http://${location.host}/jobOrderDetails2/${jobOrderId}`)
-    .then(response => {
-        // Extract job order details and work activities from the response
-        const { jobOrderDetails, workActivities } = response.data;
-
-        // Update the input elements with the fetched data
-        const jobOrderNameElement = document.getElementById('name');
-        jobOrderNameElement.textContent = jobOrderDetails.customer_name || '';
-        const jobOrderNumElement = document.getElementById('num');
-        jobOrderNumElement.textContent = jobOrderDetails.telephone_no || '';
-        const jobOrderStatusElement = document.getElementById('status');
-        jobOrderStatusElement.textContent = jobOrderDetails.status || '';
-        const jobOrderTechElement = document.getElementById('tech');
-        jobOrderTechElement.textContent = jobOrderDetails.full_name || '';
-        const jobOrderDateElement = document.getElementById('date');
-        const formattedDate = new Date(jobOrderDetails.date).toLocaleDateString('en-US');
-        jobOrderDateElement.textContent = formattedDate || '';
-        // Update other elements with their corresponding data
-        // For example:
-        // const customerNameElement = document.getElementById('customerName');
-        // customerNameElement.textContent = jobOrderDetails.customer_name || '';
-
-        // Generate barcode if needed
-        generateBarcode();
-    })
-    .catch(error => {
-        console.error('Error fetching job order details:', error);
-        // Handle error if needed
-    });
-
-        }
-    
-        // Function to generate the barcode
-        function generateBarcode() {
-            var barcodeData = document.getElementById("barcodeData").value;
-            if (barcodeData) {
+    function generateBarcode(barcodeData) {
+        if (barcodeData) {
+            // Check if the input length is less than or equal to 12 characters
+            if (barcodeData.length <= 12) {
                 JsBarcode("#barcodeCanvas", barcodeData, {
                     format: "CODE128",
                     displayValue: true,
                     width: 2, // Set the width of the barcode bars
-                    height: 40 // Set the height of the barcode
+                    height: 40, // Set the height of the barcode
+                    background: "transparent" // Set background color to transparent
                 });
+            } else {
+                // Clear the input if it exceeds 12 characters
+                document.getElementById("barcodeData").value = barcodeData.substring(0, 12);
             }
         }
-    
-        // Extract job order ID from the URL parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const jobOrderId = urlParams.get('jobOrderId');
-    
-        // Automatically fetch job order details when the page is loaded
+    }
+
+    // Generate barcode with initial data
+    generateBarcode(initialBarcodeData);
+</script>
+<script>
+    // Triggered after the printing process is completed (whether printing or canceling)
+    // window.onafterprint = function() {
+    //     // Close the current tab or window
+    //     window.close();
+    // };
+
+    // Trigger the print dialog when the page is loaded
+    window.onload = function() {
+fetchJobOrderDetails(jobOrderId);
+//window.print();
+};
+
+</script>
+
+
+
+
+
+
+
+
+<script>
+    // Function to fetch job order details from the server
+    function fetchJobOrderDetails(jobOrderId) {
+        console.log(jobOrderId);
+
+        // Make an HTTP GET request to fetch job order details
+        axios.get(`http://${location.host}/jobOrderDetails2/${jobOrderId}`)
+            .then(response => {
+                // Extract job order details and work activities from the response
+                const { jobOrderDetails, workActivities } = response.data;
+
+                // Update the input elements with the fetched data
+                const jobOrderNameElement = document.getElementById('name');
+                jobOrderNameElement.value = jobOrderDetails.customer_name || '';
+                const jobOrderNameElement2 = document.getElementById('name2');
+                jobOrderNameElement2.textContent = jobOrderDetails.customer_name || '';
+
+                const jobOrderNumElement = document.getElementById('num');
+                jobOrderNumElement.value = jobOrderDetails.telephone_no || '';
+
+                const jobOrderNum2Element = document.getElementById('num2');
+                jobOrderNum2Element.textContent = jobOrderDetails.telephone_no || '';
+                const jobOrderStatusElement = document.getElementById('status');
+                jobOrderStatusElement.value = jobOrderDetails.status || '';
+                const jobOrderTechElement = document.getElementById('tech');
+                jobOrderTechElement.value = jobOrderDetails.full_name || '';
+                const jobOrderDateElement = document.getElementById('date');
+
+                if (jobOrderDetails.date) {
+                    const dateObject = new Date(jobOrderDetails.date);
+                    const options = { month: 'long', day: 'numeric', year: 'numeric' };
+                    const formattedDate = dateObject.toLocaleDateString('en-US', options);
+                    jobOrderDateElement.value = formattedDate;
+                } else {
+                    jobOrderDateElement.value = '';
+                }
+                const jobOrdercPerElement = document.getElementById('cPer');
+                jobOrdercPerElement.textContent = jobOrderDetails.contactPerson || '';
+                const jobOrdercAddElement = document.getElementById('add');
+                jobOrdercAddElement.textContent = jobOrderDetails.address || '';
+                const jobOrderctransElement = document.getElementById('trans');
+                jobOrderctransElement.textContent = jobOrderDetails.transportForMoney || '';
+
+                // Populate the work activities container with the details of each work activity
+                if (workActivities && workActivities.length > 0) {
+                    const workActivitiesContainer = document.getElementById('workActivitiesContainer');
+                    workActivitiesContainer.innerHTML = '';
+                    let counter = 1;
+
+                    workActivities.forEach(workActivity => {
+                        const activityElement = document.createElement('div');
+                        activityElement.style.fontSize = '13px';
+                        activityElement.style.marginTop = '5px';
+                        activityElement.textContent = `${counter}. ${workActivity.description}`;
+
+                        const spanElement = document.createElement('span');
+                        spanElement.style.paddingLeft = '50px';
+                        spanElement.textContent = `${workActivity.remarks}`; // assuming remarks2 contains "ZENTYAL SOFTWARE"
+
+                        activityElement.appendChild(spanElement);
+
+                        workActivitiesContainer.appendChild(activityElement);
+
+                        if (counter < workActivities.length) {
+                            const hrElement = document.createElement('hr');
+                            workActivitiesContainer.appendChild(hrElement);
+                        }
+
+                        counter++;
+                    });
+                } else {
+                    console.error("Error fetching job order details: Missing or undefined workActivities");
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching job order details:', error);
+                // Handle error if needed
+            });
+    }
+
+    // Extract job order ID from the URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const jobOrderId = urlParams.get('jobOrderId');
+
+    // Automatically fetch job order details when the page is loaded
+    fetchJobOrderDetails(jobOrderId);
+</script>
+
+
+
+            <img src="../../../../css/images/zanklogo.png" alt="logo" style="width: 150px; height: auto;">
+            
+        </div>
         
-    </script>
         
     </body>
 </html>

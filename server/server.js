@@ -27,7 +27,7 @@ app.set('view engine', 'ejs');
 const config = {
   user: 'sa',
   password: 'zankojt@2024',
-  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',
+  server: 'DESKTOP-SA4VIBJ\\SQLEXPRESS',
   database: 'jo',
   options: {
     enableArithAbort: true,
@@ -75,84 +75,55 @@ app.get('/', (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ status: 'error', message: 'Username and password are required.' });
+      return res.status(400).json({ status: 'error', message: 'Username and password are required.' });
   }
 
   try {
-    // Retrieve the user from the database
-    const query = "SELECT * FROM users WHERE username = @username";
-    const request = new sql.Request();
-    request.input('username', sql.NVarChar, username);
+      // Retrieve the user from the database
+      const query = "SELECT * FROM users WHERE username = @username";
+      const request = new sql.Request();
+      request.input('username', sql.NVarChar, username);
 
-    const result = await request.query(query);
+      const result = await request.query(query);
 
-    if (result.recordset.length > 0) {
-      const storedPasswordHash = result.recordset[0].password;
-      const userid = result.recordset[0].id;
-      const token = jwt.sign({ role: "admin" }, "jwt-secret-key", { expiresIn: '1d' });
-      const passwordMatch = await bcrypt.compare(password, storedPasswordHash);
-      if (passwordMatch) {
-        res.cookie('token', token);
-        console.log('User ID:', userid);
-        //console.log(' ID:', token);
-        localStorage.setItem('userId', userid);
-        return res.status(200).json({ status: 'success', id: userid });
+      if (result.recordset.length > 0) {
+          const storedPasswordHash = result.recordset[0].password;
+          const userId = result.recordset[0].id;
+          const user = result.recordset[0].username;
+
+          // Compare the provided password with the stored hash
+          const passwordMatch = await bcrypt.compare(password, storedPasswordHash);
+
+          if (passwordMatch) {
+              // Generate JWT token
+              const token = jwt.sign({ userId, username: user }, "jwt-secret-key", { expiresIn: '1d' });
+
+              // Set JWT token in a cookie
+              res.cookie('token', token, { httpOnly: true });
+
+              // Store userId and username in localStorage
+              localStorage.setItem('userId', userId);
+              localStorage.setItem('username', user);
+
+              // After successful login
+              return res.status(200).json({ status: 'success', id: userId, username: username });
+
+          }
       }
-    }
 
-    // Invalid username or password
-    res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
+      // Invalid username or password
+      return res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
   } catch (err) {
-    console.error('Error checking login:', err);
-    res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
+      console.error('Error checking login:', err);
+      return res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
   }
 });
 
 
-app.post('/login', async (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
 
-  if (!username || !password) {
-    return res.status(400).json({ status: 'error', message: 'Username and password are required.' });
-  }
-
-  try {
-    // Retrieve the user from the database
-    const query = "SELECT * FROM users WHERE username = @username";
-    const request = new sql.Request();
-    request.input('username', sql.NVarChar, username);
-
-    const result = await request.query(query);
-
-    if (result.recordset.length > 0) {
-      const storedPassword = result.recordset[0].password;
-      const userid = result.recordset[0].id;
-      const token = jwt.sign({ role: "admin" }, "jwt-secret-key", { expiresIn: '1d' });
-      // Compare the inputted password with the stored password (plain text)
-      if (password === storedPassword) {
-      res.cookie('token', token);
-        console.log('User ID:', userid);
-        console.log(' ID:', token);
-        localStorage.setItem('userId', userid);
-        return res.status(200).json({ status: 'success', id: userid });
-      }
-      if(username === '0'){
-        res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
-      }
-    }
-
-    // Invalid username or password
-    res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
-  } catch (err) {
-    console.error('Error checking login:', err);
-    res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
-  }
-});
 
 
 app.get('/jobOrderList', async (req, res) => {
