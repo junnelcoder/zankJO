@@ -53,7 +53,6 @@ xhr.send();
 </head>
 
 <body class="sidebar-fixed">
-  <body class="sidebar-fixed">
   
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
@@ -266,7 +265,7 @@ xhr.send();
                             <div class="modal-content">
                                 <!-- Modal Header -->
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Hello, Please enter your password.</h4>
+                                    <h4 class="modal-title">Hello, Please re-enter your password.</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <!-- Modal Body -->
@@ -446,8 +445,6 @@ xhr.send();
       // Send POST request to server
       const response = await axios.post('/addNewTechForm', { username, password });
       // Handle response
-      console.log('Server response:', response.data);
-      console.log({password});
       alert('Username and password added successfully.');
     } catch (error) {
       // Handle errors
