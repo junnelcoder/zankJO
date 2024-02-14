@@ -18,18 +18,25 @@
     <link rel="shortcut icon" href="../../../../css/images/favicon.png" />
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3/dist/JsBarcode.all.min.js"></script>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 20px;
-        }
 
-       
+
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Bahnschrift:wght@300&display=swap');
+
+        body {
+        font-family: 'Bahnschrift Light', 'Segoe UI', sans-serif;
+        font-weight: bold; /* Make the font bold */
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 20px;
+        }
+        .container {
+        width: 100%; 
+        }      
+
         .barcode-container {
         position: absolute;
-        top: 15px;
+        top: 20px;
         left:1550px;
         display: flex;
         flex-direction: column;
@@ -71,18 +78,34 @@
         .form {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            grid-gap: 20px;
+            grid-gap: 15px;
+            margin-left: 8px;
+            
         }
         .form p {
-            margin: 0;
+        font-family: 'Bahnschrift Light', 'Segoe UI', sans-serif;
+         font-weight: bold;
+         font-size: 16px;
         }
+
+        .form p[style*="margin-left: 50px;"] {
+        margin-left: 50px;
+        }
+
+        .form p[style*="margin-left: 0px;"] {
+        margin-left: 0px;   
+        }
+
         .form input[type="text"] {
+            font-family: 'Bahnschrift Light', 'Segoe UI', sans-serif;
+            font-weight: bold;
             width: 85%;
             padding: 10px;
             margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         .barcode-container {
             display: flex;
             align-items: center;
@@ -91,11 +114,10 @@
         }
 
         @media print {
-            /* Adjust the position of the barcode */
             .barcode-container {
                 position: absolute; /* Set position to absolute */
-                top: 10px; /* Adjust top margin as needed */
-                left: 420px; /* Align to the left edge */
+                top: 16px; /* Adjust top margin as needed */
+                left: 425px; /* Align to the left edge */
                 right: 0; /* Align to the right edge */
                 margin-left: auto; /* Center horizontally */
                 margin-right: auto;
@@ -128,22 +150,34 @@
             margin-top: 
             4px;
         }
-        .three-row-text {
-            font-size: 12px;
-            line-height: 1.5;
-            margin-top: 20px;
+        #inner_field::placeholder {
+         font-weight: bold;
         }
-    </style>
+
+        .three-row-text table {
+        border-collapse: collapse;
+        width: 100%;
+         }
+
+        .three-row-text td {
+        text-align: left;
+         padding: 8px;
+        }
+
+         .three-row-text tr {
+        margin-bottom: 10px; /* Adjust the spacing as needed */
+        }
+     </style>
 </head>
 <body>
     
     <div class="container">
-        <p style="font-family: impact; font-size: 40px;">ZANK POS ENTERPRISES</p>
-        <p>Unit 1012 G/F IT Village 696 Brgy Aurora Blvd Cubao Quezon</p>
-        <p>City Metro Manila Philippines 1109</p>
-        <p>E-mail: admin@zankpos.com</p>
-        <p>Hotline Number: 0905-308-9906 / 0943-128-6796</p>
-        <p>881-6248 / 721-1561</p><br>
+        <p style="font-family: impact; font-size: 43px;">ZANK POS ENTERPRISES</p>
+        <p style="font-size: 15px;">Unit 1012 G/F IT Village 696 Brgy Aurora Blvd Cubao Quezon</p>
+        <p style="font-size: 15px;">City Metro Manila Philippines 1109</p>
+        <p style="font-size: 15px;">E-mail: admin@zankpos.com</p>
+        <p style="font-size: 15px;">Hotline Number: 0905-308-9906 / 0943-128-6796</p>
+        <p style="font-size: 15px;">881-6248 / 721-1561</p><br>
         <form>
             <div class="form">
                 <div>
@@ -163,58 +197,103 @@
                     <input type="text" id="tech" placeholder="" disabled>
                 </div>
             </div>
-<br><br>
+            <br><br>
             <!-- Inner Form -->
             <div class="inner-form">
                 <input type="text" id="date" name="inner_field" placeholder="" disabled style="width: 98%;"><br>
-                <h1 style="font-size: 13px; margin-top: 8px;" id="name2"></h1><hr>
-                <h1 style="font-size: 12px; margin-top: 5px;" id="cPer"></h1>
-                <h1 style="font-size: 12px; margin-top: 5px;" id="add"></h1><hr>
-                <h1 style="font-size: 13px; margin-top: 5px;"><span id="num2"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Transpo: Php <span id="trans"></span>.00</h1><hr>
+                <h1 style="font-size: 14px; margin-top: 8px;" id="name2"></h1><hr>
+                <h1 style="font-size: 14px; margin-top: 5px;" id="cPer"></h1>
+                <h1 style="font-size: 14px; margin-top: 5px;" id="add"></h1><hr>
+                <h1 style="font-size: 14px; margin-top: 5px;"><span id="num2"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Transpo: Php <span id="trans"></span>.00</h1><hr>
                 <h1 style="font-size: 13px; margin-top: 5px;">Remarks:</h1><hr>
-                <div id="workActivitiesContainer"></div>
-                <h1 style="font-size: 13px; margin-top: 5px;">Details:</h1><hr>
-                <h1 style="font-size: 12px; margin-top: 5px;">Total:</h1><hr>
-                <input type="text" id="inner_field" name="inner_field" placeholder="Prepared by: Admin" disabled style="font-style: italic; width: 98%;"><br>
+                <div id="workActivitiesContainer"></div><hr>
+                <h1 style="font-size: 15px; margin-top: 5px;">Details:</h1>
+                <h1 style="font-family:'Times New Roman', Times, serif;font-size: 13px; margin-top: 5px;" id="deliv"></h1><hr>
+                <input type="text" id="inner_field" name="inner_field" placeholder="Prepared by: Admin" disabled style="font-style: italic; width: 98%; text-align: right;"><br>
             </div>
         </form>
         
         <h1 style="font-size: 13px; margin-top: 15px;">DATE REPORT: January 30, 2024</h1>
         <h1 style="font-size: 13px; margin-bottom: 20px;">ASSIGNED TECH: HAROLD</h1>
-        <input type="text" id="inner_field" name="inner_field" placeholder=" WORK ACTIVITY" disabled style="margin-top: 10px; height: 30px; width: 100%; border: 1px solid black;"><br>
+        <input type="text" id="inner_field" name="inner_field" placeholder=" WORK ACTIVITY" disabled style="margin-top: 10px; height: 30px; width: 100%; border: 1px solid black;"><br><br>
 
         <div class="three-row-text">
-            <div>
-                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
-
-            </div>
+            <table>
+                <tr>
+                    <td>[ ] SOFTWARE TRAINING</td>
+                    <td>[ ] ZREAD & XREAD</td>
+                    <td>[ ] INVENTORY</td>
+                </tr>
+                <tr>
+                    <td>[ ] ITEM OR MENU INPUT</td>
+                    <td>[ ] ADD ITEM</td>
+                    <td>[ ] REPORT GENERATING</td>
+                </tr>
+                <tr>
+                    <td>[ ] ADMIN USER & CASHIER</td>
+                    <td>[ ] SENIOR & PWD DISCOUNT</td>
+                    <td>[ ] SENIOR & PWD DISCOUNT</td>
+                </tr>
+                <tr>
+                    <td>[ ] VOID & CANCEL TRANSACTION</td>
+                    <td>[ ] CABLING</td>
+                    <td>[ ] TABLE ARRANGEMENT</td>
+                </tr>
+                <tr>
+                    <td>[ ] PULL OUT UNIT</td>
+                    <td>[ ] SOFTWARE REPAIR</td>
+                    <td>[ ] SERVICE UNIT</td>
+                </tr>
+                <tr>
+                    <td>[ ] PRICE UPDATE</td>
+                    <td>[ ] ENCODING OF ITEM</td>
+                    <td>[ ] VIRUS FORMAT</td>
+                </tr>
+                <tr>
+                    <td>[ ] FILES BACK-UP</td>
+                    <td>[ ] SOFTWARE INSTALLATION</td>
+                    <td>[ ] ADD CATEGORY</td>
+                </tr>
+                <tr>
+                    <td>[ ] PRODUCT ADV, FOR DUAL SCREEN (RESTO)</td>
+                    <td>[ ] REPORT GENERATING</td>
+                    <td>[ ] LOADING PICTURE (RESTO)</td>
+                </tr>
+            </table>
         </div>
-        <input type="text" id="inner_field" name="inner_field" placeholder=" STATUS OF WORK" disabled style="margin-top: 15px; height: 30px; width: 100%; border: 1px solid black;"><br>
+
+        <p>CORRECTION PREVENTIVE SERVICES OR RECOMMENDATION:</p><br><br>
+        <p>PROBLEM IDENIFIED BY THE TECHNICAL:</p><br>
+        
+        <input type="text" id="inner_field" name="inner_field" placeholder=" STATUS OF WORK" disabled style="margin-top: 15px; height: 30px; width: 100%; border: 1px solid black;"><br><br>
 
        
-             <h1 style="font-size: 12px; margin-top: 15px;">[ ] FOR RE-SCHEDULE <span style="padding-left: 50px;">ITEM:</span></h1>
-             <h1 style="font-size: 12px; margin-top: 15px;">[ ] WORK SERVICE <span style="padding-left: 70px;">SERIAL AND MODEL:</span></h1>
-             <h1 style="font-size: 12px; margin-top: 15px;">[ ] DELIVERY <span style="padding-left: 105px;">NAME OF RECIEVER:</span></h1>
-             <h1 style="font-size: 12px; margin-top: 15px;">[ ] APULL-OUT</h1>
-             <h1 style="font-size: 12px; margin-top: 15px;">[ ] ITEM RETURN <span style="padding-left: 80px;">OTHERS PLEASE SPECIFY:</span></h1><br>
-             <h1 style="font-size: 13px; margin-top: 15px;">TIME OF ARRIVAL: <span style="padding-left: 60px;">TOTAL SERVICE TIME:</span></h1>
-             <h1 style="font-size: 13px; margin-top: 15px;">TIME OF DEPART: <span style="padding-left: 65px;">CUSTOMER AME AND SIGNATURE:</span></h1>
-<!-- Barcode section -->
-<div class="barcode-container">
-    <canvas id="barcodeCanvas"></canvas>
-    <!-- Barcode data input -->
-    <div class="barcode-input-container">
-        <p>JOB ORDER SERVICE REPORT NO:</p>
-        <!-- <input type="text" id="barcodeData" placeholder="Enter barcode data" maxlength="12" style="border: none;">  -->
-    </div>
-</div>
+        <div class="form">
+            <p> [ ] FOR RE-SCHEDULE</p>
+            <p>ITEM:</p>
+            <p> [ ] WORK / SERVICE</p>
+            <p>SERIAL AND MODEL:</p>
+            <p> [ ] DELIVERY</p>
+            <p> NAME OF RECEIVER:</p>
+            <p> [ ] PULL-OUT</p><br>
+            <p> [ ] ITEM RETURN</p>
+            <p> OTHERS PLEASE SPECIFY:<br><br></p>
+            <p> TIME OF ARRIVAL:</p>
+            <p> TOTAL SERVICE TIME:</p>
+            <p> TIME OF DEPART:</p>
+            <p> CUSTOMER NAME AND SIGNATURE:</p>
+        </div>
+        
+
+        
+            <div class="barcode-container">
+                <canvas id="barcodeCanvas"></canvas>
+                <!-- Barcode data input -->
+                <div class="barcode-input-container">
+                    <p >JOB ORDER SERVICE REPORT NO:</p>
+                    <!-- <input type="text" id="barcodeData" placeholder="Enter barcode data" maxlength="12" style="border: none;">  -->
+                </div>
+            </div>
 
 <!-- JavaScript to generate the barcode -->
 <script>
@@ -244,16 +323,19 @@
 </script>
 <script>
     // Triggered after the printing process is completed (whether printing or canceling)
-    // window.onafterprint = function() {
-    //     // Close the current tab or window
-    //     window.close();
-    // };
+    window.onafterprint = function() {
+        // Close the current tab or window
+        window.close();
+    };
 
     // Trigger the print dialog when the page is loaded
     window.onload = function() {
-fetchJobOrderDetails(jobOrderId);
-//window.print();
+    fetchJobOrderDetails(jobOrderId);
+    setTimeout(function() {
+        window.print();
+    }, 500); // Delay in milliseconds (adjust as needed)
 };
+
 
 </script>
 
@@ -306,6 +388,9 @@ fetchJobOrderDetails(jobOrderId);
                 jobOrdercAddElement.textContent = jobOrderDetails.address || '';
                 const jobOrderctransElement = document.getElementById('trans');
                 jobOrderctransElement.textContent = jobOrderDetails.transportForMoney || '';
+                const jobOrderDelivElement = document.getElementById('deliv');
+                jobOrderDelivElement.textContent = jobOrderDetails.deliveryRemarks || '';
+                jobOrderDelivElement.style.whiteSpace = 'pre-line';
 
                 // Populate the work activities container with the details of each work activity
                 if (workActivities && workActivities.length > 0) {
@@ -354,7 +439,7 @@ fetchJobOrderDetails(jobOrderId);
 
 
 
-            <img src="../../../../css/images/zanklogo.png" alt="logo" style="width: 150px; height: auto;">
+            <img src="../../../../css/images/zanklogo.png" alt="logo" style="width: 150px; margin-left:500px;height: auto;">
             
         </div>
         

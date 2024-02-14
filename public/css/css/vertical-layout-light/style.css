@@ -31313,11 +31313,13 @@ padding-left: 70px;
 }
 
 .button-container2 {
-  display: inline-block;
-  margin-top: 8px;
+  position: relative; /* Make sure the parent container is positioned */
 }
 
 .button-container2 button {
+  position: absolute;
+  right: 260px;
+  top: 20px;
   padding: 8px 10px;
   margin-right: 2px;
   cursor: pointer;
@@ -31329,6 +31331,19 @@ padding-left: 70px;
   line-height: 1;
   display: flex;
   align-items: center;
+  z-index: 999; /* Adjust the z-index value as needed */
+} 
+@media only screen and (max-width: 767px) {
+  .button-container2 {
+    text-align: center; /* Center align buttons for small screens */
+  }
+  .button-container2 button {
+    position: relative; /* Change position back to relative */
+    right: 140px; /* Remove right position */
+    top: auto; /* Remove top position */
+    margin: 10px auto 0; /* Center buttons vertically with margin */
+    display: block; /* Display buttons as blocks for full width */
+  }
 }
 
 .button-container2 button span {
@@ -31561,4 +31576,131 @@ padding-left: 70px;
 }
 .settings{
   width: 200px;
+}
+
+/* Media queries for different screen sizes */
+@media (max-width: 768px) {
+  .modal-title{
+    font-size: 15px;
+  }
+  .table1 {
+    display: flex;
+    /* background: gray; */
+    margin: auto;
+  }
+ 
+  .content1 th,
+  .content2 td {
+    display: none; /* Hide the th elements in content1 and td elements in content2 */
+  }
+
+  .table2 tr {
+    border-bottom: 1px solid #ddd; /* Add border between rows */
+  }
+
+  .table2 td {
+    display: table-cell; /* Keep the td elements as table cells */
+    text-align: left; /* Align text to the left */
+    border: none; /* Remove borders */
+    padding: 5px; /* Add padding */
+    font-size: 10px;
+  }
+
+
+  .left,
+  .right {
+    flex: 1; /* Both columns should take up equal space */
+    display: flex;
+    flex-direction: column;
+   
+  }
+  .right th,
+  .right td {
+    width: 100%; /* Make both left and right columns occupy full width */
+    
+    display: flex;
+    align-items: center;
+    color: black;
+    box-sizing: border-box; /* Include padding in width calculation */
+    padding: 5px; /* Set the same padding size for both thead and tbody */
+    font-size: 10px; /* Adjust the font size as needed */
+    height: auto; /* Ensure the height adjusts based on content */
+    border-top: none;
+  }
+  .left th,
+  .left td{
+    width: 100%; /* Make both left and right columns occupy full width */
+    
+    display: flex;
+    align-items: center;
+    color: black;
+    box-sizing: border-box; /* Include padding in width calculation */
+    padding: 5px; /* Set the same padding size for both thead and tbody */
+    font-size: 10px; /* Adjust the font size as needed */
+    height: auto; /* Ensure the height adjusts based on content */
+    border-top: none;
+  }
+}
+
+
+
+@media (min-width: 576px) and (max-width: 1000px) {
+  .table1 {
+    display: flex;
+    margin: auto;
+
+  }
+ 
+
+  .content1 th,
+  .content2 td {
+    display: none; /* Hide the th elements in content1 and td elements in content2 */
+  }
+
+  .table2 tr {
+    border-bottom: 1px solid #ddd; /* Add border between rows */
+  }
+
+  .table2 td {
+    display: table-cell; /* Keep the td elements as table cells */
+    text-align: left; /* Align text to the left */
+    border: none; /* Remove borders */
+    padding: 5px; /* Add padding */
+    font-size: 12px;
+  }
+
+  .left,
+  .right {
+    flex: 1; /* Both columns should take up equal space */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .right th,
+  .right td {
+    width: 100%; /* Make both left and right columns occupy full width */
+    display: flex;
+    align-items: center;
+    color: black;
+    box-sizing: border-box; /* Include padding in width calculation */
+    padding: 5px; /* Set the same padding size for both thead and tbody */
+    font-size: 12px; /* Adjust the font size as needed */
+    height: auto; /* Ensure the height adjusts based on content */
+    border-top: none;
+  }
+  .left th,
+  .left td{
+    width: 100%; /* Make both left and right columns occupy full width */
+    display: flex;
+    align-items: center;
+    color: black;
+    box-sizing: border-box; /* Include padding in width calculation */
+    padding: 5px; /* Set the same padding size for both thead and tbody */
+    font-size: 12px; /* Adjust the font size as needed */
+    height: auto; /* Ensure the height adjusts based on content */
+    border-top: none;
+  }
+}
+@media (max-width: 322px) {
+
 }
