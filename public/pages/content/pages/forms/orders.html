@@ -222,9 +222,9 @@ function deleteJo(jobOrderId) {
                         <table id="order-listing" class="table">
                           <thead>
                               <tr class="bg-primary text-white">
-                                  <th class="widen">Job Order No.</th>
+                                  <th  class="vanish">Job Order No.</th>
                                   <th id="custom-sort-th" class="vanish">Date</th>
-                                  <th class="widen">Customer</th>
+                                  <th id="custom-sort-th"class="widen">Customer</th>
                                   <th id="custom-sort-th" class="vanish">Address</th>
                                   <th id="custom-sort-th" class="vanish">Technical</th>
                                   <th id="custom-sort-th" class="vanish">Month No.</th>
@@ -316,7 +316,7 @@ function deleteJo(jobOrderId) {
     "lengthMenu": [5, 10, 15],
     "iDisplayLength": 5, // Initial number of entries to show
     "columnDefs": [
-        { "targets": [ 1,3, 4, 5, 6, 7], "className": "vanish" } // Apply 'vanish' class to specified columns
+        { "targets": [0, 1,3, 4, 5, 6, 7], "className": "vanish" } // Apply 'vanish' class to specified columns
     ]
 });
 
