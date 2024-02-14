@@ -300,22 +300,18 @@
                                   joborders.Month,
                                   joborders.WeekNo,
                                   joborders.status,
-                                  `<form id="joForm" method="POST" >
-    <input type="text" style="display: none;" name="JobOrderID" id="JobOrderID_${joborders.joborder_id}" value="${joborders.joborder_id}">
-    
-    <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
-        <i class="mdi mdi-printer btn-icon-prepend"></i>
-        <span class="button-label">Print</span> <!-- Label for Print button -->
-    </button>
-    
-    <button type="button" class="btn btn-outline-danger btn-icon-text" onclick="deleteJo(${joborders.id})" id="deleteButton">
-        <i class="mdi mdi-delete btn-icon-prepend"></i>
-        <span class="button-label">Delete</span> <!-- Label for Delete button -->
-    </button>
-    
-    <input type="hidden" value="${joborders.joborder_id}" id="joID" name="joID">
-</form>
-
+                                  `<form id="myForm_${joborders.joborder_id}">
+                                        <input type="text" style="display: none;" name="JobOrderID" id="JobOrderID_${joborders.joborder_id}" value="${joborders.joborder_id}">
+                                        
+                                        <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
+                                            <i class="mdi mdi-printer btn-icon-prepend"></i>
+                                            <span class="button-label">Print</span> <!-- Label for Print button -->
+                                        </button>
+                                        <button type="button" class="btn btn-outline-danger btn-icon-text" onclick="deleteJo(${joborders.joborder_id})">
+                                            <i class="mdi mdi-delete btn-icon-prepend"></i>
+                                            <span class="button-label">Delete</span> <!-- Label for Delete button -->
+                                        </button>
+                                    </form>
                                     `
                               ]).draw();
   
@@ -355,6 +351,15 @@
           // Populate the job order list when the page loads
           populateJobOrderList();
       });
+
+
+      function openPrintPage(jobOrderId) {
+    // Construct the URL with the job order ID as a parameter
+    const url = `print.html?jobOrderId=${jobOrderId}`;
+    // Open the print.html page in a new window
+    const printWindow = window.open(url, '_blank');
+}
+
   
   </script>
 

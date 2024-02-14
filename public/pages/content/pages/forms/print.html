@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Zank POS</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../../../../css/js/local.js"></script>
+    <link rel="stylesheet" href="../../../../css/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../../../css/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="../../../../css/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="../../../../css/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../../../css/images/favicon.png" />
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3/dist/JsBarcode.all.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+       
+        .barcode-container {
+        position: absolute;
+        top: 15px;
+        left:1550px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+
+        #barcodeCanvas {
+        width: 200px; /* Set a fixed width for the canvas */
+        height: 100px; /* Set a fixed height for the canvas */
+        border-radius: 5px;
+        margin-bottom: 10px;
+        }
+
+        #barcodeCanvas {
+        width: 200px; /* Set a fixed width for the canvas */
+        height: 100px; /* Set a fixed height for the canvas */
+        border-radius: 5px;
+        margin-bottom: 10px;
+        }
+        #barcodeCanvas {
+        border: none; /* Remove border */
+        }
+        #barcodeData::placeholder {
+            text-align: center;
+        }
+        h1 {
+            text-align: left;
+            margin-top: 0;
+        }
+        .job-order {
+            font-size: 14px;
+            margin-top: -10px; /* Adjust this value to align with the company name */
+        }
+        p {
+            font-size: 13px;
+            margin: 0;
+        }
+        .form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+        }
+        .form p {
+            margin: 0;
+        }
+        .form input[type="text"] {
+            width: 85%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .barcode-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        @media print {
+            /* Adjust the position of the barcode */
+            .barcode-container {
+                position: absolute; /* Set position to absolute */
+                top: 10px; /* Adjust top margin as needed */
+                left: 420px; /* Align to the left edge */
+                right: 0; /* Align to the right edge */
+                margin-left: auto; /* Center horizontally */
+                margin-right: auto;
+                text-align: center;
+            }
+          }
+
+        #barcodeCanvas {
+            width: 300px; /* Set a larger width for printing */
+            height: auto; /* Let the height adjust proportionally */
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+    
+        #barcodeData {
+            flex-grow: 1;
+
+        }
+        #generateBarcodeBtn {
+            flex-shrink: 0;
+        }
+        label {
+            font-weight: bold;
+        }
+        .inner-form {
+            background-color: #f9f9f9;
+            border: 1px solid;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 
+            4px;
+        }
+        .three-row-text {
+            font-size: 12px;
+            line-height: 1.5;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <p style="font-family: impact; font-size: 40px;">ZANK POS ENTERPRISES</p>
+        <p>Unit 1012 G/F IT Village 696 Brgy Aurora Blvd Cubao Quezon</p>
+        <p>City Metro Manila Philippines 1109</p>
+        <p>E-mail: admin@zankpos.com</p>
+        <p>Hotline Number: 0905-308-9906 / 0943-128-6796</p>
+        <p>881-6248 / 721-1561</p><br>
+        <form>
+            <div class="form">
+                <div>
+                    <p>Name: </p>
+                    <input type="text" id="name" placeholder="" disabled>
+                </div>
+                <div>
+                    <p>Phone:</p>
+                    <input type="text" id="num" placeholder="" disabled>
+                </div>
+                <div>
+                    <p>Status:</p>
+                    <input type="text" id="status" placeholder="" disabled>
+                </div>
+                <div>
+                    <p>Technical:</p>
+                    <input type="text" id="tech" placeholder="" disabled>
+                </div>
+            </div>
+<br><br>
+            <!-- Inner Form -->
+            <div class="inner-form">
+                <input type="text" id="date" name="inner_field" placeholder="" disabled style="width: 98%;"><br>
+                <h1 style="font-size: 13px; margin-top: 8px;" id="name2"></h1><hr>
+                <h1 style="font-size: 12px; margin-top: 5px;" id="cPer"></h1>
+                <h1 style="font-size: 12px; margin-top: 5px;" id="add"></h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;"><span id="num2"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Transpo: Php <span id="trans"></span>.00</h1><hr>
+                <h1 style="font-size: 13px; margin-top: 5px;">Remarks:</h1><hr>
+                <div id="workActivitiesContainer"></div>
+                <h1 style="font-size: 13px; margin-top: 5px;">Details:</h1><hr>
+                <h1 style="font-size: 12px; margin-top: 5px;">Total:</h1><hr>
+                <input type="text" id="inner_field" name="inner_field" placeholder="Prepared by: Admin" disabled style="font-style: italic; width: 98%;"><br>
+            </div>
+        </form>
+        
+        <h1 style="font-size: 13px; margin-top: 15px;">DATE REPORT: January 30, 2024</h1>
+        <h1 style="font-size: 13px; margin-bottom: 20px;">ASSIGNED TECH: HAROLD</h1>
+        <input type="text" id="inner_field" name="inner_field" placeholder=" WORK ACTIVITY" disabled style="margin-top: 10px; height: 30px; width: 100%; border: 1px solid black;"><br>
+
+        <div class="three-row-text">
+            <div>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+                [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT &nbsp; [ ] ITEM OR MENU INPUT<br>
+
+            </div>
+        </div>
+        <input type="text" id="inner_field" name="inner_field" placeholder=" STATUS OF WORK" disabled style="margin-top: 15px; height: 30px; width: 100%; border: 1px solid black;"><br>
+
+       
+             <h1 style="font-size: 12px; margin-top: 15px;">[ ] FOR RE-SCHEDULE <span style="padding-left: 50px;">ITEM:</span></h1>
+             <h1 style="font-size: 12px; margin-top: 15px;">[ ] WORK SERVICE <span style="padding-left: 70px;">SERIAL AND MODEL:</span></h1>
+             <h1 style="font-size: 12px; margin-top: 15px;">[ ] DELIVERY <span style="padding-left: 105px;">NAME OF RECIEVER:</span></h1>
+             <h1 style="font-size: 12px; margin-top: 15px;">[ ] APULL-OUT</h1>
+             <h1 style="font-size: 12px; margin-top: 15px;">[ ] ITEM RETURN <span style="padding-left: 80px;">OTHERS PLEASE SPECIFY:</span></h1><br>
+             <h1 style="font-size: 13px; margin-top: 15px;">TIME OF ARRIVAL: <span style="padding-left: 60px;">TOTAL SERVICE TIME:</span></h1>
+             <h1 style="font-size: 13px; margin-top: 15px;">TIME OF DEPART: <span style="padding-left: 65px;">CUSTOMER AME AND SIGNATURE:</span></h1>
+<!-- Barcode section -->
+<div class="barcode-container">
+    <canvas id="barcodeCanvas"></canvas>
+    <!-- Barcode data input -->
+    <div class="barcode-input-container">
+        <p>JOB ORDER SERVICE REPORT NO:</p>
+        <!-- <input type="text" id="barcodeData" placeholder="Enter barcode data" maxlength="12" style="border: none;">  -->
+    </div>
+</div>
+
+<!-- JavaScript to generate the barcode -->
+<script>
+    // Initial barcode data
+    var initialBarcodeData = "111111111111"; // Example data
+
+    function generateBarcode(barcodeData) {
+        if (barcodeData) {
+            // Check if the input length is less than or equal to 12 characters
+            if (barcodeData.length <= 12) {
+                JsBarcode("#barcodeCanvas", barcodeData, {
+                    format: "CODE128",
+                    displayValue: true,
+                    width: 2, // Set the width of the barcode bars
+                    height: 40, // Set the height of the barcode
+                    background: "transparent" // Set background color to transparent
+                });
+            } else {
+                // Clear the input if it exceeds 12 characters
+                document.getElementById("barcodeData").value = barcodeData.substring(0, 12);
+            }
+        }
+    }
+
+    // Generate barcode with initial data
+    generateBarcode(initialBarcodeData);
+</script>
+<script>
+    // Triggered after the printing process is completed (whether printing or canceling)
+    // window.onafterprint = function() {
+    //     // Close the current tab or window
+    //     window.close();
+    // };
+
+    // Trigger the print dialog when the page is loaded
+    window.onload = function() {
+fetchJobOrderDetails(jobOrderId);
+//window.print();
+};
+
+</script>
+
+
+
+
+
+
+
+
+<script>
+    // Function to fetch job order details from the server
+    function fetchJobOrderDetails(jobOrderId) {
+        console.log(jobOrderId);
+
+        // Make an HTTP GET request to fetch job order details
+        axios.get(`http://${location.host}/jobOrderDetails2/${jobOrderId}`)
+            .then(response => {
+                // Extract job order details and work activities from the response
+                const { jobOrderDetails, workActivities } = response.data;
+
+                // Update the input elements with the fetched data
+                const jobOrderNameElement = document.getElementById('name');
+                jobOrderNameElement.value = jobOrderDetails.customer_name || '';
+                const jobOrderNameElement2 = document.getElementById('name2');
+                jobOrderNameElement2.textContent = jobOrderDetails.customer_name || '';
+
+                const jobOrderNumElement = document.getElementById('num');
+                jobOrderNumElement.value = jobOrderDetails.telephone_no || '';
+
+                const jobOrderNum2Element = document.getElementById('num2');
+                jobOrderNum2Element.textContent = jobOrderDetails.telephone_no || '';
+                const jobOrderStatusElement = document.getElementById('status');
+                jobOrderStatusElement.value = jobOrderDetails.status || '';
+                const jobOrderTechElement = document.getElementById('tech');
+                jobOrderTechElement.value = jobOrderDetails.full_name || '';
+                const jobOrderDateElement = document.getElementById('date');
+
+                if (jobOrderDetails.date) {
+                    const dateObject = new Date(jobOrderDetails.date);
+                    const options = { month: 'long', day: 'numeric', year: 'numeric' };
+                    const formattedDate = dateObject.toLocaleDateString('en-US', options);
+                    jobOrderDateElement.value = formattedDate;
+                } else {
+                    jobOrderDateElement.value = '';
+                }
+                const jobOrdercPerElement = document.getElementById('cPer');
+                jobOrdercPerElement.textContent = jobOrderDetails.contactPerson || '';
+                const jobOrdercAddElement = document.getElementById('add');
+                jobOrdercAddElement.textContent = jobOrderDetails.address || '';
+                const jobOrderctransElement = document.getElementById('trans');
+                jobOrderctransElement.textContent = jobOrderDetails.transportForMoney || '';
+
+                // Populate the work activities container with the details of each work activity
+                if (workActivities && workActivities.length > 0) {
+                    const workActivitiesContainer = document.getElementById('workActivitiesContainer');
+                    workActivitiesContainer.innerHTML = '';
+                    let counter = 1;
+
+                    workActivities.forEach(workActivity => {
+                        const activityElement = document.createElement('div');
+                        activityElement.style.fontSize = '13px';
+                        activityElement.style.marginTop = '5px';
+                        activityElement.textContent = `${counter}. ${workActivity.description}`;
+
+                        const spanElement = document.createElement('span');
+                        spanElement.style.paddingLeft = '50px';
+                        spanElement.textContent = `${workActivity.remarks}`; // assuming remarks2 contains "ZENTYAL SOFTWARE"
+
+                        activityElement.appendChild(spanElement);
+
+                        workActivitiesContainer.appendChild(activityElement);
+
+                        if (counter < workActivities.length) {
+                            const hrElement = document.createElement('hr');
+                            workActivitiesContainer.appendChild(hrElement);
+                        }
+
+                        counter++;
+                    });
+                } else {
+                    console.error("Error fetching job order details: Missing or undefined workActivities");
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching job order details:', error);
+                // Handle error if needed
+            });
+    }
+
+    // Extract job order ID from the URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const jobOrderId = urlParams.get('jobOrderId');
+
+    // Automatically fetch job order details when the page is loaded
+    fetchJobOrderDetails(jobOrderId);
+</script>
+
+
+
+            <img src="../../../../css/images/zanklogo.png" alt="logo" style="width: 150px; height: auto;">
+            
+        </div>
+        
+        
+    </body>
+</html>
