@@ -20,25 +20,66 @@
   <link rel="stylesheet" href="../../../../css/css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="../../../../css/images/favicon.png" />
+  <script src="../css/vendors/sweetalert/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     
-  function deleteJo(joID){
-    alert(joID)
-    event.preventDefault(); // Prevent default form submission
-    axios.post('/delete', {joID})
-    .then(response => {
-      // Handle success response
-      console.log('Server response:', response.data);
-    })
-    .catch(error => {
-      // Handle error
-      console.error('Error:', error.message);
-      alert('An error occurred while deleting the data.');
-    });
-  }
-  </script>
-  <script>
+    function confirmDelete(jobOrderId) {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'You will not be able to recover this job order!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, cancel!',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      deleteJo(jobOrderId);
+    }
+  });
+}
+
+function deleteJo(jobOrderId) {
+  $.ajax({
+    type: 'POST',
+    url: '/delete',
+    data: { joID: jobOrderId },
+    success: function(response) {
+      // Show success message if deletion is successful
+      Swal.fire({
+        title: 'Deleted!',
+        text: 'Your job order has been deleted.',
+        icon: 'success',
+        confirmButtonColor: '#3f51b5',
+        confirmButtonText: 'OK',
+      }).then(() => {
+        // Optionally, you can redirect or refresh the page here
+        window.location.reload();
+      });
+    },
+    error: function(xhr, status, error) {
+      // Show error message if deletion fails
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to delete job order.',
+        icon: 'error',
+        confirmButtonColor: '#ff4081',
+        confirmButtonText: 'OK',
+      });
+    },
+  });
+}
+
+    function openPrintPage(jobOrderId) {
+    // Construct the URL with the job order ID as a parameter
+    const url = `print.html?jobOrderId=${jobOrderId}`;
+    // Open the print.html page in a new window
+    const printWindow = window.open(url, '_blank');
+}
+
   </script>
 </head>
 <body class="sidebar-fixed " >
@@ -287,7 +328,6 @@
                
                 jobOrderListBody.appendChild(noDataMessageRow);
                       } else {
-                      
                           // Iterate over the received data and add rows to the DataTable
                           response.data.forEach(joborders => {
                               const formattedDate = new Date(joborders.date).toLocaleDateString('en-US'); // Format date
@@ -303,19 +343,20 @@
                                   `<form id="myForm_${joborders.id}">
                                         <input type="text" style="display: none;" name="JobOrderID" id="JobOrderID_${joborders.joborder_id}" value="${joborders.joborder_id}">
                                         
-                                        <button class="btn btn-outline-success btn-icon-text" onclick="window.print()">
+                                        <button class="btn btn-outline-success btn-icon-text" onclick="openPrintPage('${joborders.id}')">
                                             <i class="mdi mdi-printer btn-icon-prepend"></i>
                                             <span class="button-label">Print</span> <!-- Label for Print button -->
                                         </button>
-                                        <button type="button" class="btn btn-outline-danger btn-icon-text" onclick="deleteJo(${joborders.id})">
-                                            <i class="mdi mdi-delete btn-icon-prepend"></i>
-                                            <span class="button-label">Delete</span> <!-- Label for Delete button -->
+                                        <button type="button" class="btn btn-outline-danger btn-icon-text" onclick="confirmDelete(${joborders.id})">
+                                          <i class="mdi mdi-delete btn-icon-prepend"></i>
+                                          <span class="button-label">Delete</span> <!-- Label for Delete button -->
                                         </button>
                                     </form>
                                     `
                               ]).draw();
   
                           });
+                          
                           
                       }
                         
@@ -359,8 +400,6 @@
     // Open the print.html page in a new window
     const printWindow = window.open(url, '_blank');
 }
-
-  
   </script>
 
     
@@ -444,16 +483,7 @@ function populateModal(jobOrderDetails) {
     });
 }
 
-
-
-
-
 </script>
-    
-    
-    
-    
-    
     
       <!-- main-panel ends -->
     </div>
@@ -467,6 +497,8 @@ function populateModal(jobOrderDetails) {
   <script src="../../../../css/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- inject:js -->
+  
+  <script src="../css/js/alerts.js"></script>
   <script src="../../../../css/js/off-canvas.js"></script>
   <script src="../../../../css/js/hoverable-collapse.js"></script>
   <script src="../../../../css/js/template.js"></script>
@@ -480,6 +512,15 @@ function populateModal(jobOrderDetails) {
   <!-- Custom js for this page-->
 
   <!-- End custom js for this page-->
+  
+<script>
+  // Your existing code for showSwal function
+
+  // Assume you have an event listener for the form submission
+  // Event listener for delete button
+  // Event listener for delete button
+
+</script>
 </body>
 <!-- End custom js for this page-->
 

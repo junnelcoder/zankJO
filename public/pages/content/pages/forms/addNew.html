@@ -24,13 +24,10 @@
   <link rel="shortcut icon" href="../../../../css/images/favicon.png" />
   <script>
     function submits(){
-      alert("New Tech added successfully");
-      window.location.href="addNew.html"
+      window.location.href="/addNewTechForm"
     }
 
-    
 const userId = localStorage.getItem('userId');
-
 // Make an AJAX request to fetch data from the server
 const xhr = new XMLHttpRequest();
 xhr.open('GET', `/getDataFromServer/${userId}`, true); // Include userId in the URL
@@ -242,13 +239,13 @@ xhr.send();
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Add New Technical</h4>
-                  <form class="form-sample" id="addTechForm"  method="POST">
+                  <form class="form-sample" id="addTechForm" method="POST">
                     <p class="card-description"></p>
                     <hr>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label for="date" class="col-sm-3 col-form-label">USERNAME: </label>
+                                <label for="date" class="col-sm-3 col-form-label">USERNAME:</label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="username" name="username" required>
                                 </div>
@@ -279,12 +276,27 @@ xhr.send();
                                 <!-- Modal Footer -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" id="modalCloseBtn" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" id="modalSaveBtn" onclick="submits()">Submit</button>
+                                    <button type="button" class="btn btn-primary" id="modalSaveBtn">Submit</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
+                <script>
+    document.getElementById("addTechForm").addEventListener("keypress", function (e) {
+        if (e.key === 'Enter' && document.getElementById("username").value.trim() !== '') {
+            e.preventDefault(); // Prevent form submission
+            $('#myModal').modal('show'); // Show the modal
+        }
+    });
+
+    document.getElementById("modalSaveBtn").addEventListener("click", function () {
+        // Handle modal save button click
+        submits();
+    });
+</script>
+
+              
                 <script>
                   // Get the username input field
                   const username = document.getElementById('username');
@@ -433,7 +445,7 @@ xhr.send();
 
 <script>
   // Function to handle form submission
-  async function submitForm(event) {
+  async function submitFormTech(event) {
     event.preventDefault(); // Prevent default form submission
 
     // Get form data
@@ -454,7 +466,7 @@ xhr.send();
   }
 
   // Add event listener to the form for submission
-  document.getElementById('addTechForm').addEventListener('submit', submitForm);
+  document.getElementById('addTechForm').addEventListener('submit', submitFormTech);
 </script>
 <script>
   // Function to handle form submission
