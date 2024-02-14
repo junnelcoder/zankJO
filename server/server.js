@@ -10,6 +10,7 @@ const { LocalStorage } = require('node-localstorage');
 const localStorage = new LocalStorage('./scratch');
 const readline = require('readline');
 const bcrypt = require('bcrypt');
+const Sequelize = require('sequelize');
 
 const app = express();
 const server = http.createServer(app);
@@ -20,20 +21,27 @@ const rl = readline.createInterface({
 });
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 app.set('view engine', 'ejs');
 
+const serverName = 'DESKTOP-6S6CLHO\\SQLEXPRESS2014';
 const config = {
   user: 'sa',
   password: 'zankojt@2024',
-  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',
+  server: serverName,
   database: 'jo',
   options: {
     enableArithAbort: true,
     encrypt: false,
   },
 };
+const sequelize = new Sequelize('jo','sa','zankojt@2024',{
+  dialect: 'mssql',
+  host: serverName
+});
+
 //server: 'DESKTOP-6S6CLHO\\SQLEXPRESS2014', Justin
 //server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014', Junnel
 //server: 'DESKTOP-U6G6LH1\\SQLEXPRESS2014', Axl   
@@ -434,43 +442,32 @@ app.post('/addNewTechForm', async (req, res) => {
     `);
 const userData = techresult.recordset[0];
 const DBpassword = userData.password;
-    // Retrieve form data from request body
     const { username } = req.body;
-    //console.log('Username from request body:', username);
     if (!username) {
       throw new Error('No username found in request body.');
     }
     const { password } = req.body;
-    //console.log('password from request body:', password);
     if (!password) {
       throw new Error('No password found in request body.');
     }
     if(DBpassword==password){
-    // Connect to the SQL Server database
     await poolConnect;
     console.log('Database connection established successfully.');
-
-    // Insert the new username into the employee_listing table
     const request = pool.request();
     request.input('username', sql.NVarChar, username);
       const result = await request.query(`
         INSERT INTO employee_listing (full_name)
         VALUES (@username)
       `);
-      console.log('Technical added sssuccessfully:', username); // Log successful insertion
-    // Respond with success message
+      console.log('Technical added sssuccessfully:', username);
     }else{
       console.log("doesn't match");
     }
-    
   } catch (error) {
-    // If an error occurs, respond with an error message
     console.error('Error adding username:', error.message);
     res.status(500).send('An error occurred while adding the username.');
   }
 });
-
-
 
 app.post('/addNewUserForm', async (req, res) => {
   try {
@@ -512,4 +509,57 @@ app.post('/addNewUserForm', async (req, res) => {
 app.get('/logout', (req, res) => {
   // Redirect the user to a different URL, such as the login page
   res.redirect('/');
+});
+
+
+app.post('/delete', async (req, res) => {
+  try {
+    const joID = req.body.joID;
+
+    // Retrieve the id from the joborders table based on the joID
+    const pool = await sql.connect(/* your database connection configuration */);
+    const result = await pool.request()
+      .input('joID', sql.Int, joID)
+      .query('SELECT id FROM joborders WHERE id = @joID');
+
+    if (result.recordset.length > 0) {
+      const id = result.recordset[0].id;
+
+      // Begin a new transaction
+      const transaction = new sql.Transaction(pool);
+      await transaction.begin();
+
+      try {
+        
+        // Truncate rows from work_activities_erp table where jo_id matches the provided id
+        const truncateQuery = `
+        DELETE FROM work_activities_erp WHERE jo_id = @id
+        `;
+        const request = new sql.Request(transaction);
+        request.input('id', sql.Int, id);
+        await request.query(truncateQuery);
+        
+        // Optionally, truncate row from joborders table based on the id
+        const truncateJobOrderQuery = `
+          DELETE FROM joborders WHERE id = @id
+        `;
+        const jobOrderRequest = new sql.Request(transaction);
+        jobOrderRequest.input('id', sql.Int, id);
+        await jobOrderRequest.query(truncateJobOrderQuery);
+
+        // Commit the transaction
+        await transaction.commit();
+
+        res.status(200).json({ success: true, message: 'Data related to joID truncated successfully.' });
+      } catch (error) {
+        // If an error occurs, rollback the transaction
+        await transaction.rollback();
+        throw error;
+      }
+    } else {
+      res.status(404).json({ success: false, message: 'No record found for the provided joID.' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error processing the request.', error: error.message });
+  }
 });
