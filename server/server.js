@@ -27,7 +27,7 @@ app.set('view engine', 'ejs');
 const config = {
   user: 'sa',
   password: 'zankojt@2024',
-  server: 'DESKTOP-SA4VIBJ\\SQLEXPRESS',
+  server: 'DESKTOP-EIR2A8B\\SQLEXPRESS2014',
   database: 'jo',
   options: {
     enableArithAbort: true,
