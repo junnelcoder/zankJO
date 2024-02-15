@@ -1,12 +1,41 @@
 const express = require('express');
 const router = express.Router();
 const sql = require('mssql');
-const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { LocalStorage } = require('node-localstorage');
 const localStorage = new LocalStorage('./scratch');
 const config = require('../server.js');
+
+const secretKey = "ZankPointOfSalesEnterpriseJO2024";
+const algorithm = 'aes-256-cbc';
+
+function encrypt(text) {
+  const iv = "ZankPOSNterprise";
+  const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
+  let encrypted = cipher.update(text);
+  encrypted = Buffer.concat([encrypted, cipher.final()]);
+  return iv.toString('hex') + ':' + encrypted.toString('hex');
+}
+
+function decrypt(text) {
+  try {
+    const parts = text.split(':');
+    const iv = "ZankPOSNterprise";
+    const encryptedText = Buffer.from(parts[1], 'hex');
+    console.log('IV:', iv.toString('hex'));
+    console.log('Encrypted Text:', encryptedText.toString('hex'));
+    const decipher = crypto.createDecipheriv(algorithm, Buffer.from(secretKey), iv);
+    let decrypted = decipher.update(encryptedText);
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
+    return decrypted.toString();
+  } catch (error) {
+    console.error('Error decrypting text:', error);
+    throw new Error('Failed to decrypt text');
+  }
+}
+
+
 // Login route
 router.post('/login', async (req, res) => {
   try {
@@ -17,7 +46,7 @@ router.post('/login', async (req, res) => {
     if (!username || !password) {
       return res.status(400).json({ status: 'error', message: 'Username and password are required.' });
     }
-
+    
     // Connect to the SQL Server database
     await sql.connect(config);
 
@@ -33,24 +62,32 @@ router.post('/login', async (req, res) => {
 
     // Verify the password
     const user = result.recordset[0];
-    // const passwordMatch = await bcrypt.compare(password, user.password);
-    const passwordMatch = (password === user.password);
+    const decrypted = decrypt(user.password);
+    const passwordMatch = (decrypted === password);
 
     if (!passwordMatch) {
       return res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
     }
+    
+    // Check if user is already logged in
+    if (user.status === 'online') {
+      return res.status(400).json({ status: 'error', message: 'User is already logged in. Please try logging in with another user.' });
+    }
 
-    // Generate JWT token
+    // Update user status to 'online'
+    
+    await request.query('UPDATE users SET status = \'online\' WHERE username = @username');
+
+
+    // Generate JWT token and set it in cookies
     const token = jwt.sign({ userId: user.id, username: user.username }, "jwt-secret-key", { expiresIn: '1d' });
-
-    // Set JWT token in a cookie
     res.cookie('token', token, { httpOnly: true });
 
-    // Store userId and username in localStorage
+    // Store user ID and username in localStorage
     localStorage.setItem('userId', user.id);
     localStorage.setItem('username', user.username);
 
-    // Respond with success
+    // Send success response
     res.status(200).json({ status: 'success', id: user.id, username: user.username });
   } catch (err) {
     console.error('Error checking login:', err);
@@ -77,22 +114,13 @@ router.get('/get/users', async (req, res) => {
 
 
 router.get('/getDataFromServer/:userId', (req, res) => {
-    // Retrieve the user ID from the URL parameter
     const userId = req.params.userId;
-  
-    // Perform database query to retrieve password based on user ID
-    // Replace this with your database query logic
     const query = `
       SELECT [password]
       FROM [jo].[dbo].[users]
       WHERE [id] = ${userId}
     `;
-    
-    // Execute the query and retrieve the password from the database
-    // This is just a placeholder and should be replaced with your database query logic
-    const password = 'dummyPassword'; // Replace with actual password retrieved from the database
-  
-    // Send the password as a JSON response
+    const password = 'dummyPassword'; 
     res.json({ password });
   });
 
@@ -101,12 +129,9 @@ router.get('/getDataFromServer/:userId', (req, res) => {
 
   router.post('/addNewTechForm', async (req, res) => {
     try {
-      // Connect to the database
       await sql.connect(config);
       const referer = req.header('referer');
-      // Retrieve data
       const data = localStorage.getItem('userId');
-      // Query the database to get id and full_name values
       const techresult = await sql.query(`
       SELECT [id], [password] 
       FROM [dbo].[users] 
@@ -151,12 +176,15 @@ router.get('/getDataFromServer/:userId', (req, res) => {
   
       // Hash the password
       // const hashedPassword = await bcrypt.hash(password, 10); // Using 10 salt rounds
+        // Encrypt the password
+        
+      const encryptedPassword = encrypt(password);
   
       // Insert the new user into the users table
       const request = new sql.Request();
       request.input('username', sql.NVarChar, username);
-      // request.input('password', sql.NVarChar, hashedPassword);
-      request.input('password', sql.NVarChar, password);
+      request.input('password', sql.NVarChar, encryptedPassword);
+      // request.input('password', sql.NVarChar, password);
       request.input('role', sql.NVarChar, role);
       request.input('createdAt', sql.Date, new Date());
       request.input('updatedAt', sql.Date, new Date());
@@ -175,10 +203,26 @@ router.get('/getDataFromServer/:userId', (req, res) => {
     }
   });
   
-  router.get('/logout', (req, res) => {
-    // Redirect the user to a different URL, such as the login page
-    res.redirect('/');
-  });
-  
+  router.get('/logout', async (req, res) => {
+    try {
+        // Extract user ID from the request query
+        const userId = req.query.userId;
+
+        // Connect to the SQL Server database
+        await sql.connect(config);
+
+        // Update the user's status to "offline" in the database
+        const request = new sql.Request();
+        request.input('userId', sql.Int, userId);
+        await request.query('UPDATE users SET status = \'offline\' WHERE id = @userId');
+
+        // Send success response
+        res.status(200).json({ status: 'success', message: 'User logged out successfully.' });
+    } catch (err) {
+        console.error('Error updating user status:', err);
+        res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
+    }
+});
+
 
 module.exports = router;

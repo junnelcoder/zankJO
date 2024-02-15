@@ -7,7 +7,6 @@ const sql = require('mssql');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const { LocalStorage } = require('node-localstorage');
-const bcrypt = require('bcrypt');
 
 // Import routes
 const auth = require('./Routes/authenticationRoutes');
