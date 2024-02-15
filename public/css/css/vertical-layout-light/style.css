@@ -10182,9 +10182,9 @@ pre code {
   border-bottom: 2px solid #e3e7ed;
 }
 
-/* .table tbody + tbody, .jsgrid .jsgrid-table tbody + tbody {
+.table tbody + tbody, .jsgrid .jsgrid-table tbody + tbody {
   border-top: 2px solid #e3e7ed;
-} */
+}
 
 .table-sm th,
 .table-sm td {
@@ -31578,9 +31578,6 @@ padding-left: 70px;
   width: 200px;
 }
 
-
-
-
 /* Media queries for different screen sizes */
 @media (max-width: 768px) {
   .modal-title{
@@ -31590,14 +31587,11 @@ padding-left: 70px;
     display: flex;
     /* background: gray; */
     margin: auto;
-    border: 1px solid #e3e7ed;
-    border-radius: 5px;
   }
  
   .content1 th,
   .content2 td {
     display: none; /* Hide the th elements in content1 and td elements in content2 */
-    
   }
 
   .table2 tr {
@@ -31620,12 +31614,10 @@ padding-left: 70px;
     flex-direction: column;
    
   }
-  .left th,
-  .left td,
   .right th,
   .right td {
     width: 100%; /* Make both left and right columns occupy full width */
-    /* border-bottom: 1px solid #e3e7ed; */
+    
     display: flex;
     align-items: center;
     color: black;
@@ -31635,15 +31627,19 @@ padding-left: 70px;
     height: auto; /* Ensure the height adjusts based on content */
     border-top: none;
   }
-  .left th:nth-child(7) {
-    /* padding: 5px ;  */
-    height: 120px;
-}
-  .right td:nth-child(7) {
-    /* padding: 5px 5px 95px; Top and bottom padding is 5px, left and right padding is 5px, and bottom padding is increased to 95px */
-    height: 120px; 
-}
-  
+  .left th,
+  .left td{
+    width: 100%; /* Make both left and right columns occupy full width */
+    
+    display: flex;
+    align-items: center;
+    color: black;
+    box-sizing: border-box; /* Include padding in width calculation */
+    padding: 5px; /* Set the same padding size for both thead and tbody */
+    font-size: 10px; /* Adjust the font size as needed */
+    height: auto; /* Ensure the height adjusts based on content */
+    border-top: none;
+  }
 }
 
 
@@ -31652,8 +31648,6 @@ padding-left: 70px;
   .table1 {
     display: flex;
     margin: auto;
-    border: 1px solid #e3e7ed;
-    border-radius: 5px;
 
   }
  
@@ -31661,7 +31655,6 @@ padding-left: 70px;
   .content1 th,
   .content2 td {
     display: none; /* Hide the th elements in content1 and td elements in content2 */
-    text-align: left; /* Align text to the left */
   }
 
   .table2 tr {
@@ -31674,7 +31667,6 @@ padding-left: 70px;
     border: none; /* Remove borders */
     padding: 5px; /* Add padding */
     font-size: 12px;
-    word-wrap: break-word; /* Enable word wrapping */
   }
 
   .left,
@@ -31683,12 +31675,10 @@ padding-left: 70px;
     display: flex;
     flex-direction: column;
   }
-  .left th,
-  .left td,
+
   .right th,
   .right td {
     width: 100%; /* Make both left and right columns occupy full width */
-    /* border-bottom: 1px solid #e3e7ed; */
     display: flex;
     align-items: center;
     color: black;
@@ -31698,108 +31688,22 @@ padding-left: 70px;
     height: auto; /* Ensure the height adjusts based on content */
     border-top: none;
   }
-
-  .left th:nth-child(7) {
-    padding: 5px ; 
-    height: 120px;
-}
-  .right td:nth-child(7) {
-    height: 120px;
-}
- 
-}
-
-
-
-@media (min-width: 360px) and (max-width: 400px) {
-  .modal-footer{
-    
-    display: inline-block;
+  .left th,
+  .left td{
+    width: 100%; /* Make both left and right columns occupy full width */
+    display: flex;
     align-items: center;
-    
+    color: black;
+    box-sizing: border-box; /* Include padding in width calculation */
+    padding: 5px; /* Set the same padding size for both thead and tbody */
+    font-size: 12px; /* Adjust the font size as needed */
+    height: auto; /* Ensure the height adjusts based on content */
+    border-top: none;
+  }
 }
-
-.content1 th {
-  display: none; /* Hide the th elements in content1 and td elements in content2 */
-   text-align: left; /* Align text to the left */
-}
-
-.table2 tr {
-  border-bottom: 1px solid #ddd; /* Add border between rows */
-}
-
-.table2 td {
-  display: table-cell; /* Keep the td elements as table cells */
-  text-align: left; /* Align text to the left */
-  border: none; /* Remove borders */
-  padding: 5px; /* Add padding */
-  font-size: 10px;
-  
-}
-
-
-.modal-footer .btn {
-    margin-left: 210px;
-    padding: 5px 10px;
-    
-}
-
-.modal-footer .btn1 {
-  margin-left: 210px;
-  padding: 5px 10px;
-  margin-top: 10px;
- 
-  
-}
-
-  .left th:nth-child(7) {
-    padding: 5px ; 
-    height: 140px;
-}
-  .right td:nth-child(7) {
-    padding: 5px ; 
-    height: 140px;
-}
-
+@media (max-width: 322px) {
 
 }
-
-
-
-@media (min-width: 280px) and (max-width: 359px) {
-  .modal-footer{
-    
-    display: inline-block;
-    align-items: center;
-    
-}
-
-.modal-footer .btn {
-    /* margin-left: 120px; */
-    padding: 5px 10px;
-    
-}
-
-.modal-footer .btn1 {
-  margin-left: 120px;
-  padding: 5px 10px;
-  margin-top: 10px;
- 
-  
-}
-
-  .left th:nth-child(7) {
-    padding: 5px ; 
-    height: 140px;
-}
-  .right td:nth-child(7) {
-    padding: 5px ; 
-    height: 140px;
-}
-
-
-}
-
 
 .nav-item:hover
 {

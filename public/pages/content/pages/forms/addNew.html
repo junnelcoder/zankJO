@@ -8,6 +8,11 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="../css/vendors/sweetalert/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <link rel="stylesheet" href="../../../../vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../../../vendors/css/vendor.bundle.base.css">
+  <script src="../../../../css/js/alerts.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Zank POS</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -23,29 +28,36 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="../../../../css/images/favicon.png" />
   <script>
-    function submits(){
-      window.location.href="/addNewTechForm"
-    }
-
 const userId = localStorage.getItem('userId');
 // Make an AJAX request to fetch data from the server
-const xhr = new XMLHttpRequest();
-xhr.open('GET', `/getDataFromServer/${userId}`, true); // Include userId in the URL
-xhr.onload = function() {
-  if (xhr.status >= 200 && xhr.status < 300) {
-    // Parse the JSON response
-    const data = JSON.parse(xhr.responseText);
-    // Use the retrieved data in your JavaScript code
-    console.log('Password from server:', data.password);
-  } else {
-    console.error('Request failed:', xhr.statusText);
-  }
-};
-xhr.onerror = function() {
-  console.error('Request failed');
-};
-xhr.send();
-
+function fetchData(callback) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', `/getDataFromServer/${userId}`, true); // Include userId in the URL
+  xhr.onload = function() {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      const data = JSON.parse(xhr.responseText);
+      callback(data); // Pass the data to the callback function
+    } else {
+      console.error('Request failed:', xhr.statusText);
+    }
+  };
+  xhr.onerror = function() {
+    console.error('Request failed');
+  };
+  xhr.send();
+}
+fetchData();
+function submits(){
+  fetchData(function(data) {
+    const password = document.getElementById('confPassword').value;
+    if(password === data.password){
+      showSwal('goods');
+      submitFormTech({ target: document.getElementById('addTechForm') });
+    }else{
+      showSwal('wrongpass');
+    }
+  });
+}
   </script>
 </head>
 
@@ -270,7 +282,7 @@ xhr.send();
                                     <!-- Simple form -->
                                     <div class="form-group">
                                         <p>Password:</p>
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                        <input type="password" class="form-control" id="confPassword" name="confPassword" placeholder="Password" required>
                                     </div>
                                 </div>
                                 <!-- Modal Footer -->
@@ -420,13 +432,16 @@ xhr.send();
   <script src="../../../../css/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- inject:js -->
-  <script src="../../../../css/js/off-canvas.js"></script>
-  <script src="../../../../css/js/hoverable-collapse.js"></script>
-  <script src="../../../../css/js/template.js"></script>
-  <script src="../../../../css/js/settings.js"></script>
-  <script src="../../../../css/js/todolist.js"></script>
+  <script src="../../../../js/off-canvas.js"></script>
+  <script src="../../../../js/hoverable-collapse.js"></script>
+  <script src="../../../../js/template.js"></script>
+  <script src="../../../../js/settings.js"></script>
+  <script src="../../../../js/todolist.js"></script>
   <!-- endinject -->
   <!-- plugin js for this page -->
+  
+  <script src="../../../../vendors/sweetalert/sweetalert.min.js"></script>
+  <script src="../../../../vendors/jquery.avgrund/jquery.avgrund.min.js"></script>
   <script src="../../../../css/vendors/typeahead.js/typeahead.bundle.min.js"></script>
   <script src="../../../../css/vendors/select2/select2.min.js"></script>
   <!-- End plugin js for this page -->
@@ -434,6 +449,8 @@ xhr.send();
   <script src="../../../../css/js/file-upload.js"></script>
   <script src="../../../../css/js/typeahead.js"></script>
   <script src="../../../../css/js/select2.js"></script>
+  <script src="../../../../js/alerts.js"></script>
+  <script src="../../../../js/avgrund.js"></script>
 
 <!-- Bootstrap JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -445,18 +462,13 @@ xhr.send();
 <script>
   // Function to handle form submission
   async function submitFormTech(event) {
-    event.preventDefault(); // Prevent default form submission
 
     // Get form data
     const formData = new FormData(event.target);
     const username = formData.get('username');
-    const password = formData.get('password');
 
     try {
-      // Send POST request to server
-      const response = await axios.post('/addNewTechForm', { username, password });
-      // Handle response
-      alert('Username and password added successfully.');
+      const response = await axios.post('/addNewTechForm', { username});
     } catch (error) {
       // Handle errors
       console.error('Error:', error.message);

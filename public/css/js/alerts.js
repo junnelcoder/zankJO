@@ -37,6 +37,23 @@ function showSwal(type, callback) {
       confirmButtonColor: '#ff4081',
       confirmButtonText: 'OK',
     };
+  }else if (type === 'goods') {
+     config = {
+      url: 'orders.html',
+      title: 'Success!',
+      text: 'New Tech Added.',
+      icon: 'success',
+      timer: 2500,
+      confirmButtonColor: '#3f51b5',
+      confirmButtonText: 'OK',
+    };
+  }else if (type === 'wrongpass') {
+    config = {
+      title: 'Wrong Password',
+      icon: 'warning',
+      timer: 800,
+      button: true
+    }
   }
 
   // Show the SweetAlert
