@@ -23,6 +23,14 @@
   <script src="../css/vendors/sweetalert/sweetalert.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+    /* CSS to visually hide the first column */
+    .table1 th:first-child,
+    .table1 td:first-child {
+      display: none;
+    }
+  </style>
+  
   <script>
     
     function confirmDelete(jobOrderId) {
@@ -94,10 +102,11 @@ function deleteJo(jobOrderId) {
             </div>
             <div class="modal-body">
                 <div class="row">
-                  <table class="table table1">
+                  <table class="table table1" >
                     
                       <tbody class="left">
                         <tr>
+                            <th>Id</th>
                             <th>Job Order Id</th>
                             <th>Date</th>
                             <th>Contact Person</th>
@@ -110,6 +119,7 @@ function deleteJo(jobOrderId) {
                       </tbody>
                       <tbody class="right">
                           <tr>
+                            <td><span id="id"></span></td>
                               <td><span id="jobOrderId"></span></td>
                               <td><span id="jobOrderDate"></span></td>
                               <td><span id="jobOrderContactPerson"></span></td>
@@ -138,26 +148,18 @@ function deleteJo(jobOrderId) {
                     </table>
                   </div>
               
-                  <!-- <center><h2>W O R K &nbsp; A C T I V I T Y</h2></center> -->
-                    <!-- <div class="modal-body">
-                        <div class="row">
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                <th>Description</th>
-                                <th>Remarks</th>
-                              </tr>
-                            </thead>
-                            <tbody id="workActivitiesTableBody"></tbody>
-
-                          </table>
-                        </div>
-                    </div> -->
+                  
                 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success btn-rounded">Print</button>
-                <button type="button" class="btn btn-light btn-rounded" data-dismiss="modal">Delete</button>
+              <button class="btn btn-outline-success btn-icon-text" id="printButtonInModal">
+                <i class="mdi mdi-printer btn-icon-prepend"></i>
+                <span class="button-label">Print</span> <!-- Label for Print button -->
+            </button>
+            <button type="button" class="btn btn-outline-danger btn-icon-text" id="deleteButtonInModal">
+              <i class="mdi mdi-delete btn-icon-prepend"></i>
+              <span class="button-label">Delete</span> <!-- Label for Delete button -->
+            </button>
             </div>
         </div>
     </div>
@@ -461,7 +463,9 @@ function populateModal(jobOrderDetails) {
     console.log("Populating modal with job order details:", jobOrderDetails);
     
     // Retrieve references to the HTML elements
+    
     const jobOrderIdElement = document.getElementById('jobOrderId');
+    const jobOrderElement = document.getElementById('id');
     const jobOrderDateElement = document.getElementById('jobOrderDate');
     const jobOrderContactPersonElement = document.getElementById('jobOrderContactPerson');
     const jobOrderTransportElement = document.getElementById('jobOrderTransport');
@@ -473,6 +477,7 @@ function populateModal(jobOrderDetails) {
     
     // Assign values to the HTML elements
     jobOrderIdElement.textContent = jobOrderDetails.jobOrderDetails.joborder_id || '';
+    jobOrderElement.textContent = jobOrderDetails.jobOrderDetails.id || '';
     jobOrderDateElement.textContent = jobOrderDetails.jobOrderDetails.date ? new Date(jobOrderDetails.jobOrderDetails.date).toLocaleDateString('en-US') : '';
     jobOrderContactPersonElement.textContent = jobOrderDetails.jobOrderDetails.contactPerson || '';
     jobOrderTransportElement.textContent = jobOrderDetails.jobOrderDetails.transportForMoney || '';
@@ -500,7 +505,61 @@ function populateModal(jobOrderDetails) {
 }
 
 </script>
-    
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      // Function to handle opening print page from modal
+      function openPrintPageFromModal(jobOrderId) {
+          const url = `print.html?jobOrderId=${jobOrderId}`;
+          const printWindow = window.open(url, '_blank');
+      }
+
+      // Function to handle deleting from modal
+      function deleteFromModal(jobOrderId) {
+          // Perform delete operation here using AJAX or fetch
+          // For example:
+          fetch(`/deleteJobOrder/${jobOrderId}`, {
+              method: 'DELETE',
+              headers: {
+                  'Content-Type': 'application/json'
+                  // Add any additional headers if required
+              }
+          })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
+              }
+              return response.json();
+          })
+          .then(data => {
+              // Handle success response, for example, close modal or update UI
+              console.log('Job order deleted successfully');
+              // Close modal
+              $('#exampleModal').modal('hide');
+              // Reload job order list or perform any other necessary action
+              // For example:
+              populateJobOrderList(); // Assuming you have a function to repopulate the job order list
+          })
+          .catch(error => {
+              console.error('Error deleting job order:', error);
+              // Handle error, for example, display error message to the user
+          });
+      }
+
+      // Function to handle click event on print button in modal
+      document.getElementById('printButtonInModal').addEventListener('click', function () {
+          const jobOrderId = document.getElementById('id').textContent;
+          openPrintPageFromModal(jobOrderId);
+      });
+
+      // Function to handle click event on delete button in modal
+      document.getElementById('deleteButtonInModal').addEventListener('click', function () {
+          const jobOrderId = document.getElementById('id').textContent;
+          confirmDelete(jobOrderId);
+      });
+  });
+</script>
+
+  
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
