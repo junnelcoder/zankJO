@@ -164,43 +164,60 @@
 
     // Make an AJAX request to the server
     $.ajax({
-    type: 'POST',
-    url: '/login',
-    data: { username: username, password: password },
-    success: function (response) {
+      type: 'POST',
+      url: '/login',
+      data: { username: username, password: password },
+      success: function (response) {
         if (response.status === 'success') {
-            // Store user ID and username in localStorage
-            localStorage.setItem('auth', 'true');
-            localStorage.setItem('userId', response.id);
-            localStorage.setItem('username', response.username);
-            console.log('User ID and username stored:', response.id, response.username);
+          // Store user ID and username in localStorage
+          localStorage.setItem('auth', 'true');
+          localStorage.setItem('userId', response.id);
+          localStorage.setItem('username', response.username);
+          console.log('User ID and username stored:', response.id, response.username);
 
-            // Show success popup and redirect after clicking "OK"
-            window.location.href = '/pages/content/pages/forms/orders.html';
-        } else {
-            // Show error popup and refresh input fields
-            showSwal('warning-message-and-cancel', function () {
-                // Optionally, you can refresh the input fields here
-                $('#exampleInputEmail1').val('');
-                $('#exampleInputPassword1').val('');
-            });
+          // Show success popup and redirect after clicking "OK"
+          window.location.href = '/pages/content/pages/forms/orders.html';
+        }  else {
+          // Show error popup and refresh input fields
+          showSwal('warning-message-and-cancel', function () {
+            // Optionally, you can refresh the input fields here
+            $('#exampleInputEmail1').val('');
+            $('#exampleInputPassword1').val('');
+          });
         }
-    },
-    error: function (xhr, status, error) {
-        if (xhr.status === 401) {
-            showSwal('unauthorized-error', function () {
-                // Optionally, you can refresh the input fields here
-                $('#exampleInputEmail1').val('');
-                $('#exampleInputPassword1').val('');
-            });
-        } else {
-            console.error('Error during login:', error);
+      },
+      error: function (xhr, status, error) {
+        if (xhr.status === 400) {
+                  Swal.fire({
+            title: 'Account is already Online',
+            text: 'log in to another account!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0000FF',
+            confirmButtonText: 'OK',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              $('#username').val('');
+            $('#exampleInputPassword1').val('');
+            }
+          });
         }
-    },
-});
+        else if (xhr.status === 401) {
+          showSwal('unauthorized-error', function () {
+            // Optionally, you can refresh the input fields here
+            $('#exampleInputEmail1').val('');
+            $('#exampleInputPassword1').val('');
+          });
+        } else {
+          console.error('Error during login:', error);
+        }
+      },
+    });
 
   });
 </script>
+
+
 
 
 

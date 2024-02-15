@@ -311,7 +311,7 @@ function deleteJo(jobOrderId) {
     <script>
       document.addEventListener('DOMContentLoaded', function () {
     // Get the current date in the format "MM/DD/YYYY"
-    const currentDate = new Date().toLocaleDateString('en-US');
+    const currentDate = new Date().toISOString().slice(0, 10);
 
     // Initialize the DataTable
     // Initialize the DataTable
@@ -390,7 +390,12 @@ function deleteJo(jobOrderId) {
     const endDateInput = document.getElementById('end_date');
 
     // Set the start date input field to the current date
-    startDateInput.value = currentDate;
+    // Get the current date in the format "yyyy-MM-dd"
+
+
+// Assign the formatted current date to startDateInput
+startDateInput.value = currentDate;
+
 
     // Attach event listener to the filter button
     filterButton.addEventListener('click', function () {

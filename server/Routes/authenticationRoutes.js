@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const sql = require('mssql');
-const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { LocalStorage } = require('node-localstorage');
@@ -63,12 +62,15 @@ router.post('/login', async (req, res) => {
     // Verify the password
     const user = result.recordset[0];
     // const passwordMatch = await bcrypt.compare(password, user.password);
-    // const passwordMatch = (password === user.password);  ZankPOSNterprise:307275bf0b45e0b301d201c0b0056b0e
+    // const passwordMatch = (password === user.password);  
     const decrypted = decrypt(user.password);
     const passwordMatch = (decrypted === password);
 
     if (!passwordMatch) {
       return res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
+    }
+    if (user.status === 'online') {
+      return res.status(400).json({ status: 'error2', message: 'User is already logged in. Please try logging in with another user.' });
     }
     const token = jwt.sign({ userId: user.id, username: user.username }, "jwt-secret-key", { expiresIn: '1d' });
     res.cookie('token', token, { httpOnly: true });
