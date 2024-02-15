@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const sql = require('mssql');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { LocalStorage } = require('node-localstorage');
 const localStorage = new LocalStorage('./scratch');
@@ -32,7 +33,8 @@ router.post('/login', async (req, res) => {
 
     // Verify the password
     const user = result.recordset[0];
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    // const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = (password === user.password);
 
     if (!passwordMatch) {
       return res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
@@ -148,13 +150,13 @@ router.get('/getDataFromServer/:userId', (req, res) => {
       }
   
       // Hash the password
-      const hashedPassword = await bcrypt.hash(password, 10); // Using 10 salt rounds
-  
+      // const hashedPassword = await bcrypt.hash(password, 10); // Using 10 salt rounds
   
       // Insert the new user into the users table
       const request = new sql.Request();
       request.input('username', sql.NVarChar, username);
-      request.input('password', sql.NVarChar, hashedPassword); // Store the hashed password
+      // request.input('password', sql.NVarChar, hashedPassword);
+      request.input('password', sql.NVarChar, password);
       request.input('role', sql.NVarChar, role);
       request.input('createdAt', sql.Date, new Date());
       request.input('updatedAt', sql.Date, new Date());

@@ -31,13 +31,15 @@
         padding: 20px;
         }
         .container {
-        width: 100%; 
-        }      
-
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }     
         .barcode-container {
         position: absolute;
-        top: 20px;
-        left:1550px;
+        top: 50px;
+        left:1000px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -116,8 +118,8 @@
         @media print {
             .barcode-container {
                 position: absolute; /* Set position to absolute */
-                top: 16px; /* Adjust top margin as needed */
-                left: 425px; /* Align to the left edge */
+                top: 40px; /* Adjust top margin as needed */
+                left: 430px; /* Align to the left edge */
                 right: 0; /* Align to the right edge */
                 margin-left: auto; /* Center horizontally */
                 margin-right: auto;
@@ -126,7 +128,7 @@
           }
 
         #barcodeCanvas {
-            width: 300px; /* Set a larger width for printing */
+            width: 250px; /* Set a larger width for printing */
             height: auto; /* Let the height adjust proportionally */
             border-radius: 5px;
             margin-bottom: 5px;
@@ -197,7 +199,7 @@
                     <input type="text" id="tech" placeholder="" disabled>
                 </div>
             </div>
-            <br><br>
+            <br>
             <!-- Inner Form -->
             <div class="inner-form">
                 <input type="text" id="date" name="inner_field" placeholder="" disabled style="width: 98%;"><br>
@@ -262,8 +264,8 @@
             </table>
         </div>
 
-        <p>CORRECTION PREVENTIVE SERVICES OR RECOMMENDATION:</p><br><br>
-        <p>PROBLEM IDENIFIED BY THE TECHNICAL:</p><br>
+        <br><br><p style="font-size:15px;">CORRECTION PREVENTIVE SERVICES OR RECOMMENDATION:</p><br><br>
+        <p style="font-size:15px;">PROBLEM IDENIFIED BY THE TECHNICAL:</p><br>
         
         <input type="text" id="inner_field" name="inner_field" placeholder=" STATUS OF WORK" disabled style="margin-top: 15px; height: 30px; width: 100%; border: 1px solid black;"><br><br>
 

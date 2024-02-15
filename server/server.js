@@ -10,7 +10,7 @@ const { LocalStorage } = require('node-localstorage');
 const bcrypt = require('bcrypt');
 
 // Import routes
-const auth = require('./Routes/authenticationRoutes'); // Import loginRoutes
+const auth = require('./Routes/authenticationRoutes');
 const crud = require('./Routes/orderCrudRoutes');
 const list = require('./Routes/orderListingRoutes');
 
