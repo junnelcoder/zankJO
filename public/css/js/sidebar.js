@@ -45,7 +45,7 @@ includeHTML('navigations/header.html', 'header-container');
 
     // Get the current path without the base path
     const currentPath = window.location.pathname.substring(basePath.length);
-
+    
     // Redirect to login if not authenticated and trying to access a protected route
     if (!isAuthenticated && currentPath.startsWith('/')) {
       window.location.href = '/pages/login.html';
@@ -65,24 +65,24 @@ function windowBack(){
   window.location.href="/";
 }
 function logout() {
-  // Retrieve user ID from localStorage
-  const userId = localStorage.getItem('userId');
+    // Retrieve user ID from localStorage
+    const userId = localStorage.getItem('userId');
 
-  // Make an AJAX request to logout endpoint
-  $.ajax({
-      type: 'GET',
-      url: '/logout',
-      data: { userId: userId },
-      success: function(response) {
-          // Clear localStorage and redirect the user to the login page
-          localStorage.clear();
-          window.location.href = '/';
-      },
-      error: function(xhr, status, error) {
-          console.error('Error during logout:', error);
-          // Handle error response if needed
-      }
-  });
+    // Make an AJAX request to logout endpoint
+    $.ajax({
+        type: 'GET',
+        url: '/logout',
+        data: { userId: userId },
+        success: function(response) {
+            // Clear localStorage and redirect the user to the login page
+            localStorage.clear();
+            window.location.href = '/';
+        },
+        error: function(xhr, status, error) {
+            console.error('Error during logout:', error);
+            // Handle error response if needed
+        }
+    });
 }
 
 function closeDropdown() {
@@ -97,3 +97,4 @@ function rotateArrow() {
   arrowUp.style.display = arrowUp.style.display === "none" ? "block" : "none";
   
 }
+

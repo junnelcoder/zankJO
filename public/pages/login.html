@@ -221,8 +221,30 @@
 
 
 
+<script>
+  // Check if the user is already logged in
+// Check if the user is already logged in
+$(document).ready(function() {
+    const isLoggedIn = localStorage.getItem('auth') === 'true'; // Check if authentication flag is set
+    if (isLoggedIn) {
+        window.location.href = '/pages/content/pages/forms/orders.html'; // Redirect to another page
+    }
+});
 
+</script>
   
+<script>
+  window.onload = function () {
+      if (window.history && window.history.pushState) {
+          $(document).ready(function () {
+              window.history.pushState('forward', null, './#forward');
+              $(window).on('popstate', function () {
+                  window.location.reload();
+              });
+          });
+      }
+  }
+</script>
 
   <!-- endinject -->
 </body>
