@@ -71,3 +71,12 @@ function logout() {
 function closeDropdown() {
   $('.dropdown-menu.settings').dropdown('hide');
 }
+
+function rotateArrow() {
+  var arrowDown = document.getElementById("arrowDown");
+  var arrowUp = document.getElementById("arrowUp");
+
+  arrowDown.style.display = arrowDown.style.display === "none" ? "block" : "none";
+  arrowUp.style.display = arrowUp.style.display === "none" ? "block" : "none";
+  
+}

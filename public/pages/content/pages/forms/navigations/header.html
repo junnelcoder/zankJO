@@ -19,7 +19,8 @@
                 <i class="mdi mdi-account"></i>
             </div>
             <div id="arrowIcon" style="position: absolute; top: 50%; right: -10px; transform: translateY(-50%); transition: transform 0.3s;">
-                <i class="mdi mdi-arrow-down-drop-circle"></i>
+              <i class="mdi mdi-arrow-down-drop-circle" id="arrowDown"></i>
+        <i class="mdi mdi-arrow-up-drop-circle" id="arrowUp" style="display: none;"></i>
             </div>
         </a>
         
@@ -55,10 +56,6 @@
     </div>
   </nav>
   <script>
-    function rotateArrow() {
-    var arrowIcon = document.getElementById('arrowIcon');
-    arrowIcon.style.transform = 'rotate(180deg)';
-}
 
 
   </script>
