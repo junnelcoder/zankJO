@@ -46,6 +46,7 @@ router.post('/login', async (req, res) => {
     if (!username || !password) {
       return res.status(400).json({ status: 'error', message: 'Username and password are required.' });
     }
+    
     // Connect to the SQL Server database
     await sql.connect(config);
 
@@ -61,21 +62,32 @@ router.post('/login', async (req, res) => {
 
     // Verify the password
     const user = result.recordset[0];
-    // const passwordMatch = await bcrypt.compare(password, user.password);
-    // const passwordMatch = (password === user.password);  
     const decrypted = decrypt(user.password);
     const passwordMatch = (decrypted === password);
 
     if (!passwordMatch) {
       return res.status(401).json({ status: 'error', message: 'Invalid username or password.' });
     }
+    
+    // Check if user is already logged in
     if (user.status === 'online') {
-      return res.status(400).json({ status: 'error2', message: 'User is already logged in. Please try logging in with another user.' });
+      return res.status(400).json({ status: 'error', message: 'User is already logged in. Please try logging in with another user.' });
     }
+
+    // Update user status to 'online'
+    
+    await request.query('UPDATE users SET status = \'online\' WHERE username = @username');
+
+
+    // Generate JWT token and set it in cookies
     const token = jwt.sign({ userId: user.id, username: user.username }, "jwt-secret-key", { expiresIn: '1d' });
     res.cookie('token', token, { httpOnly: true });
+
+    // Store user ID and username in localStorage
     localStorage.setItem('userId', user.id);
     localStorage.setItem('username', user.username);
+
+    // Send success response
     res.status(200).json({ status: 'success', id: user.id, username: user.username });
   } catch (err) {
     console.error('Error checking login:', err);
@@ -191,10 +203,26 @@ router.get('/getDataFromServer/:userId', (req, res) => {
     }
   });
   
-  router.get('/logout', (req, res) => {
-    // Redirect the user to a different URL, such as the login page
-    res.redirect('/');
-  });
-  
+  router.get('/logout', async (req, res) => {
+    try {
+        // Extract user ID from the request query
+        const userId = req.query.userId;
+
+        // Connect to the SQL Server database
+        await sql.connect(config);
+
+        // Update the user's status to "offline" in the database
+        const request = new sql.Request();
+        request.input('userId', sql.Int, userId);
+        await request.query('UPDATE users SET status = \'offline\' WHERE id = @userId');
+
+        // Send success response
+        res.status(200).json({ status: 'success', message: 'User logged out successfully.' });
+    } catch (err) {
+        console.error('Error updating user status:', err);
+        res.status(500).json({ status: 'error', message: 'Internal Server Error.' });
+    }
+});
+
 
 module.exports = router;
