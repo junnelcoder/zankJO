@@ -125,7 +125,7 @@ function deleteJo(jobOrderId) {
                               <td><span id="jobOrderContactPerson"></span></td>
                               <td>P <span id="jobOrderTransport"></span>.00</td>
                               <td><span id="jobOrderRemarks"></span></td>
-                              <td><span id="jobOrderDeliveryRemarks"></span></td>
+                              <td><span id="jobOrderDeliveryRemarks" ></span></td>
                               <td><label class="badge badge-danger"><span id="jobOrderStatus"></span></label></td>
                               <td><span id="permit"></span></td>
                           </tr>
@@ -470,7 +470,8 @@ function populateModal(jobOrderDetails) {
     const jobOrderContactPersonElement = document.getElementById('jobOrderContactPerson');
     const jobOrderTransportElement = document.getElementById('jobOrderTransport');
     const jobOrderRemarksElement = document.getElementById('jobOrderRemarks');
-    const jobOrderDeliveryRemarksElement = document.getElementById('jobOrderDeliveryRemarks');
+    const jobOrderDelivElement = document.getElementById('jobOrderDeliveryRemarks');
+                
     const jobOrderStatusElement = document.getElementById('jobOrderStatus');
     const permitElement = document.getElementById('permit');
     const workActivitiesTableBody = document.getElementById('workActivitiesTableBody');
@@ -482,7 +483,8 @@ function populateModal(jobOrderDetails) {
     jobOrderContactPersonElement.textContent = jobOrderDetails.jobOrderDetails.contactPerson || '';
     jobOrderTransportElement.textContent = jobOrderDetails.jobOrderDetails.transportForMoney || '';
     jobOrderRemarksElement.textContent = jobOrderDetails.jobOrderDetails.remarks || '';
-    jobOrderDeliveryRemarksElement.textContent = jobOrderDetails.jobOrderDetails.deliveryRemarks || '';
+    jobOrderDelivElement.textContent = jobOrderDetails.jobOrderDetails.deliveryRemarks || '';
+    jobOrderDelivElement.style.whiteSpace = 'pre-line';
     jobOrderStatusElement.textContent = jobOrderDetails.jobOrderDetails.status || '';
     permitElement.textContent = jobOrderDetails.jobOrderDetails.permitIssue ? 'Yes' : 'No';
     
